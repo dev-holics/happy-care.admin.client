@@ -1,11 +1,19 @@
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
-export function phoneNumberValidator(control: FormControl): {[key: string]: any} {
-    const phoneNumberRegexp = /[0-9\+\-\ ]/;
-    if (control.value && !phoneNumberRegexp.test(control.value)) {
-        return {invalidphoneNumber: true};
-    }
-    return {invalidphoneNumber: false};
+export function phoneNumberValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const phoneNumberRegexp = /[- +()0-9]{10,14}/g;
+    const validPhoneNumber = phoneNumberRegexp.test(control.value);
+    return (control.value && !validPhoneNumber) ? {invalidphoneNumber: {value: control.value}} : null;
+  };
+}
+
+export function passwordValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const passwordRegexp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/g;
+    const validPassword = passwordRegexp.test(control.value);
+    return (control.value && !validPassword) ? {invalidPassword: {value: control.value}} : null;
+  };
 }
 
 export function matchingPasswords(passwordKey: string, passwordConfirmationKey: string) {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AppSettings } from './app.settings';
 import { Settings } from './app.settings.model';
+import { AccountsService } from './_services/accounts.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { Settings } from './app.settings.model';
 export class AppComponent {
   title = 'happy-care-admin';
   public settings: Settings;
-  constructor(public appSettings:AppSettings){
+  constructor(public appSettings:AppSettings, public accountsService: AccountsService){
       this.settings = this.appSettings.settings;
   }
 }
