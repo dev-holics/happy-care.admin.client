@@ -30,7 +30,7 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule,
     SharedModule,
     HttpClientModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
   ],
   providers: [AppSettings,
     { provide: HTTP_INTERCEPTORS, useClass:JwtInterceptor, multi: true},

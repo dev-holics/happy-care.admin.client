@@ -17,19 +17,52 @@
                   <h2 class="text-center">Đăng nhập vào hệ thống</h2>
 
                   <div class="form-outline mb-4">
-                    <input type="text" formControlName="phoneNumber" class="form-control"
-                      placeholder="Số điện thoại" />
-                      <mat-error *ngIf="submitted && form.controls.phoneNumber.errors?.required">Không được bỏ trống trường này</mat-error>
-                      <mat-error *ngIf="submitted && form.controls.phoneNumber.hasError('invalidphoneNumber')">Số điện thoại không hợp lệ</mat-error>
+                    <input
+                      type="text"
+                      formControlName="phoneNumber"
+                      class="form-control"
+                      placeholder="Số điện thoại"
+                      [(ngModel)]="user.phoneNumber"
+                    />
+                    <div
+                      *ngIf="submitted && form.controls.phoneNumber.status == 'INVALID'"
+                      class="alert alert-danger mt-2 py-0"
+                    >
+                      <div *ngIf="form.controls.phoneNumber.errors?.['required']">
+                        Không được bỏ trống trường này
+                      </div>
+                      <div *ngIf="form.controls.phoneNumber.errors?.['invalidphoneNumber']">
+                        Số điện thoại không hợp lệ
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-outline mb-4">
-                    <input type="password" formControlName="password" class="form-control"
-                      placeholder="Mật khẩu"/>
-                    <mat-error *ngIf="submitted && form.controls.password.errors?.required">Không được bỏ trống trường này</mat-error>
+                    <input
+                      type="password"
+                      formControlName="password"
+                      class="form-control"
+                      placeholder="Mật khẩu"
+                      [(ngModel)]="user.password"
+                    />
+                    <div
+                      *ngIf="submitted && form.controls.password.status == 'INVALID'"
+                      class="alert alert-danger mt-2 py-0"
+                    >
+                      <div *ngIf="form.controls.password.errors?.['required']">
+                        Không được bỏ trống trường này
+                      </div>
+                    </div>
                   </div>
                   <div class="form-outline mb-4">
-                    <input class="form-check-input" id="rememberMe" type="checkbox" value="" formControlName="rememberMe">
+                    <input
+                      class="form-check-input"
+                      id="rememberMe"
+                      type="checkbox"
+                      value=""
+                      formControlName="rememberMe"
+                      [(ngModel)]="user.rememberMe"
+                    />
                     <label class="ms-2 form-check-label" for="rememberMe">
                          Ghi nhớ tôi
                     </label>

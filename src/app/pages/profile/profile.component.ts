@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Profile } from 'src/app/_models/profile';
 import { AccountsService } from 'src/app/_services/accounts.service';
 import { NotificationService } from 'src/app/_services/notification.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-profile',
@@ -14,6 +15,7 @@ export class ProfileComponent implements OnInit {
   profile: Profile = new Profile();
   loading = false;
   submitted = false;
+  inputChanged = false;
   public form: FormGroup;
   constructor(
     public accountService: AccountsService,
@@ -43,6 +45,13 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchProfile();
+    this.form.valueChanges.subscribe((currentValue) => {
+      if (!_.isEqual(_.omit(currentValue, 'avatar'), _.omit(this.profile, ['id', 'role', 'isActive']))) {
+        this.inputChanged = true;
+      } else {
+        this.inputChanged = false;
+      }
+    });
   }
   fetchProfile() {
     this.accountService.getProfile().subscribe(

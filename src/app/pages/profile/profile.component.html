@@ -22,7 +22,8 @@
                 <input type="text" formControlName="phoneNumber" class="form-control-plaintext"
                   [ngModel]="profile.phoneNumber"
                   placeholder="Số điện thoại"
-                  readonly/>
+                  readonly
+                />
               </div>
             </div>
             <hr>
@@ -31,9 +32,13 @@
                 <p class="mb-0">Họ và tên</p>
               </div>
               <div class="col-sm-9">
-                <input type="text" formControlName="fullname" class="form-control"
+                <input
+                  type="text"
+                  formControlName="fullname"
+                  class="form-control"
                   [ngModel]="profile.fullname"
-                  placeholder="Họ và tên" />
+                  placeholder="Họ và tên"
+                />
               </div>
             </div>
             <hr>
@@ -45,8 +50,9 @@
                 <input type="email" formControlName="email" class="form-control"
                   [ngModel]="profile.email"
                   placeholder="Email"/>
-                <div *ngIf="form.controls.email.status == 'INVALID'"
-                  class="alert alert-danger pt-1">
+                <div
+                  *ngIf="form.controls.email.status == 'INVALID'"
+                  class="alert alert-danger mt-2 py-0">
                   <div *ngIf="form.controls.email.errors?.['email']">
                     Email không hợp lệ.
                   </div>
@@ -79,7 +85,7 @@
           </div>
         </div>
         <div class="card-footer">
-          <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Cập nhật</button>
+          <button [disabled]="!inputChanged" class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Cập nhật</button>
         </div>
       </div>
     </div>
