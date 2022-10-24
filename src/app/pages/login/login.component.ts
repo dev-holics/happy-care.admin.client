@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { phoneNumberValidator, passwordValidator } from '../../theme/utils/app-validators';
+import { phoneNumberValidator } from '../../theme/utils/app-validators';
 import { AppSettings } from '../../app.settings';
 import { Settings } from '../../app.settings.model';
 import { UserLogin } from 'src/app/_models/user';
 import { AccountsService } from 'src/app/_services/accounts.service';
-import { AlertService } from 'src/app/_services/alert.service';
+import { NotificationService } from 'src/app/_services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     public fb: FormBuilder,
     public router:Router,
     public accountsService: AccountsService,
-    private alertService: AlertService){
+    private alertService: NotificationService){
     this.settings = this.appSettings.settings;
     this.form = this.fb.group({
       'phoneNumber': [null, Validators.compose(
@@ -43,9 +43,11 @@ export class LoginComponent implements OnInit {
       'rememberMe': [null]
     });
 
-    if (this.accountsService.currentUser$) {
-      //this.router.navigate(['/'])
-    }
+    const currentUser = this.accountsService.currentUserValue;
+        if (currentUser) {
+            // authorised so return true
+            this.router.navigate(['/'])
+        }
   }
 
   ngOnInit(): void {
@@ -53,7 +55,6 @@ export class LoginComponent implements OnInit {
 
   public onSubmit(values:Object):void {
     this.submitted = true;
-    this.alertService.clear();
     if (this.form.valid) {
       this.loading = true;
       this.user.phoneNumber = this.form.value.phoneNumber;
@@ -64,7 +65,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/']);
         },
         (error) => {
-          this.alertService.error(error);
+          this.alertService.showError(error.error.message, 'Đăng nhập thất bại');
           this.loading = false;
         },
       );
