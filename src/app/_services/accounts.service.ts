@@ -4,6 +4,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { __values } from 'tslib';
 import { UserToken, UserLogin } from '../_models/user';
 import { map } from 'rxjs/operators';
+import { Profile } from '../_models/profile';
+import { environment } from '../../environments/environment'
 @Injectable({
   providedIn: 'root'
 })
@@ -11,12 +13,11 @@ export class AccountsService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type':'application/json'}),
   };
-  baseUrl = 'http://happy-care.apis.ductruong.com/api/v1/users';
   private currentUser = new BehaviorSubject<UserToken | null>(null);
   currentUser$ = this.currentUser.asObservable();
   constructor(private httpClient: HttpClient) { }
   login(userLogin: UserLogin): Observable<any>{
-    return this.httpClient.post<any>(`${this.baseUrl}/login`,userLogin,this.httpOptions)
+    return this.httpClient.post<any>(`${environment.baseUrl}/login`,userLogin,this.httpOptions)
     .pipe(
       map((response: any) => {
         const data = response.data;
@@ -47,5 +48,18 @@ export class AccountsService {
       }
     }
     this.logout();
+  }
+
+  getProfile() : Observable<Profile>{
+    return this.httpClient.get<Profile>(`${environment.baseUrl}/profile`);
+  }
+
+  updateProfile(profile: Profile): Observable<any> {
+    return this.httpClient.put(`${environment.baseUrl}/profile`, profile, this.httpOptions)
+    .pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
   }
 }

@@ -15,6 +15,7 @@ import { PagesComponent } from './pages/pages.component';
 
 import { AppSettings } from './app.settings';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { OverlayContainer } from '@angular/cdk/overlay';
     StoreModule.forRoot({}, {}),
     BrowserAnimationsModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastrModule.forRoot(),
   ],
   providers: [AppSettings,
     { provide: HTTP_INTERCEPTORS, useClass:JwtInterceptor, multi: true},

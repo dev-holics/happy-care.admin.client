@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { LoginComponent } from './login.component';
-import { AlertComponent } from 'src/app/_components/alerts/alert.component';
 export const routes = [
   { path: '', component: LoginComponent, }
 ];
@@ -19,7 +18,6 @@ export const routes = [
   ],
   declarations: [
     LoginComponent,
-    AlertComponent
   ]
 })
 export class LoginModule { }
