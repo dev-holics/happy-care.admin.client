@@ -17,3 +17,9 @@ export class UserLogin{
     password: string = '';
     rememberMe: boolean = false;
 }
+
+export class UserChangePassword {
+  oldPassword: string = '';
+  newPassword: string = '';
+  confirmPassword: string = '';
+}

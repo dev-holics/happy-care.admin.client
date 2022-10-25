@@ -17,7 +17,7 @@ export class AccountsService {
   currentUser$ = this.currentUser.asObservable();
   constructor(private httpClient: HttpClient) { }
   login(userLogin: UserLogin): Observable<any>{
-    return this.httpClient.post<any>(`${environment.baseUrl}/login`,userLogin,this.httpOptions)
+    return this.httpClient.post<any>(`${environment.baseUrl}/users/login`,userLogin,this.httpOptions)
     .pipe(
       map((response: any) => {
         const data = response.data;
@@ -51,11 +51,11 @@ export class AccountsService {
   }
 
   getProfile() : Observable<Profile>{
-    return this.httpClient.get<Profile>(`${environment.baseUrl}/profile`);
+    return this.httpClient.get<Profile>(`${environment.baseUrl}/users/profile`);
   }
 
   updateProfile(profile: Profile): Observable<any> {
-    return this.httpClient.put(`${environment.baseUrl}/profile`, profile, this.httpOptions)
+    return this.httpClient.put(`${environment.baseUrl}/users/profile`, profile, this.httpOptions)
     .pipe(
       map((response: any) => {
         return response;
