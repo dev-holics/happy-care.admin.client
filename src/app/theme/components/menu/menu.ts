@@ -61,3 +61,6 @@ export const verticalMenuItems = [
     new Menu (144, 'Level 5', null, 'http://themeseason.com', 'link', null, false, 143),
     new Menu (200, 'External Link', null, 'http://themeseason.com', 'open_in_new', '_blank', false, 0)
 ];
+
+export const horizontalMenuItems = [
+];
