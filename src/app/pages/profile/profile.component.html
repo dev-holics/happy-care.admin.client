@@ -3,7 +3,7 @@
   <div class="container py-5">
     <div class="row">
       <div class="col-lg-4">
-        <div class="card mb-4">
+        <div class="card mb-4" style="padding-bottom: 107px;">
           <div class="card-body text-center">
             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
               class="rounded-circle img-fluid" style="width: 150px;">
@@ -16,7 +16,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col-sm-3">
-                <p class="mb-0">Số điện thoại</p>
+                <p class="mb-0 fw-bold fs-6">Số điện thoại</p>
               </div>
               <div class="col-sm-9">
                 <input type="text" formControlName="phoneNumber" class="form-control-plaintext"
@@ -29,7 +29,7 @@
             <hr>
             <div class="row">
               <div class="col-sm-3">
-                <p class="mb-0">Họ và tên</p>
+                <p class="mb-0 fw-bold fs-6">Họ và tên</p>
               </div>
               <div class="col-sm-9">
                 <input
@@ -44,7 +44,7 @@
             <hr>
             <div class="row">
               <div class="col-sm-3">
-                <p class="mb-0">Email</p>
+                <p class="mb-0 fw-bold fs-6">Email</p>
               </div>
               <div class="col-sm-9">
                 <input type="email" formControlName="email" class="form-control"
@@ -62,7 +62,7 @@
             <hr>
             <div class="row">
               <div class="col-sm-3">
-                <p class="mb-0">Giới tính</p>
+                <p class="mb-0 fw-bold fs-6">Giới tính</p>
               </div>
               <div class="col-sm-9">
                 <select [ngModel]="profile.gender" class="form-select" formControlName="gender" aria-label="Giới tính">
@@ -74,7 +74,7 @@
             <hr>
             <div class="row">
               <div class="col-sm-3">
-                <p class="mb-0">Ngày sinh</p>
+                <p class="mb-0 fw-bold fs-6">Ngày sinh</p>
               </div>
               <div class="col-sm-9">
                 <input type="date" formControlName="birthday" class="form-control"
@@ -85,7 +85,7 @@
           </div>
         </div>
         <div class="card-footer">
-          <button [disabled]="!inputChanged" class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Cập nhật</button>
+          <button [disabled]="!inputChanged" class="btn btn-primary btn-block fa-lg gradient-custom__btn__login  px-3 py-4 mb-3 me-3" type="submit">Cập nhật</button>
         </div>
       </div>
     </div>
