@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { LoginComponent } from './login.component';
-
 export const routes = [
   { path: '', component: LoginComponent, }
 ];
@@ -18,7 +17,7 @@ export const routes = [
     SharedModule
   ],
   declarations: [
-    LoginComponent
+    LoginComponent,
   ]
 })
 export class LoginModule { }

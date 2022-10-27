@@ -1,32 +1,91 @@
-  <div fxLayout="row" fxLayoutAlign="center center" class="h-100">
+<section class="h-100 gradient-form" style="background-color: #eee;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-10">
+        <div class="card rounded-3 text-black">
+          <div class="row g-0">
+            <div class="col-lg-6">
+              <div class="card-body p-md-5 mx-md-4">
 
-       <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" fxFlex="80" fxFlex.gt-sm="30" fxFlex.sm="60">
-
-            <mat-card class="p-0 mat-elevation-z24 box">
-                <div fxLayout="column" fxLayoutAlign="center center" class="bg-primary box-header">
-                    <button mat-fab color="accent" class="mat-elevation-z12" (click)="onSubmit(form.value);">
-                        <mat-icon>exit_to_app</mat-icon>
-                    </button>
-                    <a mat-button routerLink="/register">Don't have an account? Sign up now!</a>
+                <div class="text-center">
+                  <em class="app-icon app-icon-logo"></em>
+                  <h4 class="mt-1 mb-5 pb-1">Happy Care</h4>
                 </div>
-                <mat-card-content fxLayout="column" fxLayoutAlign="end center" class="box-content">
-                    <mat-card fxLayout="column" fxLayoutAlign="center center" class="mat-elevation-z12 box-content-inner">
-                        <span class="box-content-header">Login</span>
-                        <mat-form-field class="w-100">
-                            <input matInput placeholder="Phone Number" formControlName="phoneNumber">
-                            <mat-error *ngIf="form.controls.phoneNumber.errors?.required">PhoneNumber is required</mat-error>
-                            <mat-error *ngIf="form.controls.phoneNumber.hasError('invalidPhoneNumber')">Invalid PhoneNumber</mat-error>
-                        </mat-form-field>
-                        <mat-form-field class="w-100">
-                            <input matInput placeholder="Password" formControlName="password">
-                            <mat-error *ngIf="form.controls.password.errors?.required">Password is required</mat-error>
-                            <mat-error *ngIf="form.controls.password.hasError('minlength')">Password isn't long enough, minimum of 6 characters</mat-error>
-                        </mat-form-field>
-                    </mat-card>
-                    <button mat-raised-button color="primary" class="mat-elevation-z12 box-button" type="submit">SIGN IN</button>
-                </mat-card-content>
-            </mat-card>
 
-        </form>
+                <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+                  <h2 class="text-center">Đăng nhập vào hệ thống</h2>
 
+                  <div class="form-outline mb-4">
+                    <input
+                      type="text"
+                      formControlName="phoneNumber"
+                      class="form-control"
+                      placeholder="Số điện thoại"
+                      [(ngModel)]="user.phoneNumber"
+                    />
+                    <div
+                      *ngIf="submitted && form.controls.phoneNumber.status == 'INVALID'"
+                      class="alert alert-danger mt-2 py-0"
+                    >
+                      <div *ngIf="form.controls.phoneNumber.errors?.['required']">
+                        Không được bỏ trống trường này
+                      </div>
+                      <div *ngIf="form.controls.phoneNumber.errors?.['invalidphoneNumber']">
+                        Số điện thoại không hợp lệ
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input
+                      type="password"
+                      formControlName="password"
+                      class="form-control"
+                      placeholder="Mật khẩu"
+                      [(ngModel)]="user.password"
+                    />
+                    <div
+                      *ngIf="submitted && form.controls.password.status == 'INVALID'"
+                      class="alert alert-danger mt-2 py-0"
+                    >
+                      <div *ngIf="form.controls.password.errors?.['required']">
+                        Không được bỏ trống trường này
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-outline mb-4">
+                    <input
+                      class="form-check-input"
+                      id="rememberMe"
+                      type="checkbox"
+                      value=""
+                      formControlName="rememberMe"
+                      [(ngModel)]="user.rememberMe"
+                    />
+                    <label class="ms-2 form-check-label" for="rememberMe">
+                         Ghi nhớ tôi
+                    </label>
+                  </div>
+
+                  <div class="d-flex justify-content-center text-center">
+                    <button class="btn btn-primary btn-block fa-lg gradient-custom__btn__login  px-3 py-4 mb-3 me-3" type="submit">Đăng nhập</button>
+                  </div>
+
+                </form>
+                <div class="text-center mb-5 pb-1">
+                  <a class="text-muted" href="#!">Quên mật khẩu?</a>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-lg-6 d-flex align-items-center justify-content-center gradient-custom">
+              <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                <em class="app-icon app-icon-doctor-panel"></em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</section>
