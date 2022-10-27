@@ -10,12 +10,14 @@ import { SharedModule } from './shared/shared.module';
 
 import { AppSettings } from './app.settings';
 import { VerticalMenuComponent } from './theme/components/menu/vertical-menu/vertical-menu.component';
+import { SidenavComponent } from './theme/components/sidenav/sidenav.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     VerticalMenuComponent,
+    SidenavComponent,
     //PagesComponent,
   ],
   imports: [
