@@ -9,11 +9,13 @@ import { SharedModule } from './shared/shared.module';
 // import { PagesComponent } from './pages/pages.component';
 
 import { AppSettings } from './app.settings';
+import { VerticalMenuComponent } from './theme/components/menu/vertical-menu/vertical-menu.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    VerticalMenuComponent,
     //PagesComponent,
   ],
   imports: [
