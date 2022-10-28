@@ -21,6 +21,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { ButtonModule } from 'primeng/button';
 import { UserMenuComponent } from './theme/components/user-menu/user-menu.component';
 import { MenuModule } from 'primeng/menu';
+import { TableModule } from 'primeng/table';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -31,7 +34,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     VerticalMenuComponent,
     SidenavComponent,
     PagesComponent,
-    UserMenuComponent
+    UserMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +49,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     Ng2SearchPipeModule,
     Ng2OrderModule,
     NgxPaginationModule,
+    TableModule,
+    DynamicDialogModule
   ],
   providers: [AppSettings,
     { provide: HTTP_INTERCEPTORS, useClass:JwtInterceptor, multi: true},
