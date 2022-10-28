@@ -1,0 +1,37 @@
+<div *ngFor="let menu of parentMenu" class="menu-item">
+    <a *ngIf="menu.routerLink && !menu.hasSubMenu" (click)="onClick(menu.id)">
+        <button pButton pRipple class="p-button-secondary p-button-text menu-button" 
+                [id]="'menu-button-'+menu.id">
+            <span class="menu-button-wrapper">
+                <i [class]="menu.icon" class="menu-icon"></i>
+                <span class="menu-title">{{menu.title}}</span>
+            </span>
+        </button>
+    </a>
+
+    <a *ngIf="menu.href && !menu.subMenu" (click)="onClick(menu.id)"
+        [attr.href]="menu.href || ''" [attr.target]="menu.target || ''">
+        <button pButton pRipple class="p-button-secondary p-button-text menu-button" 
+                [id]="'menu-button-'+menu.id">
+            <span class="menu-button-wrapper">
+                <i [class]="menu.icon" class="menu-icon"></i>
+                <span class="menu-title">{{menu.title}}</span>
+            </span>
+        </button>
+    </a>
+
+    <a *ngIf="menu.hasSubMenu" (click)="onClick(menu.id)">
+        <button pButton pRipple class="p-button-secondary p-button-text menu-button" 
+                [id]="'menu-button-'+menu.id">
+            <span class="menu-button-wrapper">
+                <i [class]="menu.icon" class="menu-icon"></i>
+                <span class="menu-title">{{menu.title}}</span>
+                <i class="fa-solid fa-caret-down menu-expand-icon"></i>
+            </span>
+        </button>
+    </a>
+
+    <div *ngIf="menu.hasSubMenu" class="sub-menu" [id]="'sub-menu-'+menu.id">
+        <app-vertical-menu [menuItems]="menuItems" [menuParentId]="menu.id"></app-vertical-menu>
+    </div>
+</div>

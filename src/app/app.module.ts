@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { CustomOverlayContainer } from './theme/utils/custom-overlay-container';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app.routing.module';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,14 +14,22 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { PagesComponent } from './pages/pages.component';
 
 import { AppSettings } from './app.settings';
+import { VerticalMenuComponent } from './theme/components/menu/vertical-menu/vertical-menu.component';
+import { SidenavComponent } from './theme/components/sidenav/sidenav.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ToastrModule } from 'ngx-toastr';
+import { ButtonModule } from 'primeng/button';
+import { UserMenuComponent } from './theme/components/user-menu/user-menu.component';
+import { MenuModule } from 'primeng/menu';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    VerticalMenuComponent,
+    SidenavComponent,
     PagesComponent,
+    UserMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +39,8 @@ import { ToastrModule } from 'ngx-toastr';
     SharedModule,
     HttpClientModule,
     ToastrModule.forRoot(),
+    ButtonModule,
+    MenuModule,
   ],
   providers: [AppSettings,
     { provide: HTTP_INTERCEPTORS, useClass:JwtInterceptor, multi: true},
