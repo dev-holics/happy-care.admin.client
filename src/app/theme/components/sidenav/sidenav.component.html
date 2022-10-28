@@ -1,5 +1,8 @@
+<div class="sidenav-header flex align-items-center justify-content-center">
+    <a *ngIf="settings.menuType == 'default'" class="logo" routerLink="/" (click)="closeSubMenus()">Happy Care</a>
+</div>
 <div class="sidenav-menu-outer" [class.user-block-show]="settings.sidenavUserBlock">
-    <div id="vertical-menu">
+    <div id="vertical-menu" class="h-100">
         <app-vertical-menu [menuItems]="menuItems" [menuParentId]="0"></app-vertical-menu> 
     </div>   
 </div>

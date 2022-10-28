@@ -16,10 +16,11 @@
     }
     .menu-button {
         padding: 0;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding-top: 15px;
+        padding-bottom: 15px;
         width: 100%;
         font-weight: 400;
+        color: var(--bluegray-900) !important;
 
         &.expanded {
             .menu-expand-icon {

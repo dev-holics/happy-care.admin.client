@@ -9,5 +9,7 @@
 @import "~primeng/resources/themes/saga-blue/theme.css";
 @import "~primeng/resources/primeng.min.css";
 
+@import "app/theme/styles/base";
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

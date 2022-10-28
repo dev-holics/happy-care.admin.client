@@ -1,5 +1,5 @@
 <button pButton pRipple type="button" icon="pi pi-user" 
-        class="p-button-rounded p-button-plain p-button-text"
-        (click)="menu.toggle($event)">
+        class="p-button-rounded p-button-plain"
+        (click)="menu.toggle($event)" [ngStyle]="{backgroundColor:'var(--surface-0)', color:'var(--bluegray-900)'}">
 </button>
 <p-menu #menu [popup]="true" [model]="items"></p-menu>
