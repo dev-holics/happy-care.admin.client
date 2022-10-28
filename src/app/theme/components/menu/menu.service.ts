@@ -33,15 +33,15 @@ export class MenuService {
   }
 
   public toggleMenuItem(menuId: number) {
-    let menuItem = document.getElementById('menu-item-' + menuId);
+    let menuButton = document.getElementById('menu-button-' + menuId);
     let subMenu = document.getElementById('sub-menu-' + menuId);
     if (subMenu) {
       if (subMenu.classList.contains('show')) {
         subMenu.classList.remove('show');
-        menuItem && menuItem.classList.remove('expanded');
+        menuButton && menuButton.classList.remove('expanded');
       } else {
         subMenu.classList.add('show');
-        menuItem && menuItem.classList.add('expanded');
+        menuButton && menuButton.classList.add('expanded');
       }
     }
   }
@@ -52,11 +52,11 @@ export class MenuService {
       menu.forEach((item) => {
         if (item.id != menuId) {
           let subMenu = document.getElementById('sub-menu-' + item.id);
-          let menuItem = document.getElementById('menu-item-' + item.id);
+          let menuButton = document.getElementById('menu-button-' + item.id);
           if (subMenu) {
             if (subMenu.classList.contains('show')) {
               subMenu.classList.remove('show');
-              menuItem && menuItem.classList.remove('expanded');
+              menuButton && menuButton.classList.remove('expanded');
             }
           }
         }

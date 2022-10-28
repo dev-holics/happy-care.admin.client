@@ -18,6 +18,7 @@ import { VerticalMenuComponent } from './theme/components/menu/vertical-menu/ver
 import { SidenavComponent } from './theme/components/sidenav/sidenav.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ToastrModule } from 'ngx-toastr';
+import { ButtonModule } from 'primeng/button';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { ToastrModule } from 'ngx-toastr';
     SharedModule,
     HttpClientModule,
     ToastrModule.forRoot(),
+    ButtonModule
   ],
   providers: [AppSettings,
     { provide: HTTP_INTERCEPTORS, useClass:JwtInterceptor, multi: true},
