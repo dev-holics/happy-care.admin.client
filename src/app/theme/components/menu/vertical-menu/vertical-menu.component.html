@@ -1,5 +1,6 @@
 <div *ngFor="let menu of parentMenu" class="menu-item">
-    <a *ngIf="menu.routerLink && !menu.hasSubMenu" (click)="onClick(menu.id)">
+    <a *ngIf="menu.routerLink && !menu.hasSubMenu" (click)="onClick(menu.id)"
+        [routerLink]="[menu.routerLink]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
         <button pButton pRipple class="p-button-secondary p-button-text menu-button" 
                 [id]="'menu-button-'+menu.id">
             <span class="menu-button-wrapper">

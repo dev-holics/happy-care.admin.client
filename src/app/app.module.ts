@@ -21,6 +21,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { ButtonModule } from 'primeng/button';
 import { UserMenuComponent } from './theme/components/user-menu/user-menu.component';
 import { MenuModule } from 'primeng/menu';
+import { TableModule } from 'primeng/table';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 
 @NgModule({
@@ -29,7 +31,7 @@ import { MenuModule } from 'primeng/menu';
     VerticalMenuComponent,
     SidenavComponent,
     PagesComponent,
-    UserMenuComponent
+    UserMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +43,8 @@ import { MenuModule } from 'primeng/menu';
     ToastrModule.forRoot(),
     ButtonModule,
     MenuModule,
+    TableModule,
+    DynamicDialogModule
   ],
   providers: [AppSettings,
     { provide: HTTP_INTERCEPTORS, useClass:JwtInterceptor, multi: true},

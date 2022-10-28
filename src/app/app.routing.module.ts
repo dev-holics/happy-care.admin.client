@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './pages/pages.component';
 import { AuthGuard } from './_helpers/auth.guard';
+import { ProductsModule } from './pages/products/products.module';
 
 const routes: Routes = [
   { 
@@ -16,6 +17,11 @@ const routes: Routes = [
         loadChildren: () => import('./pages/change-password/change-password.module').then(m => m.ChangePasswordModule),
         data: { breadcrumb: 'ChangePassword'}
       },
+      { 
+        path: 'products', 
+        loadChildren: () => import('./pages/products/products.module').then(m => m.ProductsModule) ,
+        data: { breadcrumb: 'Products' }
+      }
     ] 
   },
   { path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule) },

@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild, HostListener, ViewChildren, QueryList } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppSettings } from '../app.settings';
-import { Settings } from '../app.settings.model';
 import { AccountsService } from '../_services/accounts.service';
 
 @Component({
