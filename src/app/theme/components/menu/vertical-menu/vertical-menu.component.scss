@@ -11,6 +11,9 @@
 }
 
 .menu-item {
+    a {
+        text-decoration: none !important;
+    }
     .menu-button {
         padding: 0;
         padding-top: 10px;
