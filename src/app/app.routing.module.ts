@@ -58,6 +58,11 @@ const routes: Routes = [
         path: 'products', 
         loadChildren: () => import('./pages/products/products.module').then(m => m.ProductsModule) ,
         data: { breadcrumb: 'Products' }
+      },
+      { 
+        path: 'origins', 
+        loadChildren: () => import('./pages/origins/origins.module').then(m => m.OriginsModule) ,
+        data: { breadcrumb: 'Products' }
       }
     ] 
   },
