@@ -1,0 +1,61 @@
+<form>
+<div class="card mx-3 mt-3">
+  <div class="card-header">
+    <div class="mb-2 mt-2 row">
+      <label for="table-complete-search" class="col-md-1 col-sm-6 col-form-label">Tìm kiếm</label>
+      <div class="col-md-3 col-sm-6">
+        <input
+          id="table-complete-search"
+          type="text"
+          class="form-control"
+          name="searchTerm"
+        />
+      </div>
+      <div class="col-md-8 col-sm-12 justify-content-end d-flex">
+        <a class="btn btn-primary" href="/categories/create">Thêm danh mục</a>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <table class="table table-striped">
+      <caption>Bảng dữ liệu danh mục</caption>
+      <thead>
+        <tr>
+          <th scope="col" class="col-4">Tên</th>
+          <th scope="col" class="col-5">Mô tả</th>
+          <th scope="col" class="col-1"></th>
+          <th scope="col" class="col-1 text-center">Hành động</th>
+          <th scope="col" class="col-1"></th>
+
+          <!-- <th scope="col">#</th>
+          <th scope="col" sortable="name" (sort)="onSort($event)">Country</th>
+          <th scope="col" sortable="area" (sort)="onSort($event)">Area</th>
+          <th scope="col" sortable="population" (sort)="onSort($event)">Population</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categories">
+          <td>
+            <ngb-highlight [result]="category.name"></ngb-highlight>
+          </td>
+          <td><ngb-highlight [result]="category.description"></ngb-highlight></td>
+          <td><a disabled class='fas fa-eye d-flex justify-content-center' style='font-size:20px;color:blue'></a></td>
+          <td><a disabled class='fas fa-edit d-flex justify-content-center' style='font-size:20px;color:blue'></a></td>
+          <td><a disabled class='fas fa-trash-alt d-flex justify-content-center' style='font-size:20px;color:red'></a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+	<!-- <div class="d-flex justify-content-between p-2">
+		<ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+		</ngb-pagination>
+
+		<select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+			<option [ngValue]="2">2 items per page</option>
+			<option [ngValue]="4">4 items per page</option>
+			<option [ngValue]="6">6 items per page</option>
+		</select>
+	</div> -->
+</form>

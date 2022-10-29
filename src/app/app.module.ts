@@ -22,7 +22,6 @@ import { ButtonModule } from 'primeng/button';
 import { UserMenuComponent } from './theme/components/user-menu/user-menu.component';
 import { MenuModule } from 'primeng/menu';
 
-
 @NgModule({
   declarations: [
     AppComponent,
