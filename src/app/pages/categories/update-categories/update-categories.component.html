@@ -4,7 +4,7 @@
         <label
           for="table-complete-search"
           class="col-md-3 col-sm-6 col-form-label"
-          style="font-size: 1.5rem">Thêm danh mục</label>
+          style="font-size: 1.5rem">Sửa danh mục</label>
         <div class="col-md-3 col-sm-6">
         </div>
         <div class="col-md-6 col-sm-12 justify-content-end d-flex">
@@ -60,7 +60,7 @@
         </div>
     </div>
     <div class="card-footer">
-      <button class="btn btn-primary btn-block fa-lg gradient-custom__btn__login  px-3 py-4 mb-3 me-3" type="submit">Lưu</button>
+      <button [disabled]="!inputChanged" class="btn btn-primary btn-block fa-lg gradient-custom__btn__login  px-3 py-4 mb-3 me-3" type="submit">Lưu</button>
     </div>
   </form>
   </div>

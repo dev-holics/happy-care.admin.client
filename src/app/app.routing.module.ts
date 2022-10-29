@@ -25,6 +25,11 @@ const routes: Routes = [
       loadChildren: () => import('./pages/categories/create-categories/create-categories.module').then(m => m.CreateCategoriesModule),
       data: { breadcrumb: 'Categories/Create' }
     },
+    {
+      path: 'categories/update',
+      loadChildren: () => import('./pages/categories/update-categories/update-categories.module').then(m => m.UpdateCategoriesModule),
+      data: { breadcrumb: 'Categories/Update' }
+    },
     ] },
   { path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule) },
   { path: 'register', loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule) },
