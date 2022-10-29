@@ -11,7 +11,7 @@ export class Category {
 export class CategoryCreateUpdate {
   name: string = '';
   description: string = '';
-  parentId: string;
+  parentId: any = null;
   order: number = 0;
   images: [];
 }

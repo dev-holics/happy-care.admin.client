@@ -33,9 +33,7 @@ export class CreateCategoriesComponent implements OnInit {
           [
             Validators.maxLength(1024),
           ])],
-        'parentId': [null, Validators.compose(
-          [
-          ])],
+        'parentId': [null],
         'order': [null],
         'images': [null]
         });
@@ -63,7 +61,7 @@ export class CreateCategoriesComponent implements OnInit {
           this.alertService.showSuccess(response.message, "");
         },
         (error) => {
-          this.alertService.showError(error.error.errors[0].message, "");
+          this.alertService.showError(error.error.message, "");
           this.loading = false;
         },
       );}
