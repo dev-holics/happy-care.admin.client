@@ -585,3 +585,32 @@ a {
 ::-webkit-scrollbar-corner {
     background: transparent;
 }
+
+.form {
+    display: block;
+    .field {
+        .form-label {
+            color: var(--bluegray-600);
+        }
+        input {
+            color: var(--bluegray-700);
+        }
+        input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: var(--bluegray-400);
+        }
+          
+        input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color: var(--bluegray-400);
+        }
+          
+        input::-ms-input-placeholder { /* Microsoft Edge */
+            color: var(--bluegray-400);
+        }
+    }
+}
+
+.form-actions {
+    .form-button {
+        margin: 0 10px !important;
+    }
+}

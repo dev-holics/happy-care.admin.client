@@ -1,7 +1,7 @@
 @import "../theme/styles/variables";
 
 .header {
-    height: $header-height;
+    height: $toolbar-height;
     padding: 0 20px;
     background-color: var(--blue-400);
     box-shadow: 0px 4px 12px -2px var(--gray-400);

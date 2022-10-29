@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ProductDialogComponent } from './product-dialog/product-dialog.component';
+import { Product } from './product.model';
 
 @Component({
   selector: 'app-products',
@@ -14,17 +15,20 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public addProduct(product: any) {}
-  public updateProduct(product: any) {}
+  public addProduct(product: Product) {
+    console.log(product);
+  }
+  public updateProduct(product: Product) {
+    console.log(product);
+  }
 
   public openUserDialog(product) {
     this.dialogRef = this.dialogService.open(ProductDialogComponent, {
       data: product,
-      header: 'Choose a Product',
-      width: '70%',
-      contentStyle: {"overflow": "auto"},
+      width: '60%',
+      contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
-      maximizable: true
+      maximizable: true,
     });
 
     this.dialogRef.onClose.subscribe((product) => {
@@ -39,5 +43,4 @@ export class ProductsComponent implements OnInit {
       this.dialogRef.close();
     }
   }
-
 }

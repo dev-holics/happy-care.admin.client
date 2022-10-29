@@ -9,7 +9,7 @@
 
 .sidenav-header {
     padding: 0 10px !important;
-    height: 50px;
+    height: $toolbar-height;
     background-color: var(--blue-400);
 }
 
@@ -49,8 +49,8 @@
 }
 
 .sidenav-menu-outer {
-    height: calc(100vh - $header-height);
-    overflow-y: scroll;
+    height: calc(100vh - $toolbar-height);
+    overflow-y: auto;
 
     &.user-block-show {
         height: calc(100% - #{$toolbar-height + $sidenav-user-block-height});
