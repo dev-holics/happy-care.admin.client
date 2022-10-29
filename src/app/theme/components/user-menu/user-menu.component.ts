@@ -13,8 +13,9 @@ export class UserMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.items = [
-      {label: 'Profile', icon: 'pi pi-user-edit'},
-      {label: 'Sign out', icon: 'pi pi-sign-out'}
+      {label: 'Thông tin cá nhân', icon: 'pi pi-user-edit', url: '/profile'},
+      {label: 'Đổi mật khẩu', icon: 'pi pi-user-edit', url: '/changePassword'},
+      {label: 'Đăng xuất', icon: 'pi pi-sign-out'},
     ];
   }
 
