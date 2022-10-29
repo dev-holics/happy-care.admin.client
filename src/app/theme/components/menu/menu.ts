@@ -78,6 +78,8 @@ export const verticalMenuItems = [
     new Menu (200, 'External Link', null, 'http://themeseason.com', 'open_in_new', '_blank', false, 0)
     new Menu (2, 'Sản phẩm', null, null, 'event', null, true, 0),
     new Menu (2, 'Nguồn gốc', '/origins', null, 'event', null, false, 2),
+    new Menu (2, 'Sản phẩm', '/products', null, 'event', null, false, 0),
+    new Menu (3, 'Nguồn gốc', '/origins', null, 'event', null, false, 0)
 ];
 
 export const horizontalMenuItems = [

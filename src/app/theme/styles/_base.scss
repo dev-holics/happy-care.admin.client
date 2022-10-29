@@ -586,6 +586,10 @@ a {
     background: transparent;
 }
 
+.p-dialog-content {
+    padding-bottom: 0 !important;
+}
+
 .form {
     display: block;
     .field {
@@ -610,6 +614,7 @@ a {
 }
 
 .form-actions {
+    padding-top: 20px;
     .form-button {
         margin: 0 10px !important;
     }
