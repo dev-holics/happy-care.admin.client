@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  ConfirmationService,
+  ConfirmEventType,
+  MessageService,
+} from 'primeng/api';
 import { Origin } from '../origins/origin.model';
 import { OriginsService } from '../origins/origins.service';
 import { Trademark } from './trademark.model';
@@ -15,18 +20,20 @@ export class TrademarksComponent implements OnInit {
   public selectedTrademark: Trademark;
   public origins: Origin[];
   public trademarks: Trademark[];
-  public page: number;
-  public limit: number;
-  public totalData: number;
+  public page: number = 1;
+  public limit: number = 10;
+  public totalData: number = 0;
 
   constructor(
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
     public originsService: OriginsService,
     public trademarksService: TrademarksService
   ) {}
 
   ngOnInit(): void {
     this.getOrigins();
-    this.getTrademarks();
+    this.getTrademarks(this.page, this.limit);
   }
 
   public getOrigins(): void {
@@ -37,13 +44,12 @@ export class TrademarksComponent implements OnInit {
     });
   }
 
-  public getTrademarks(): void {
+  public getTrademarks(page: number, limit: number): void {
     this.trademarks = []; // for show spinner each time
-    this.trademarksService.getTrademarks().subscribe((obj) => {
+    this.trademarksService.getTrademarks(page, limit).subscribe((obj) => {
       this.page = obj['currentPage'];
       this.limit = obj['limit'];
       this.totalData = obj['totalData'];
-      console.log(this.page, this.limit, this.totalData);
       let data = obj['data'];
       data.map((trademark) => {
         trademark.originId = trademark.origin.id;
@@ -55,24 +61,34 @@ export class TrademarksComponent implements OnInit {
   public addTrademark(trademark: Trademark) {
     this.trademarksService
       .addTrademark(trademark)
-      .subscribe((trademark) => this.getTrademarks());
+      .subscribe((trademark) => this.getTrademarks(this.page, this.limit));
   }
 
   public updateTrademark(trademark: Trademark) {
     this.trademarksService
       .updateTrademark(trademark)
-      .subscribe((trademark) => this.getTrademarks());
+      .subscribe((trademark) => this.getTrademarks(this.page, this.limit));
+  }
+
+  public deleteTrademark(trademark: Trademark) {
+    this.trademarksService
+      .deleteTrademark(trademark.id)
+      .subscribe((trademark) => this.getTrademarks(this.page, this.limit));
   }
 
   paginate(event): void {
-    console.log(event.first, event.rows);
+    this.limit = event.rows;
+    this.page = event.first / event.rows + 1;
     document.getElementById('main-content')!.scrollTop = 0;
+    this.getTrademarks(this.page, this.limit);
   }
 
   openDialog(trademark): void {
     this.displayDialog = true;
     if (trademark) {
       this.selectedTrademark = trademark;
+    } else {
+      this.selectedTrademark = new Trademark();
     }
   }
 
@@ -81,5 +97,39 @@ export class TrademarksComponent implements OnInit {
     if (data) {
       data.id ? this.updateTrademark(data) : this.addTrademark(data);
     }
+  }
+
+  openConfirmDialog(trademark): void {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.deleteTrademark(trademark);
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Confirmed',
+          detail: 'Record deleted',
+        });
+      },
+      reject: (type) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Rejected',
+              detail: 'You have rejected',
+            });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Cancelled',
+              detail: 'You have cancelled',
+            });
+            break;
+        }
+      },
+    });
   }
 }
