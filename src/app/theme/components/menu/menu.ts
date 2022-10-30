@@ -6,6 +6,9 @@ export const verticalMenuItems = [
     new Menu (301, 'Tạo mới danh mục', null, '/categories/create', null, null, false, 300),
     new Menu (302, 'Danh sách danh mục', null, '/categories', null, null, false, 300),
 
+    new Menu (306, 'Quản lý hệ thống', '/', null, null, null, true, 0),
+    new Menu (307, 'Vai trò', null, '/roles', null, null, false, 306),
+
     new Menu (55, 'Lịch hẹn', '/schedule', null, 'event', null, false, 0),
     new Menu (2, 'Bác sĩ/Nhân viên', '/users', null, 'supervisor_account', null, false, 0),
     new Menu (86, 'Dụng cụ/Vật liệu', '/equipment', null, 'construction', null, false, 0),

@@ -1,0 +1,33 @@
+<div class="card mx-3 mt-3">
+    <div class="card-header">
+      <h3>VAI TRÒ</h3>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <caption>Bảng dữ liệu vai trò</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="col-4" (click)="Sort('name')">Tên &nbsp;<i class="fa fa-sort"></i></th>
+            <th scope="col" class="col-5">Mô tả</th>
+            <th scope="col" class="col-2">Mức độ truy cập</th>
+            <th scope="col" class="col-3 text-center">Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let role of roles | orderBy: key: reverse | paginate: {itemsPerPage: 10,currentPage: p};">
+            <td>
+              <ngb-highlight [result]="role.name"></ngb-highlight>
+            </td>
+            <td><ngb-highlight [result]="role.description"></ngb-highlight></td>
+            <td><ngb-highlight [result]="role.accessLevel"></ngb-highlight></td>
+            <td><a
+              disabled
+              class='fas fa-edit d-flex justify-content-center'
+              style='font-size:20px;color:blue'
+              href='roles/update?id={{role.id}}'></a></td>
+          </tr>
+        </tbody>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </table>
+    </div>
+</div>
