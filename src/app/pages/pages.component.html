@@ -1,6 +1,6 @@
 <div class="flex flex-row h-full">
     <div class="flex flex-column sidenav h-full">
-        <app-sidenav></app-sidenav> 
+        <app-sidenav></app-sidenav>
     </div>
     <div class="grid grid-nogutter container-fluid">
         <div class="col">
@@ -10,6 +10,11 @@
             <div id="main-content" class="grid grid-nogutter">
                 <router-outlet></router-outlet>
             </div>
+        </div>
+        <div id="main-content" class="mt-5">
+          <div>
+              <router-outlet></router-outlet>
+          </div>
         </div>
     </div>
 </div>

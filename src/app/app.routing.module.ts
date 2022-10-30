@@ -5,17 +5,48 @@ import { AuthGuard } from './_helpers/auth.guard';
 import { ProductsModule } from './pages/products/products.module';
 
 const routes: Routes = [
-  { 
-    path:'', component: PagesComponent, canActivate: [AuthGuard], children: [
+  {
+    path: '',
+    component: PagesComponent,
+    canActivate: [AuthGuard],
+    children: [
       {
         path: 'profile',
-        loadChildren: () => import ('./pages/profile/profile.module').then(m => m.ProfileModule),
-        data: { breadcrumb: 'Profile' }
+        loadChildren: () =>
+          import('./pages/profile/profile.module').then((m) => m.ProfileModule),
+        data: { breadcrumb: 'Profile' },
       },
       {
         path: 'changePassword',
-        loadChildren: () => import('./pages/change-password/change-password.module').then(m => m.ChangePasswordModule),
-        data: { breadcrumb: 'ChangePassword'}
+        loadChildren: () =>
+          import('./pages/change-password/change-password.module').then(
+            (m) => m.ChangePasswordModule
+          ),
+        data: { breadcrumb: 'ChangePassword' },
+      },
+      {
+        path: 'categories',
+        loadChildren: () =>
+          import('./pages/categories/categories.module').then(
+            (m) => m.CategoriesModule
+          ),
+        data: { breadcrumb: 'Categories' },
+      },
+      {
+        path: 'categories/create',
+        loadChildren: () =>
+          import(
+            './pages/categories/create-categories/create-categories.module'
+          ).then((m) => m.CreateCategoriesModule),
+        data: { breadcrumb: 'Categories/Create' },
+      },
+      {
+        path: 'categories/update',
+        loadChildren: () =>
+          import(
+            './pages/categories/update-categories/update-categories.module'
+          ).then((m) => m.UpdateCategoriesModule),
+        data: { breadcrumb: 'Categories/Update' },
       },
       { 
         path: 'products', 
@@ -27,14 +58,27 @@ const routes: Routes = [
         loadChildren: () => import('./pages/trademarks/trademark.module').then(m => m.TrademarksModule) ,
         data: { breadcrumb: 'Products' }
       }
-    ] 
+    ],
   },
-  { path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule) },
-  { path: 'register', loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule) },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./pages/login/login.module').then((m) => m.LoginModule),
+  },
+  {
+    path: 'register',
+    loadChildren: () =>
+      import('./pages/register/register.module').then((m) => m.RegisterModule),
+  },
+  {
+    path: 'logout',
+    loadChildren: () =>
+      import('./pages/logout/logout.module').then((m) => m.LogoutModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
