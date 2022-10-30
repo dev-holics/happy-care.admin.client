@@ -13,41 +13,6 @@
     background-color: var(--blue-400);
 }
 
-.user-block {
-    height: 0;
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-
-    img {
-        width: 80px;
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        border-radius: 50%;
-    }
-
-    .user-info-wrapper {
-        padding: 0 6px;
-        margin: 6px 0;
-        width: 100%;
-
-        .user-info {
-            text-align: center;
-
-            .name {
-                font-size: 15px
-            }
-
-            .position {
-                font-size: 13px;
-            }
-        }
-    }
-
-    &.show {
-        height: $sidenav-user-block-height;
-    }
-}
-
 .sidenav-menu-outer {
     height: calc(100vh - $toolbar-height);
     overflow-y: auto;

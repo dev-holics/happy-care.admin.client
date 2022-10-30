@@ -1,4 +1,4 @@
 export class Origin {
-    id: number;
+    id: string;
     name: string;
 }

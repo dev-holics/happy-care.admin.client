@@ -1,22 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { Origin } from './origins.model';
+import { Origin } from './origin.model';
+import { OriginsService } from './origins.service';
 
 @Component({
   selector: 'app-origins',
   templateUrl: './origins.component.html',
   styleUrls: ['./origins.component.scss'],
+  providers: [OriginsService]
 })
 export class OriginsComponent implements OnInit {
   public displayDialog: boolean;
   public originData: Origin;
+  public origins: Origin[] | null;
 
-  constructor() {}
+  constructor(public originsService: OriginsService) {}
 
-  ngOnInit(): void {}
-
-  public addOrigin(origin: Origin){
-    console.log(origin);
+  ngOnInit(): void {
+    this.getOrigins();
   }
+
+  public getOrigins(): void {
+    this.origins = null; //for show spinner each time
+    this.originsService.getOrigins().subscribe((origins) => {
+      console.log(origins);
+      this.origins = origins;
+    });
+  }
+
+  public addOrigin(origin: Origin) {
+    this.originsService.addOrigin(origin).subscribe(origin => this.getOrigins());
+  }
+
   public updateOrigin(origin: Origin) {
     console.log(origin);
   }
@@ -27,8 +41,8 @@ export class OriginsComponent implements OnInit {
 
   onHideDialog(data): void {
     this.displayDialog = false;
-    if(data) {
-      (data.id) ? this.updateOrigin(data) : this.addOrigin(data);
+    if (data) {
+      data.id ? this.updateOrigin(data) : this.addOrigin(data);
     }
   }
 }
