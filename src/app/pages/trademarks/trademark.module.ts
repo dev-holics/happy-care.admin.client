@@ -12,7 +12,10 @@ import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
 
 export const routes: Routes = [
   { path: '', component: TrademarksComponent, pathMatch: 'full' },
@@ -31,13 +34,17 @@ export const routes: Routes = [
     PaginatorModule,
     ToolbarModule,
     ConfirmDialogModule,
+    MessagesModule,
+    MessageModule,
+    ToastModule
   ],
   declarations: [
     TrademarkDialogComponent,
     TrademarksComponent
   ],
   providers: [
-    ConfirmationService
+    ConfirmationService,
+    MessageService
   ],
 })
 export class TrademarksModule {}
