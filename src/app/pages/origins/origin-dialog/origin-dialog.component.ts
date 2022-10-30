@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Origin } from '../origins.model';
+import { Origin } from '../origin.model';
 
 @Component({
   selector: 'app-origin-dialog',

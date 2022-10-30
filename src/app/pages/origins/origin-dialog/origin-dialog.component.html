@@ -20,7 +20,7 @@
     <ng-template pTemplate="footer">
         <div class="flex flex-row justify-content-end align-items-center form-actions">
             <button pButton pRipple [disabled]="!form.valid" class="form-button"
-                    (click)="close(originData)">
+                    (click)="close(form.value)">
                 <span *ngIf="!originData.id">
                     Save
                 </span>
