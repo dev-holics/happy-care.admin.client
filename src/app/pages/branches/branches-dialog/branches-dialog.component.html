@@ -1,0 +1,51 @@
+<p-dialog [(visible)]="isVisible" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false" [maximizable]="true" [modal]="true" [contentStyle]="{'overflow-y':'visible'}">
+    <ng-template pTemplate="header">
+        <h1><span *ngIf="!id">Thêm mới</span><span *ngIf="id">Cập nhật</span> Chi nhánh</h1>
+    </ng-template>
+    <ng-template pTemplate="content">
+        <form [formGroup]="form">
+            <div class="flex flex-column flex-1 form">
+                <div class="field">
+                    <label for="address" class="block form-label">Địa chỉ</label>
+                    <input pInputText id="address" type="username" placeholder="Địa chỉ" maxlength="512"
+                            aria-describedby="code-help" class="w-full" formControlName="address" [class.ng-dirty]="form.controls.address.touched"/>
+                    <div *ngIf="form.controls.address.invalid && (form.controls.address.dirty || form.controls.address.touched)">
+                        <small *ngIf="form.controls.address.errors?.required" id="name-help" class="p-error block">Không được bỏ trống trường này.</small>
+                    </div>
+                </div>
+                <div class="field">
+                  <label for="cityId" class="block form-label">Thành phố</label>
+                  <p-dropdown id="cityId" [options]="cities" placeholder="Chọn Thành phố" [style]="{'width':'100%'}"
+                              aria-describedby="origin-help" optionLabel="name" optionValue="id"
+                              [filter]="true" filterBy="name"
+                              formControlName="cityId" [class.ng-dirty]="form.controls.cityId.touched"
+                              (onChange)="cityOnChange($event)">
+                  </p-dropdown>
+              </div>
+                <div class="field">
+                    <label for="districtId" class="block form-label">Quận</label>
+                    <p-dropdown id="districtId" [options]="districts" placeholder="Chọn quận" [style]="{'width':'100%'}"
+                                aria-describedby="origin-help" optionLabel="name" optionValue="id"
+                                [filter]="true" filterBy="name"
+                                formControlName="districtId" [class.ng-dirty]="form.controls.districtId.touched">
+                    </p-dropdown>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <div class="flex flex-row justify-content-end align-items-center form-actions">
+            <button pButton pRipple [disabled]="!form.valid" class="form-button"
+                    (click)="close(form.value)">
+                <span>
+                    Lưu
+                </span>
+            </button>
+            <button pButton pRipple type="button" class="p-button-danger form-button"
+                    (click)="close(null)">
+                Huỷ bỏ
+            </button>
+        </div>
+    </ng-template>
+</p-dialog>

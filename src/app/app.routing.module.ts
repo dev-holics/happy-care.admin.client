@@ -24,6 +24,11 @@ const routes: Routes = [
         data: { breadcrumb: 'ChangePassword' },
       },
       {
+        path: 'roles',
+        loadChildren: () => import('./pages/roles/roles.module').then(m => m.RolesModule),
+        data: { breadcrumb: 'Roles'}
+      },
+      {
         path: 'categories',
         loadChildren: () =>
           import('./pages/categories/categories.module').then(
@@ -32,36 +37,36 @@ const routes: Routes = [
         data: { breadcrumb: 'Categories' },
       },
       {
-        path: 'categories/create',
+        path: 'products',
         loadChildren: () =>
-          import(
-            './pages/categories/create-categories/create-categories.module'
-          ).then((m) => m.CreateCategoriesModule),
-        data: { breadcrumb: 'Categories/Create' },
+          import('./pages/products/products.module').then(
+            (m) => m.ProductsModule
+          ),
+        data: { breadcrumb: 'Products' },
       },
       {
-        path: 'categories/update',
+        path: 'brands',
         loadChildren: () =>
-          import(
-            './pages/categories/update-categories/update-categories.module'
-          ).then((m) => m.UpdateCategoriesModule),
-        data: { breadcrumb: 'Categories/Update' },
+          import('./pages/trademarks/trademark.module').then(
+            (m) => m.TrademarksModule
+          ),
+        data: { breadcrumb: 'Products' },
       },
-      { 
-        path: 'products', 
-        loadChildren: () => import('./pages/products/products.module').then(m => m.ProductsModule) ,
-        data: { breadcrumb: 'Products' }
+      {
+        path: 'origins',
+        loadChildren: () =>
+          import('./pages/origins/origins.module').then((m) => m.OriginsModule),
+        data: { breadcrumb: 'Origins' },
       },
-      { 
-        path: 'brands', 
-        loadChildren: () => import('./pages/trademarks/trademark.module').then(m => m.TrademarksModule) ,
-        data: { breadcrumb: 'Products' }
+
+      {
+        path: 'branches',
+        loadChildren: () =>
+          import('./pages/branches/branches.module').then(
+            (m) => m.BranchesModule
+          ),
+        data: { breadcrumb: 'Branches' },
       },
-      { 
-        path: 'origins', 
-        loadChildren: () => import('./pages/origins/origins.module').then(m => m.OriginsModule) ,
-        data: { breadcrumb: 'Origins' }
-      }
     ],
   },
   {

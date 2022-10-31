@@ -1,52 +1,58 @@
-<form>
-<div class="card mx-3 mt-3">
-  <div class="card-header">
-    <div class="mb-2 mt-2 row">
-      <label for="table-complete-search" class="col-md-1 col-sm-6 col-form-label">Tìm kiếm</label>
-      <div class="col-md-3 col-sm-6">
-        <input
-          type="text"
-          class="form-control"
-          name="keyword"
-          [(ngModel)] = "keyword"
-          (ngModelChange)="Search()"
-
-        />
-      </div>
-      <div class="col-md-8 col-sm-12 justify-content-end d-flex">
-        <a class="btn btn-primary" href="/categories/create">Thêm danh mục</a>
-      </div>
+<app-categories-dialog *ngIf="displayDialog" [display]="displayDialog" [Categories]="categoryOptions"
+                        [Id]="selectedId" (closeDialog)="onHideDialog($event)">
+</app-categories-dialog>
+<p-confirmDialog #cd [style]="{width: '40vw'}">
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" class="p-button-outlined p-button-info" label="No" (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>
+<p-toast></p-toast>
+<div class="col p-4 data-table">
+    <div class="flex flex-row pb-3 justify-content-between align-items-center">
+        <h2 class="m-0">Danh mục</h2>
+        <button pButton pRipple type="button" label="Create" class="p-button-success" (click)="openDialog(null)"></button>
     </div>
-  </div>
-  <div class="card-body">
-    <table class="table table-striped">
-      <caption>Bảng dữ liệu danh mục</caption>
-      <thead>
-        <tr>
-          <th scope="col" class="col-4" (click)="Sort('name')">Tên &nbsp;<i class="fa fa-sort"></i></th>
-          <th scope="col" class="col-5">Mô tả</th>
-          <th scope="col" class="col-1"></th>
-          <th scope="col" class="col-1 text-center">Hành động</th>
-          <th scope="col" class="col-1"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let category of filteredCategories | orderBy: key: reverse | paginate: {itemsPerPage: 10,currentPage: p};">
-          <td>
-            <ngb-highlight [result]="category.name"></ngb-highlight>
-          </td>
-          <td><ngb-highlight [result]="category.description"></ngb-highlight></td>
-          <td><a disabled class='fas fa-eye d-flex justify-content-center' style='font-size:20px;color:blue'></a></td>
-          <td><a
-            disabled
-            class='fas fa-edit d-flex justify-content-center'
-            style='font-size:20px;color:blue'
-            href='categories/update?id={{category.id}}'></a></td>
-          <td><a disabled class='fas fa-trash-alt d-flex justify-content-center' style='font-size:20px;color:red'></a></td>
-        </tr>
-      </tbody>
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
-    </table>
-  </div>
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple icon="pi pi-trash" class="p-button-danger"></button>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+        </ng-template>
+    </p-toolbar>
+    <p-table [value]="categories" responsiveLayout="scroll" styleClass="w-full p-datatable-gridlines p-datatable-striped mt-2"
+                [paginator]="true" [rows]="limit" [totalRecords]="totalData"
+                [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10, 15, 20]"
+                (onPage)="paginate($event)">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th>Tên</th>
+                <th>Mô tả</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-category>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="category"></p-tableCheckbox>
+                </td>
+                <td>{{category.name}}</td>
+                <td>{{category.description}}</td>
+                <td style="text-align: center;">
+                    <button pButton pRipple icon="pi pi-pencil"
+                            class="p-button-warning m-1"
+                            (click)="openDialog(category.id)">
+                    </button>
+                    <button pButton pRipple icon="pi pi-trash"
+                            class="p-button-danger m-1"
+                            (click)="openConfirmDialog(category.id)">
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>
-</form>

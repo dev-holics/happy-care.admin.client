@@ -1,0 +1,159 @@
+<p-dialog [(visible)]="isVisible" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false" [maximizable]="true" [modal]="true" [contentStyle]="{'overflow-x':'visible'}">
+    <ng-template pTemplate="header">
+        <h1><span *ngIf="!id">Thêm mới</span><span *ngIf="id">Cập nhật</span> Vai trò</h1>
+    </ng-template>
+    <ng-template pTemplate="content">
+        <form [formGroup]="form">
+            <div class="flex flex-column flex-1 form">
+                <div class="field">
+                    <label for="name" class="block form-label">Tên</label>
+                    <input pInputText id="name" type="username" placeholder="Tên vai trò" maxlength="100"
+                            aria-describedby="code-help" class="w-full" formControlName="name" [class.ng-dirty]="form.controls.name.touched"/>
+                    <div *ngIf="form.controls.name.invalid && (form.controls.name.dirty || form.controls.name.touched)">
+                        <small *ngIf="form.controls.name.errors?.required" id="name-help" class="p-error block">Không được bỏ trống trường này.</small>
+                    </div>
+                </div>
+                <div class="field">
+                  <label for="description" class="block form-label">Mô tả</label>
+                  <input pInputText id="description" type="username" placeholder="Mô tả vai trò" maxlength="512"
+                          aria-describedby="code-help" class="w-full" formControlName="description" [class.ng-dirty]="form.controls.description.touched"/>
+                </div>
+                <div class="ms-4">
+                  <p class="mb-0 fw-bold fs-6">Danh mục</p>
+              </div>
+              <div class="row form-check form-switch ms-5"  *ngFor="let permission of categoryPermissions">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="isChecked(permission.id)"
+                    (change)="handleChangePermission(permission.id)"
+                  >
+                  <label class="form-check-label" for="flexSwitchCheckDefault">{{permission.name}}</label>
+              </div>
+              <div class="ms-4">
+                <p class="mb-0 fw-bold fs-6">Sản phẩm</p>
+              </div>
+              <div class="row form-check form-switch ms-5"  *ngFor="let permission of productPermissions">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="isChecked(permission.id)"
+                    (change)="handleChangePermission(permission.id)"
+                  >
+                  <label class="form-check-label" for="flexSwitchCheckDefault">{{permission.name}}</label>
+              </div>
+              <div class="ms-4">
+                <p class="mb-0 fw-bold fs-6">Cơ bản</p>
+              </div>
+              <div class="row form-check form-switch ms-5"  *ngFor="let permission of basicPermissions">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="isChecked(permission.id)"
+                    (change)="handleChangePermission(permission.id)"
+                  >
+                  <label class="form-check-label" for="flexSwitchCheckDefault">{{permission.name}}</label>
+              </div>
+              <div class="ms-4">
+                <p class="mb-0 fw-bold fs-6">Giỏ hàng</p>
+              </div>
+              <div class="row form-check form-switch ms-5"  *ngFor="let permission of cartPermissions">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="isChecked(permission.id)"
+                    (change)="handleChangePermission(permission.id)"
+                  >
+                  <label class="form-check-label" for="flexSwitchCheckDefault">{{permission.name}}</label>
+              </div>
+              <div class="ms-4">
+                <p class="mb-0 fw-bold fs-6">Vai trò</p>
+              </div>
+              <div class="row form-check form-switch ms-5"  *ngFor="let permission of rolePermissions">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="isChecked(permission.id)"
+                    (change)="handleChangePermission(permission.id)"
+                  >
+                  <label class="form-check-label" for="flexSwitchCheckDefault">{{permission.name}}</label>
+              </div>
+                <div class="ms-4">
+                  <p class="mb-0 fw-bold fs-6">Phân quyền</p>
+                </div>
+                <div class="row form-check form-switch ms-5"  *ngFor="let permission of permissionPermissions">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      [checked]="isChecked(permission.id)"
+                      (change)="handleChangePermission(permission.id)"
+                    >
+                    <label class="form-check-label" for="flexSwitchCheckDefault">{{permission.name}}</label>
+                </div>
+                <div class="ms-4">
+                  <p class="mb-0 fw-bold fs-6">Người dùng</p>
+                </div>
+                <div class="row form-check form-switch ms-5"  *ngFor="let permission of userPermissions">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      [checked]="isChecked(permission.id)"
+                      (change)="handleChangePermission(permission.id)"
+                    >
+                    <label class="form-check-label" for="flexSwitchCheckDefault">{{permission.name}}</label>
+                </div>
+                <div class="ms-4">
+                  <p class="mb-0 fw-bold fs-6">Chi nhánh</p>
+                </div>
+                <div class="row form-check form-switch ms-5"  *ngFor="let permission of branchPermissions">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      [checked]="isChecked(permission.id)"
+                      (change)="handleChangePermission(permission.id)"
+                    >
+                    <label class="form-check-label" for="flexSwitchCheckDefault">{{permission.name}}</label>
+                </div>
+                <div class="ms-4">
+                  <p class="mb-0 fw-bold fs-6">Phản hồi</p>
+                </div>
+                <div class="row form-check form-switch ms-5"  *ngFor="let permission of feedBackPermissions">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      [checked]="isChecked(permission.id)"
+                      (change)="handleChangePermission(permission.id)"
+                    >
+                    <label class="form-check-label" for="flexSwitchCheckDefault">{{permission.name}}</label>
+                </div>
+                <div class="ms-4">
+                  <p class="mb-0 fw-bold fs-6">Nguồn gốc</p>
+                </div>
+                <div class="row form-check form-switch ms-5"  *ngFor="let permission of originPermissions">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      [checked]="isChecked(permission.id)"
+                      (change)="handleChangePermission(permission.id)"
+                    >
+                    <label class="form-check-label" for="flexSwitchCheckDefault">{{permission.name}}</label>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <div class="flex flex-row justify-content-end align-items-center form-actions">
+            <button pButton pRipple [disabled]="!form.valid" class="form-button"
+                    (click)="close(form.value)">
+                <span>
+                    Lưu
+                </span>
+            </button>
+            <button pButton pRipple type="button" class="p-button-danger form-button"
+                    (click)="close(null)">
+                Huỷ bỏ
+            </button>
+        </div>
+    </ng-template>
+</p-dialog>
