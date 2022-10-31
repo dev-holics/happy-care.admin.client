@@ -8,6 +8,14 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
+import { PaginatorModule } from 'primeng/paginator';
+import { ToolbarModule } from 'primeng/toolbar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
 
 export const routes: Routes = [
   { path: '', component: ProductsComponent, pathMatch: 'full' },
@@ -18,9 +26,17 @@ export const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     ButtonModule,
-    ReactiveFormsModule,
     DialogModule,
-    InputTextModule
+    ReactiveFormsModule,
+    InputTextModule,
+    DropdownModule,
+    TableModule,
+    PaginatorModule,
+    ToolbarModule,
+    ConfirmDialogModule,
+    MessagesModule,
+    MessageModule,
+    ToastModule
   ],
   declarations: [
     ProductDialogComponent,
