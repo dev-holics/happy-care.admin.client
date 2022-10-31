@@ -1,0 +1,44 @@
+<div class="flex flex-column flex-1 form product-form">
+    <form [formGroup]="form">
+        <div class="field">
+            <label for="code" class="block form-label">Mã</label>
+            <input pInputText id="code" type="username" placeholder="Product code"
+                    aria-describedby="code-help" class="ng-dirty"/>
+        </div>
+        <div class="field">
+            <label for="name" class="block form-label">Tên sản phẩm</label>
+            <input pInputText id="name" type="username" placeholder="Product name"
+                    aria-describedby="name-help" class="ng-dirty"/>
+        </div>
+        <div class="field">
+            <label for="description" class="block form-label">Mô tả</label>
+            <input pInputText id="description" type="username" placeholder="Product name"
+                    aria-describedby="description-help" class="ng-dirty"/>
+        </div>
+        <div class="field">
+            <label for="packing-spec" class="block form-label">Quy cách đóng gói</label>
+            <input pInputText id="packing-spec" type="username" placeholder="Packing specification"
+                    aria-describedby="packing-spec-help" class="ng-dirty"/>
+        </div>
+        <div class="field">
+            <label for="username2" class="block form-label">Giá</label>
+            <input pInputText id="username2" type="username" placeholder="Product price"
+                    aria-describedby="username2-help" class="ng-dirty"/>
+        </div>
+    </form>
+</div>
+<div class="flex flex-row justify-content-end align-items-center form-actions">
+    <button pButton pRipple [disabled]="!form.valid" class="form-button"
+            (click)="dialogRef.close(form.value)">
+        <span *ngIf="!product.id">
+            Save
+        </span>
+        <span *ngIf="product.id">
+            Update
+        </span>
+    </button>
+    <button pButton pRipple type="button" class="p-button-danger form-button" 
+            (click)="close()">
+        Cancel
+    </button>
+</div>

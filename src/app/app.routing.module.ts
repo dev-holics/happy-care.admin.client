@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './pages/pages.component';
 import { AuthGuard } from './_helpers/auth.guard';
+import { ProductsModule } from './pages/products/products.module';
 
 const routes: Routes = [
   { path:'', component:PagesComponent, canActivate: [AuthGuard], children: [
@@ -39,6 +40,21 @@ const routes: Routes = [
       path: 'roles/update',
       loadChildren: () => import('./pages/roles/update-roles/update-roles.module').then(m => m.UpdateRolesModule),
       data: { breadcrumb: 'Roles/Update'}
+    },
+    {
+      path: 'products',
+      loadChildren: () => import('./pages/products/products.module').then(m => m.ProductsModule) ,
+      data: { breadcrumb: 'Products' }
+    },
+    {
+      path: 'brands',
+      loadChildren: () => import('./pages/trademarks/trademark.module').then(m => m.TrademarksModule) ,
+      data: { breadcrumb: 'Products' }
+    },
+    {
+      path: 'origins',
+      loadChildren: () => import('./pages/origins/origins.module').then(m => m.OriginsModule),
+      data: { breadcrumb: 'Origins'}
     }
     ] },
   { path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule) },

@@ -6,8 +6,8 @@
 
 .menu-expand-icon {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 20px;
+    top: 18px;
 }
 
 .menu-item {
@@ -20,7 +20,7 @@
         padding-bottom: 15px;
         width: 100%;
         font-weight: 400;
-        color: var(--bluegray-900) !important;
+        color: var(--bluegray-700) !important;
 
         &.expanded {
             .menu-expand-icon {
@@ -48,8 +48,9 @@
     -webkit-transition: max-height 0.25s ease-out;
     -moz-transition: max-height 0.25s ease-out;
     transition: max-height 0.25s ease-out;
-    padding-left: 20px;
-
+    .menu-button {
+        padding-left: 20px;
+    }
     &.show {
         max-height: 500px;
         -webkit-transition: max-height 0.25s ease-in;
