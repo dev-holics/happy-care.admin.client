@@ -50,6 +50,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     Ng2SearchPipeModule,
     Ng2OrderModule,
     NgxPaginationModule,
+    TableModule,
+    DynamicDialogModule
   ],
   providers: [AppSettings,
     { provide: HTTP_INTERCEPTORS, useClass:JwtInterceptor, multi: true},
