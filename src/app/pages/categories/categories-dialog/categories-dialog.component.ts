@@ -31,7 +31,7 @@ export class CategoriesDialogComponent implements OnInit {
           Validators.maxLength(1024),
         ])],
       'parentId': [null],
-      'order': [null],
+      'order': [0],
       'images': [[]]
       });
   }

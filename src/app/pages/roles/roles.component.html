@@ -1,33 +1,56 @@
-<div class="card mx-3 mt-3">
-    <div class="card-header">
-      <h3>VAI TRÒ</h3>
+<app-roles-dialog *ngIf="displayDialog" [display]="displayDialog"
+                        [Id]="selectedId" (closeDialog)="onHideDialog($event)">
+</app-roles-dialog>
+<p-confirmDialog #cd [style]="{width: '40vw'}">
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" class="p-button-outlined p-button-info" label="No" (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>
+<p-toast></p-toast>
+<div class="col p-4 data-table">
+    <div class="flex flex-row pb-3 justify-content-between align-items-center">
+        <h2 class="m-0">Vai trò</h2>
+        <!-- <button pButton pRipple type="button" label="Create" class="p-button-success" (click)="openDialog(null)"></button> -->
     </div>
-    <div class="card-body">
-      <table class="table table-striped">
-        <caption>Bảng dữ liệu vai trò</caption>
-        <thead>
-          <tr>
-            <th scope="col" class="col-4" (click)="Sort('name')">Tên &nbsp;<i class="fa fa-sort"></i></th>
-            <th scope="col" class="col-5">Mô tả</th>
-            <th scope="col" class="col-2">Mức độ truy cập</th>
-            <th scope="col" class="col-3 text-center">Hành động</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let role of roles | orderBy: key: reverse | paginate: {itemsPerPage: 10,currentPage: p};">
-            <td>
-              <ngb-highlight [result]="role.name"></ngb-highlight>
-            </td>
-            <td><ngb-highlight [result]="role.description"></ngb-highlight></td>
-            <td><ngb-highlight [result]="role.accessLevel"></ngb-highlight></td>
-            <td><a
-              disabled
-              class='fas fa-edit d-flex justify-content-center'
-              style='font-size:20px;color:blue'
-              href='roles/update?id={{role.id}}'></a></td>
-          </tr>
-        </tbody>
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      </table>
-    </div>
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple icon="pi pi-trash" class="p-button-danger"></button>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+        </ng-template>
+    </p-toolbar>
+    <p-table [value]="roles" responsiveLayout="scroll" styleClass="w-full p-datatable-gridlines p-datatable-striped mt-2"
+                [paginator]="true" [rows]="limit" [totalRecords]="totalData"
+                [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10, 15, 20]"
+                (onPage)="paginate($event)">
+        <ng-template pTemplate="header">
+            <tr>
+                <th scope="col" style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th scope="col">Tên</th>
+                <th scope="col">Mô tả</th>
+                <th scope="col">Mức độ truy cập</th>
+                <th scope="col"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-role>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="role"></p-tableCheckbox>
+                </td>
+                <td>{{role.name}}</td>
+                <td>{{role.description}}</td>
+                <td>{{role.accessLevel}}</td>
+                <td style="text-align: center;">
+                    <button pButton pRipple icon="pi pi-pencil"
+                            class="p-button-warning m-1"
+                            (click)="openDialog(role.id)">
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>

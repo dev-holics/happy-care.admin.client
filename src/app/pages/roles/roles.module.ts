@@ -20,6 +20,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
+import { RolesDialogComponent } from './roles-dialog/roles-dialog.component';
 
 export const routes = [
   {
@@ -31,6 +32,7 @@ export const routes = [
 @NgModule({
   declarations: [
     RolesComponent,
+    RolesDialogComponent,
   ],
   imports: [
     CommonModule,

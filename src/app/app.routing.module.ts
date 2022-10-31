@@ -27,11 +27,6 @@ const routes: Routes = [
       data: { breadcrumb: 'Roles'}
     },
     {
-      path: 'roles/update',
-      loadChildren: () => import('./pages/roles/update-roles/update-roles.module').then(m => m.UpdateRolesModule),
-      data: { breadcrumb: 'Roles/Update'}
-    },
-    {
       path: 'products',
       loadChildren: () => import('./pages/products/products.module').then(m => m.ProductsModule) ,
       data: { breadcrumb: 'Products' }
