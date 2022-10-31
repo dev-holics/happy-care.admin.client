@@ -1,23 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import * as _ from 'lodash';
-import { Permission, Role, PermissionStatus, RoleUpdate } from 'src/app/_models/role';
-import { NotificationService } from 'src/app/_services/notification.service';
+import { Permission, Role, RoleUpdate, PermissionStatus } from 'src/app/_models/role';
 import { RolesService } from 'src/app/_services/roles.service';
 
 @Component({
-  selector: 'app-update-roles',
-  templateUrl: './update-roles.component.html',
-  styleUrls: ['./update-roles.component.scss']
+  selector: 'app-roles-dialog',
+  templateUrl: './roles-dialog.component.html',
+  styleUrls: ['./roles-dialog.component.scss']
 })
-export class UpdateRolesComponent implements OnInit {
+export class RolesDialogComponent implements OnInit {
 
+  @Input('display') display: boolean;
+  @Input('Id') id: string;
+  @Output() closeDialog = new EventEmitter<any>();
+  roleUpdate: RoleUpdate;
   role: Role;
-  submitted = false;
-  inputChanged = false;
-  id: string;
-  updateRole: RoleUpdate;
   permissions: Permission[] = [];
   permissionsState: PermissionStatus[] = [];
   initPermissionsState: PermissionStatus[] = [];
@@ -32,39 +29,41 @@ export class UpdateRolesComponent implements OnInit {
   branchPermissions: Permission[] = [];
   originPermissions: Permission[] = [];
   feedBackPermissions: Permission[] = [];
-  public form: FormGroup;
 
+  public form: FormGroup;
+  submitted = false;
   constructor(
-    public rolesService: RolesService,
-    private route: ActivatedRoute,
     public fb: FormBuilder,
-    public alertService: NotificationService,
-    public router: Router
-    ) {
-      this.form = this.fb.group({
-        'name': [null, Validators.compose(
-          [
-            Validators.required,
-            Validators.maxLength(512)
-          ])],
-        'description': [null, Validators.compose(
-          [
-            Validators.maxLength(1024),
-          ])],
-        'permissions': [[]]
-        });
-    }
+    public rolesService: RolesService) {
+    this.form = this.fb.group({
+      'name': [null, Validators.compose(
+        [
+          Validators.required,
+          Validators.maxLength(512)
+        ])],
+      'description': [null, Validators.compose(
+        [
+          Validators.maxLength(1024),
+        ])],
+      'permissions': [[]]
+      });
+  }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.queryParams?.id;
-    this.rolesService.getRolesById(this.id).subscribe(
-      (response: Role) => {
-        this.role = response;
-        if (!this.role.permissions) {
-          this.role.permissions = [];
+    if(this.id) {
+      this.rolesService.getRolesById(this.id).subscribe(
+        (response: any) => {
+          this.role = response;
+          this.form.patchValue({
+            name: response.name,
+            description: response.description,
+          })
         }
-      }
-    )
+      )
+    } else {
+      this.roleUpdate = new RoleUpdate();
+    }
+
     this.rolesService.getPermission().subscribe(
       (response: Permission[]) => {
         this.permissions = response;
@@ -88,44 +87,34 @@ export class UpdateRolesComponent implements OnInit {
         this.feedBackPermissions = this.permissions.filter((permission) => { return permission.module === "FEEDBACK"});
       }
     )
-
-    this.form.valueChanges.subscribe((currentValue) => {
-      if (!_.isEqual(_.omit(currentValue, 'permissions'), _.omit(this.role, ['id', 'accessLevel', 'isActive', 'permissions']))) {
-        this.inputChanged = true;
-      } else {
-        this.inputChanged = false;
-      }
-    });
   }
 
-  public onSubmit(values:Object) : void {
-    this.submitted = true;
-    if (this.form.status) {
-      this.updateRole = new RoleUpdate();
-      this.updateRole.name = this.form.value.name;
-      this.updateRole.description = this.form.value.description;
-      this.updateRole.permissions = this.permissionsState.filter(permission => permission.status)
+  public get isVisible(): boolean {
+    return this.display;
+  }
+
+  public set isVisible(val: boolean) {
+    this.close(null);
+  }
+
+  close(role: RoleUpdate | null): void {
+    if(role) {
+      this.roleUpdate = new RoleUpdate();
+      this.roleUpdate.name = role.name;
+      this.roleUpdate.description = role.description;
+      this.roleUpdate.permissions = this.permissionsState.filter(permission => permission.status)
         .map(permission => permission.id);
-      this.rolesService.put(this.id, this.updateRole).subscribe(
-        (response) => {
-          this.alertService.showSuccess(response.message, "");
-          this.router.navigate(['/roles']);
-        },
-        (error) => {
-          console.log(error.error);
-          this.alertService.showError(error.error.errors[0].message, "");
-        },
-      );}
+      this.closeDialog.emit({id: this.id, role: this.roleUpdate});
+    } else {
+      this.closeDialog.emit(null);
+    }
+    this.form.reset();
   }
+
   handleChangePermission(id: string) {
     let permission = this.permissionsState.find(permission => permission.id === id);
     if (!permission) return;
     permission.status = !permission.status;
-    if (!_.isEqual(this.permissionsState, this.initPermissionsState)) {
-      this.inputChanged = true;
-    } else {
-      this.inputChanged = false;
-    }
   }
   isChecked(id: string) : boolean {
     let permission = this.permissionsState.find(permission => permission.id === id);
