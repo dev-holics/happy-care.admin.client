@@ -30,6 +30,16 @@ const routes: Routes = [
       loadChildren: () => import('./pages/categories/update-categories/update-categories.module').then(m => m.UpdateCategoriesModule),
       data: { breadcrumb: 'Categories/Update' }
     },
+    {
+      path: 'roles',
+      loadChildren: () => import('./pages/roles/roles.module').then(m => m.RolesModule),
+      data: { breadcrumb: 'Roles'}
+    },
+    {
+      path: 'roles/update',
+      loadChildren: () => import('./pages/roles/update-roles/update-roles.module').then(m => m.UpdateRolesModule),
+      data: { breadcrumb: 'Roles/Update'}
+    }
     ] },
   { path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule) },
   { path: 'register', loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule) },
