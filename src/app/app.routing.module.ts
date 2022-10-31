@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './pages/pages.component';
 import { AuthGuard } from './_helpers/auth.guard';
-import { ProductsModule } from './pages/products/products.module';
 
 const routes: Routes = [
   {
@@ -57,6 +56,11 @@ const routes: Routes = [
         path: 'brands', 
         loadChildren: () => import('./pages/trademarks/trademark.module').then(m => m.TrademarksModule) ,
         data: { breadcrumb: 'Products' }
+      },
+      { 
+        path: 'origins', 
+        loadChildren: () => import('./pages/origins/origins.module').then(m => m.OriginsModule) ,
+        data: { breadcrumb: 'Origins' }
       }
     ],
   },
