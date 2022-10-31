@@ -24,6 +24,7 @@ export class TrademarkDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.trademark);
     if(this.trademark) {
       this.form.patchValue(this.trademark);
     } else {

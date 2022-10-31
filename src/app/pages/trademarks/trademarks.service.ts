@@ -10,11 +10,12 @@ export class TrademarksService {
   public adminUrl = `${environment.baseUrl}/admin/trademarks`;
   constructor(public http: HttpClient) {}
 
-  getTrademarks(page: number, limit: number): Observable<Trademark[]> {
+  getTrademarks(page: number, limit: number, search: string = ''): Observable<Trademark[]> {
     return this.http.get<Trademark[]>(this.publicUrl, {
       params: {
         page: page,
-        limit: limit
+        limit: limit,
+        searchData: search
       }
     });
   }

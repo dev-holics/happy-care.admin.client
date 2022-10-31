@@ -61,19 +61,40 @@ export class TrademarksComponent implements OnInit {
   public addTrademark(trademark: Trademark) {
     this.trademarksService
       .addTrademark(trademark)
-      .subscribe((trademark) => this.getTrademarks(this.page, this.limit));
+      .subscribe((trademark) => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Inserted',
+          detail: 'Record inserted',
+        });
+        this.getTrademarks(this.page, this.limit);
+      });
   }
 
   public updateTrademark(trademark: Trademark) {
     this.trademarksService
       .updateTrademark(trademark)
-      .subscribe((trademark) => this.getTrademarks(this.page, this.limit));
+      .subscribe((trademark) => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Updated',
+          detail: 'Record updated',
+        });
+        this.getTrademarks(this.page, this.limit)
+      });
   }
 
   public deleteTrademark(trademark: Trademark) {
     this.trademarksService
       .deleteTrademark(trademark.id)
-      .subscribe((trademark) => this.getTrademarks(this.page, this.limit));
+      .subscribe((trademark) => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Confirmed',
+          detail: 'Record deleted',
+        });
+        this.getTrademarks(this.page, this.limit);
+      });
   }
 
   paginate(event): void {
@@ -106,11 +127,6 @@ export class TrademarksComponent implements OnInit {
       icon: 'pi pi-info-circle',
       accept: () => {
         this.deleteTrademark(trademark);
-        this.messageService.add({
-          severity: 'info',
-          summary: 'Confirmed',
-          detail: 'Record deleted',
-        });
       },
       reject: (type) => {
         switch (type) {
