@@ -1,13 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BranchesComponent } from './branches.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '../../shared/shared.module';
-import { CategoriesComponent } from './categories.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgxPaginationModule } from 'ngx-pagination';
-import { Ng2OrderModule } from 'ng2-order-pipe';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -20,19 +15,19 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CategoriesDialogComponent } from './categories-dialog/categories-dialog.component';
+import { BranchesDialogComponent } from './branches-dialog/branches-dialog.component';
 
 export const routes = [
   {
       path: '',
-      component: CategoriesComponent,
+      component: BranchesComponent,
   }
 ];
 
 @NgModule({
   declarations: [
-    CategoriesComponent,
-    CategoriesDialogComponent,
+    BranchesComponent,
+    BranchesDialogComponent
   ],
   imports: [
     CommonModule,
@@ -56,4 +51,4 @@ export const routes = [
     MessageService
   ]
 })
-export class CategoriesModule { }
+export class BranchesModule { }

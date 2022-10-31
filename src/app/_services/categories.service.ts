@@ -18,12 +18,7 @@ export class CategoriesService {
   }
 
   getCategoriesById(categoryId: string) : Observable <Category> {
-    return this.httpClient.get<Category>(`${environment.baseUrl}/public/categories/tree`, {params: {parentId: categoryId}})
-      .pipe(
-        map((response: any) => {
-          return response;
-        })
-      )
+    return this.httpClient.get<Category>(`${environment.baseUrl}/public/categories/tree`, {params: {parentId: categoryId}});
   }
 
   create(category: CategoryCreateUpdate): Observable<any> {
@@ -35,4 +30,7 @@ export class CategoriesService {
     );
   }
 
+  put(id: string, category: CategoryCreateUpdate): Observable<any> {
+    return this.httpClient.put(`${environment.baseUrl}/admin/categories/${id}`, category, this.httpOptions);
+  }
 }
