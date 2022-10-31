@@ -1,51 +1,56 @@
 import { Component, OnInit } from '@angular/core';
-import { ResolveEnd } from '@angular/router';
-import * as _ from 'lodash';
-import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
-import { Category, CategoryCreateUpdate, CategoryOptions } from 'src/app/_models/category';
-import { CategoriesService } from 'src/app/_services/categories.service';
+import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
+import { Branch, BranchCreateUpdate, City } from 'src/app/_models/branch';
+import { BranchsService } from 'src/app/_services/branchs.service';
 
 @Component({
-  selector: 'app-categories',
-  templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss']
+  selector: 'app-branches',
+  templateUrl: './branches.component.html',
+  styleUrls: ['./branches.component.scss']
 })
-export class CategoriesComponent implements OnInit {
+export class BranchesComponent implements OnInit {
 
-  categories: Category[] = []
-  public categoryOptions: CategoryOptions[] = []
+  branches: Branch[] = []
+  public cityOptions: City[] = []
   public displayDialog: boolean;
   public selectedId: string;
   public page: number = 1;
   public limit: number = 10;
   public totalData: number = 0;
+
   constructor(
-    public categoryService: CategoriesService,
+    public branchService: BranchsService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.fetchCategories();
+    this.fetchBranches();
+    this.fetchCities();
   }
 
-  fetchCategories() {
-    this.categories = [];
-    this.categoryService.getCategories().subscribe(
+  fetchCities() {
+    this.branchService.getCities().subscribe(
       (response: any) => {
-        this.categories = response.data;
-        for (const category of response.data) {
-          this.categoryOptions.push(new CategoryOptions(category.id, category.name))
-        }
-      },
-      (error) => {console.error(error);},
+        this.cityOptions = response.data;
+      }
     )
   }
-  public addCategory(category: CategoryCreateUpdate) {
-    this.categoryService
-      .create(category)
+
+  fetchBranches() {
+    this.branches = [];
+    this.branchService.getBranches().subscribe(
+      (response: any) => {
+        this.branches = response.data;
+      }
+    )
+  }
+
+  public addBranch(branch: BranchCreateUpdate) {
+    this.branchService
+      .create(branch)
       .subscribe((response) =>
       {
-        this.fetchCategories()
+        this.fetchBranches()
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -54,12 +59,12 @@ export class CategoriesComponent implements OnInit {
       });
   }
 
-  public updateCategory(id: string, category: CategoryCreateUpdate) {
-    this.categoryService
-      .put(id, category)
+  public updateBranch(id: string, branch: BranchCreateUpdate) {
+    this.branchService
+      .put(id, branch)
       .subscribe((response) =>
       {
-        this.fetchCategories()
+        this.fetchBranches()
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -72,7 +77,7 @@ export class CategoriesComponent implements OnInit {
     this.limit = event.rows;
     this.page = event.first / event.rows + 1;
     document.getElementById('main-content')!.scrollTop = 0;
-    this.fetchCategories();
+    this.fetchBranches();
   }
 
   openDialog(id: string | null): void {
@@ -87,7 +92,7 @@ export class CategoriesComponent implements OnInit {
   onHideDialog(data: any): void {
     this.displayDialog = false;
     if (data) {
-      data.id ? this.updateCategory(data.id, data.category) : this.addCategory(data.category);
+      data.id ? this.updateBranch(data.id, data.branch) : this.addBranch(data.branch);
     }
   }
 

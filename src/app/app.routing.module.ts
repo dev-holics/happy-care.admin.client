@@ -22,16 +22,6 @@ const routes: Routes = [
       data: { breadcrumb : 'Categories'}
     },
     {
-      path: 'categories/create',
-      loadChildren: () => import('./pages/categories/create-categories/create-categories.module').then(m => m.CreateCategoriesModule),
-      data: { breadcrumb: 'Categories/Create' }
-    },
-    {
-      path: 'categories/update',
-      loadChildren: () => import('./pages/categories/update-categories/update-categories.module').then(m => m.UpdateCategoriesModule),
-      data: { breadcrumb: 'Categories/Update' }
-    },
-    {
       path: 'roles',
       loadChildren: () => import('./pages/roles/roles.module').then(m => m.RolesModule),
       data: { breadcrumb: 'Roles'}
@@ -55,7 +45,12 @@ const routes: Routes = [
       path: 'origins',
       loadChildren: () => import('./pages/origins/origins.module').then(m => m.OriginsModule),
       data: { breadcrumb: 'Origins'}
-    }
+    },
+    {
+      path: 'branches',
+      loadChildren: () => import('./pages/branches/branches.module').then(m => m.BranchesModule),
+      data: { breadcrumb: 'Branches' }
+    },
     ] },
   { path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule) },
   { path: 'register', loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule) },
