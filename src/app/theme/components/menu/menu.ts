@@ -1,20 +1,14 @@
 ﻿import { Menu } from "./menu.model";
 
 export const verticalMenuItems = [
-    new Menu (1, 'Tổng quan', '/', null, 'pi pi-home', null, false, 0),
-    new Menu (300, 'Danh mục', '/', null, null, null, true, 0),
-    new Menu (302, 'Danh sách danh mục', null, '/categories', null, null, false, 300),
-
-    new Menu (303, 'Chi nhánh', '/', null, null, null, true, 0),
-    new Menu (305, 'Danh sách chi nhánh', null, '/branches', null, null, false, 303),
-
-    new Menu (308, 'Sản phẩm', null, null, 'event', null, true, 0),
-    new Menu (309, 'Nguồn gốc', null, '/origins', 'event', null, false, 308),
-    new Menu (310, 'Sản phẩm', null, '/products', 'event', null, false, 308),
-    new Menu (310, 'Nhãn hiệu', null, '/brands', 'event', null, false, 308),
-
-    new Menu (306, 'Quản lý hệ thống', '/', null, null, null, true, 0),
-    new Menu (307, 'Vai trò', null, '/roles', null, null, false, 306),
+    new Menu (1, 'Tổng quan', '/', null, 'fa-solid fa-house', null, false, 0),
+    new Menu (2, 'Sản phẩm', '/products', null, 'fa-solid fa-capsules', null, false, 0),
+    new Menu (3, 'Danh mục', '/categories', null, 'fa-solid fa-chart-gantt', null, false, 0),
+    new Menu (4, 'Nguồn gốc', '/origins', null, 'fa-solid fa-location-dot', null, false, 0),
+    new Menu (5, 'Nhãn hiệu', '/brands', null, 'fa-solid fa-globe', null, false, 0),
+    new Menu (6, 'Hệ thống', '/', null, 'fa-solid fa-gear', null, true, 0),
+    new Menu (7, 'Phân quyền', '/roles', null, 'fa-solid fa-user', null, false, 6),
+    new Menu (8, 'Chi nhánh', '/branches', null, 'fa-solid fa-code-branch', null, false, 6)
 ];
 
 export const horizontalMenuItems = [

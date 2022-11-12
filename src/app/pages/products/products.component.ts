@@ -30,6 +30,7 @@ export class ProductsComponent implements OnInit {
   public getProducts(page: number, limit: number): void {
     this.products = []; // for show spinner each time
     this.productsService.getProducts(page, limit).subscribe((obj) => {
+      console.log(obj);
       this.page = obj['currentPage'];
       this.limit = obj['limit'];
       this.totalData = obj['totalData'];

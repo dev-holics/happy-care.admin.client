@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { horizontalMenuItems, verticalMenuItems } from './menu';
 import { Menu } from './menu.model';
+import { MenuItem } from 'primeng/api';
 
 @Injectable()
 export class MenuService {
@@ -14,6 +15,21 @@ export class MenuService {
 
   public getHorizontalMenuItems(): Array<Menu> {
     return horizontalMenuItems;
+  }
+
+  public activateMenuItem(menu: Array<Menu>, menuId: number) {
+    menu.forEach((item) => {
+      if (item.id != menuId) {
+        let menuButton = document.getElementById('menu-button-' + item.id);
+        menuButton?.classList.remove('active');
+      }
+    });
+    let menuButton = document.getElementById('menu-button-' + menuId);
+    let subMenu = document.getElementById('sub-menu-' + menuId);
+    if (subMenu) {
+      return;
+    }
+    menuButton?.classList.add('active');
   }
 
   public expandActiveSubMenu(menu: Array<Menu>) {

@@ -15,10 +15,10 @@ export class Product {
     guide: string;
     preserve: string;
     trademarkId: string;
-    trademark: Trademark;
+    trademark: Trademark | null;
     originId: string;
-    origin: Origin;
+    origin: Origin | null;
     categoryId: string;
-    category: Category;
+    category: Category | null;
     images: Array<Image>;
 }

@@ -20,7 +20,9 @@
         padding-bottom: 15px;
         width: 100%;
         font-weight: 400;
-        color: var(--bluegray-700) !important;
+        color: var(--gray-500) !important;
+        border-width: 0 0 0 3px !important;
+        border-radius: 0 !important;
 
         &.expanded {
             .menu-expand-icon {
@@ -37,7 +39,13 @@
     }
 
     .menu-button-wrapper {
-        padding-left: 16px;
+        padding-left: 30px;
+    }
+
+    .active {
+        background-color: #f6fbff !important;
+        color: #2394ff !important;
+        border-color: #2394ff !important;
     }
 }
 
