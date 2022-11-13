@@ -1,20 +1,20 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Origin } from '../../origins/origin.model';
-import { Trademark } from '../trademark.model';
+import { OriginModel } from '../../../origins/models/origin.model';
+import { BrandModel } from '../../models/brand.model';
 
 @Component({
-  selector: 'app-trademark-dialog',
-  templateUrl: './trademark-dialog.component.html',
-  styleUrls: ['./trademark-dialog.component.scss']
+  selector: 'app-brand-dialog',
+  templateUrl: './brand-dialog.component.html',
+  styleUrls: ['./brand-dialog.component.scss']
 })
-export class TrademarkDialogComponent implements OnInit {
+export class BrandDialogComponent implements OnInit {
   @Input('display') display: boolean;
-  @Input('origins') origins: Origin[];
-  @Input('trademark') trademark: Trademark;
+  @Input('origins') origins: OriginModel[];
+  @Input('brand') brand: BrandModel;
   @Output() closeDialog = new EventEmitter<any>();
   public form: FormGroup;
-  submitted = false;
+
   constructor(public fb: FormBuilder) { 
     this.form = this.fb.group({
       id: null,
@@ -24,11 +24,10 @@ export class TrademarkDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.trademark);
-    if(this.trademark) {
-      this.form.patchValue(this.trademark);
+    if(this.brand) {
+      this.form.patchValue(this.brand);
     } else {
-      this.trademark = new Trademark();
+      this.brand = new BrandModel();
     }
   }
 
@@ -40,9 +39,9 @@ export class TrademarkDialogComponent implements OnInit {
     this.close(null);
   }
 
-  close(trademark): void {
-    if(trademark) {
-      this.closeDialog.emit(trademark);
+  close(brand): void {
+    if(brand) {
+      this.closeDialog.emit(brand);
     } else {
       this.closeDialog.emit(null);
     }

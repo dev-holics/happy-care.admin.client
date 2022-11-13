@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  apiUrl: 'https://happy-care.apis.ductruong.com',
   baseUrl: 'https://happy-care.apis.ductruong.com/api/v1',
 };
 

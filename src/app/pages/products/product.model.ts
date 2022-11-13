@@ -1,7 +1,7 @@
 import { Category } from "src/app/_models/category";
 import { Image } from "src/app/_models/image.model";
-import { Origin } from "../origins/origin.model";
-import { Trademark } from "../trademarks/trademark.model";
+import { OriginModel } from "../origins/models/origin.model";
+import { BrandModel } from "../brands/models/brand.model";
 export class Product {
     id: number;
     code: string;
@@ -15,9 +15,9 @@ export class Product {
     guide: string;
     preserve: string;
     trademarkId: string;
-    trademark: Trademark | null;
+    trademark: BrandModel | null;
     originId: string;
-    origin: Origin | null;
+    origin: OriginModel | null;
     categoryId: string;
     category: Category | null;
     images: Array<Image>;

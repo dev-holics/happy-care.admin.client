@@ -47,7 +47,7 @@ const routes: Routes = [
       {
         path: 'brands',
         loadChildren: () =>
-          import('./pages/trademarks/trademark.module').then(
+          import('./pages/brands/brands.module').then(
             (m) => m.TrademarksModule
           ),
         data: { breadcrumb: 'Products' },

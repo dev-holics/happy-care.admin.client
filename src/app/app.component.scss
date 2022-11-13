@@ -5,3 +5,14 @@
   right:0;
   bottom:0;
 }
+
+.shapes-loading {
+  width: 40px;
+  height: 40px;
+  color: #0aff99;
+  position: relative;
+  background:
+    linear-gradient(currentColor 0 0) center/100% 10px,
+    linear-gradient(currentColor 0 0) center/10px 100%;
+  background-repeat: no-repeat;
+}

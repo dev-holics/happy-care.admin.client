@@ -5,8 +5,6 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TrademarkDialogComponent } from './trademark-dialog/trademark-dialog.component';
-import { TrademarksComponent } from './trademarks.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
@@ -16,9 +14,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
+import { BrandDialogComponent } from './components/brand-dialog/brand-dialog.component';
+import { BrandsComponent } from './components/brands/brands.component';
 
 export const routes: Routes = [
-  { path: '', component: TrademarksComponent, pathMatch: 'full' },
+  { path: '', component: BrandsComponent, pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -39,8 +39,8 @@ export const routes: Routes = [
     ToastModule
   ],
   declarations: [
-    TrademarkDialogComponent,
-    TrademarksComponent
+    BrandDialogComponent,
+    BrandsComponent
   ],
   providers: [
     ConfirmationService,

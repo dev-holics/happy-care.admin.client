@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Origin } from '../origin.model';
+import { OriginModel } from '../../models/origin.model';
 
 @Component({
   selector: 'app-origin-dialog',
@@ -10,7 +10,7 @@ import { Origin } from '../origin.model';
 })
 export class OriginDialogComponent implements OnInit {
   @Input('display') display: boolean;
-  @Input('origin') originData: Origin;
+  @Input('origin') originData: OriginModel;
   @Output() closeDialog = new EventEmitter<any>();
   public form: FormGroup;
 
@@ -25,7 +25,7 @@ export class OriginDialogComponent implements OnInit {
     if(this.originData) {
       this.form.patchValue(this.originData);
     } else {
-      this.originData = new Origin();
+      this.originData = new OriginModel();
     }
   }
 

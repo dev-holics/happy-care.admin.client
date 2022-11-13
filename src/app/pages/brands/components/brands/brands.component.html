@@ -1,6 +1,6 @@
-<app-trademark-dialog *ngIf="displayDialog" [display]="displayDialog" [origins]="origins" 
-                        [trademark]="selectedTrademark" (closeDialog)="onHideDialog($event)">
-</app-trademark-dialog>
+<app-brand-dialog *ngIf="displayDialog" [display]="displayDialog" [origins]="origins" 
+                        [brand]="selectedBrand" (closeDialog)="onHideDialog($event)">
+</app-brand-dialog>
 <p-confirmDialog #cd [style]="{width: '40vw'}">
     <ng-template pTemplate="footer">
         <button type="button" pButton icon="pi pi-times" class="p-button-outlined p-button-info" label="No" (click)="cd.reject()"></button>
@@ -21,8 +21,8 @@
         <ng-template pTemplate="right">
         </ng-template>
     </p-toolbar>
-    <p-table [value]="trademarks" responsiveLayout="scroll" styleClass="w-full p-datatable-gridlines p-datatable-striped mt-2"
-                [lazy]="true" [paginator]="true" [rows]="limit" [totalRecords]="totalData"
+    <p-table [value]="brands" responsiveLayout="scroll" styleClass="w-full p-datatable-gridlines p-datatable-striped mt-2"
+                [lazy]="true" [paginator]="true" [rows]="paginator.limit" [totalRecords]="paginator.totalData"
                 [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10, 15, 20]"
                 (onPage)="paginate($event)">
         <ng-template pTemplate="header">
@@ -35,21 +35,21 @@
                 <th></th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-trademark>
+        <ng-template pTemplate="body" let-brand>
             <tr>
                 <td>
-                    <p-tableCheckbox [value]="trademark"></p-tableCheckbox>
+                    <p-tableCheckbox [value]="brand"></p-tableCheckbox>
                 </td>
-                <td>{{trademark.name}}</td>
-                <td>{{trademark.origin.name}}</td>
+                <td>{{brand.name}}</td>
+                <td>{{brand.origin.name}}</td>
                 <td style="text-align: center;">
                     <button pButton pRipple icon="pi pi-pencil" 
                             class="p-button-warning m-1"
-                            (click)="openDialog(trademark)">
+                            (click)="openDialog(brand)">
                     </button>
                     <button pButton pRipple icon="pi pi-trash" 
                             class="p-button-danger m-1"
-                            (click)="openConfirmDialog(trademark)">
+                            (click)="openConfirmDialog(brand)">
                     </button>
                 </td>
             </tr>

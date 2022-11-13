@@ -1,4 +1,4 @@
-export class Origin {
+export class OriginModel {
     id: string;
     name: string;
 }

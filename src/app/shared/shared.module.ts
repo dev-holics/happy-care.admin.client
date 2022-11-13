@@ -31,6 +31,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { BlockUIModule } from 'primeng/blockui';
 
 @NgModule({
   imports: [
@@ -66,7 +67,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatStepperModule
+    MatStepperModule,
+    BlockUIModule
   ],
   exports: [
     FlexLayoutModule,
@@ -100,8 +102,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatStepperModule
+    MatStepperModule,
+    BlockUIModule
   ],
-  declarations: []
+  declarations: [
+  ]
 })
 export class SharedModule { }
