@@ -1,0 +1,48 @@
+<p-dialog [(visible)]="isVisible" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false" [maximizable]="true" [modal]="true" [contentStyle]="{'overflow-y':'visible'}">
+    <ng-template pTemplate="header">
+        <h1><span *ngIf="!id">Thêm mới</span><span *ngIf="id">Cập nhật</span> Quyền </h1>
+    </ng-template>
+    <ng-template pTemplate="content">
+        <form [formGroup]="form">
+            <div class="flex flex-column flex-1 form">
+                <div class="field">
+                    <label for="name" class="block form-label">Tên của quyền</label>
+                    <input pInputText id="name" type="username" placeholder="Tên của quyền" maxlength="512"
+                            aria-describedby="code-help" class="w-full" formControlName="name" [class.ng-dirty]="form.controls.name.touched"/>
+                    <div *ngIf="form.controls.name.invalid && (form.controls.name.dirty || form.controls.name.touched)">
+                        <small *ngIf="form.controls.name.errors?.required" id="name-help" class="p-error block">Không được bỏ trống trường này.</small>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="module" class="block form-label">Module</label>
+                    <p-dropdown id="module" [options]="modules" placeholder="Chọn module" [style]="{'width':'100%'}"
+                                aria-describedby="origin-help" optionLabel="name" optionValue="id"
+                                [filter]="true" filterBy="name"
+                                formControlName="module" [class.ng-dirty]="form.controls.module.touched"
+                                [disabled]="this.id != ''">
+                    </p-dropdown>
+                </div>
+                <div class="field">
+                  <label for="description" class="block form-label">Mô tả</label>
+                  <textarea pInputText id="description" placeholder="Mô tả" maxlength="1024"
+                          aria-describedby="code-help" class="w-full" formControlName="description" [class.ng-dirty]="form.controls.description.touched"></textarea>
+              </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <div class="flex flex-row justify-content-end align-items-center form-actions">
+            <button pButton pRipple [disabled]="!form.valid" class="form-button"
+                    (click)="close(form.value)">
+                <span>
+                    Lưu
+                </span>
+            </button>
+            <button pButton pRipple type="button" class="p-button-danger form-button"
+                    (click)="close(null)">
+                Huỷ bỏ
+            </button>
+        </div>
+    </ng-template>
+</p-dialog>
