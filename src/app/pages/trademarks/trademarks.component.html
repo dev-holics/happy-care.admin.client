@@ -1,4 +1,4 @@
-<app-trademark-dialog *ngIf="displayDialog" [display]="displayDialog" [origins]="origins" 
+<app-trademark-dialog *ngIf="displayDialog" [display]="displayDialog" [origins]="origins"
                         [trademark]="selectedTrademark" (closeDialog)="onHideDialog($event)">
 </app-trademark-dialog>
 <p-confirmDialog #cd [style]="{width: '40vw'}">
@@ -10,7 +10,7 @@
 <p-toast></p-toast>
 <div class="col p-4 data-table">
     <div class="flex flex-row pb-3 justify-content-between align-items-center">
-        <h2 class="m-0">Brands</h2>
+        <h2 class="m-0">Nhãn hiệu</h2>
         <button pButton pRipple type="button" label="Create" class="p-button-success" (click)="openDialog(null)"></button>
     </div>
     <p-toolbar styleClass="mb-4">
@@ -43,16 +43,16 @@
                 <td>{{trademark.name}}</td>
                 <td>{{trademark.origin.name}}</td>
                 <td style="text-align: center;">
-                    <button pButton pRipple icon="pi pi-pencil" 
+                    <button pButton pRipple icon="pi pi-pencil"
                             class="p-button-warning m-1"
                             (click)="openDialog(trademark)">
                     </button>
-                    <button pButton pRipple icon="pi pi-trash" 
+                    <button pButton pRipple icon="pi pi-trash"
                             class="p-button-danger m-1"
                             (click)="openConfirmDialog(trademark)">
                     </button>
                 </td>
             </tr>
         </ng-template>
-    </p-table>       
+    </p-table>
 </div>
