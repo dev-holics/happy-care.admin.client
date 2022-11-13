@@ -1,0 +1,71 @@
+<app-users-dialog *ngIf="displayDialog" [display]="displayDialog" [roles]="roleOptions"
+                        [Id]="selectedId" (closeDialog)="onHideDialog($event)">
+</app-users-dialog>
+<p-confirmDialog #cd [style]="{width: '40vw'}">
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" class="p-button-outlined p-button-info" label="No" (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>
+<p-toast></p-toast>
+<div class="col p-4 data-table">
+    <div class="flex flex-row pb-3 justify-content-between align-items-center">
+        <h2 class="m-0">Người dùng</h2>
+        <button pButton pRipple type="button" label="Create" class="p-button-success" (click)="openDialog(null)"></button>
+    </div>
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="right">
+        </ng-template>
+    </p-toolbar>
+    <p-table [value]="users" responsiveLayout="scroll" styleClass="w-full p-datatable-gridlines p-datatable-striped mt-2"
+                [lazy]="true" [paginator]="true" [rows]="limit" [totalRecords]="totalData"
+                [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10, 15, 20]"
+                (onPage)="paginate($event)">
+        <ng-template pTemplate="header">
+            <tr>
+                <th scope="col" style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th scope="col">Số điện thoại</th>
+                <th scope="col">Email</th>
+                <th scope="col">Họ và tên</th>
+                <th scope="col">Giới tính</th>
+                <th scope="col">Sinh nhật</th>
+                <th scope="col">Quyền</th>
+                <th scope="col">Đang hoạt động</th>
+                <th scope="col"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="user"></p-tableCheckbox>
+                </td>
+                <td>{{user.phoneNumber}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.fullname}}</td>
+                <td>{{user.gender}}</td>
+                <td>{{user.birthday}}</td>
+                <td>{{user.role.name}}</td>
+                <td>
+                  <em *ngIf="user.isActive" class="pi pi-check"></em>
+                  <em *ngIf="!user.isActive" class="pi pi-times"></em>
+                </td>
+                <td style="text-align: center;">
+                    <button pButton pRipple icon="pi pi-pencil"
+                            class="p-button-warning m-1"
+                            (click)="openDialog(user.id)">
+                    </button>
+                    <!-- <button *ngIf="user.isActive" pButton pRipple icon="pi pi-lock"
+                            class="p-button-warning m-1"
+                            (click)="openInActiveDialog(user.id)">
+                    </button>
+                    <button *ngIf="!user.isActive" pButton pRipple icon="pi pi-unlock"
+                            class="p-button-warning m-1"
+                            (click)="openActiveDialog(user.id)">
+                    </button> -->
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

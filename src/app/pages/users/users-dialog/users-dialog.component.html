@@ -1,0 +1,76 @@
+<p-dialog [(visible)]="isVisible" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false" [maximizable]="true" [modal]="true" [contentStyle]="{'overflow-y':'visible'}">
+    <ng-template pTemplate="header">
+        <h1><span *ngIf="!id">Thêm mới</span><span *ngIf="id">Cập nhật</span> Người dùng </h1>
+    </ng-template>
+    <ng-template pTemplate="content">
+        <form [formGroup]="form">
+            <div class="flex flex-column flex-1 form">
+                <div *ngIf="!id" class="field">
+                    <label for="phoneNumber" class="block form-label">Số điện thoại</label>
+                    <input pInputText id="name" type="text" placeholder="Số điện thoại" maxlength="20"
+                            aria-describedby="code-help" class="w-full" formControlName="phoneNumber" [class.ng-dirty]="form.controls.phoneNumber.touched"/>
+                    <div *ngIf="form.controls.phoneNumber.invalid && (form.controls.phoneNumber.dirty || form.controls.phoneNumber.touched)">
+                        <small *ngIf="form.controls.phoneNumber.errors?.required" id="name-help" class="p-error block">Không được bỏ trống trường này.</small>
+                        <small *ngIf="form.controls.phoneNumber.errors?.invalidPhoneNumber" id="name-help" class="p-error block">Số điện thoại không hợp lệ</small>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="role" class="block form-label">Vai trò</label>
+                    <p-dropdown id="role" [options]="roles" placeholder="Chọn vai trò" [style]="{'width':'100%'}"
+                                aria-describedby="origin-help" optionLabel="name" optionValue="id"
+                                [filter]="true" filterBy="name"
+                                formControlName="role" [class.ng-dirty]="form.controls.role.touched">
+                    </p-dropdown>
+                </div>
+                <div *ngIf="!id" class="field">
+                  <label for="email" class="block form-label">Email</label>
+                  <input pInputText id="email" type="text" placeholder="Email" maxlength="512"
+                          aria-describedby="code-help" class="w-full" formControlName="email" [class.ng-dirty]="form.controls.email.touched"/>
+                  <div *ngIf="form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched)">
+                      <small *ngIf="form.controls.email.errors?.required" id="name-help" class="p-error block">Không được bỏ trống trường này.</small>
+                      <small *ngIf="form.controls.email.errors?.email" id="name-help" class="p-error block">Email không hợp lệ</small>
+                  </div>
+                </div>
+                <div *ngIf="!id" class="field">
+                  <label for="fullname" class="block form-label">Họ và tên</label>
+                  <input pInputText id="fullname" type="text" placeholder="Họ và tên" maxlength="512"
+                          aria-describedby="code-help" class="w-full" formControlName="fullname" [class.ng-dirty]="form.controls.fullname.touched"/>
+                  <div *ngIf="form.controls.fullname.invalid && (form.controls.fullname.dirty || form.controls.fullname.touched)">
+                      <small *ngIf="form.controls.fullname.errors?.required" id="name-help" class="p-error block">Không được bỏ trống trường này.</small>
+                  </div>
+                </div>
+                <div *ngIf="!id" class="field">
+                  <label for="gender" class="block form-label">Giới tính</label>
+                  <p-dropdown id="gender" [options]="gender" placeholder="Chọn giới tính" [style]="{'width':'100%'}"
+                              aria-describedby="origin-help" optionLabel="name" optionValue="id"
+                              formControlName="gender" [class.ng-dirty]="form.controls.gender.touched">
+                  </p-dropdown>
+                </div>
+                <div *ngIf="!id" class="field">
+                  <label for="password" class="block form-label">Mật khẩu</label>
+                  <input pInputText id="password" type="password" placeholder="Mật khẩu" maxlength="512"
+                          aria-describedby="code-help" class="w-full" formControlName="password" [class.ng-dirty]="form.controls.password.touched"/>
+                  <div *ngIf="form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched)">
+                      <small *ngIf="form.controls.password.errors?.required" id="name-help" class="p-error block">Không được bỏ trống trường này.</small>
+                      <small *ngIf="form.controls.password.errors?.invalidPassword" id="name-help" class="p-error block">Password không hợp lệ</small>
+                  </div>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <div class="flex flex-row justify-content-end align-items-center form-actions">
+            <button pButton pRipple [disabled]="!form.valid" class="form-button"
+                    (click)="close(form.value)">
+                <span>
+                    Lưu
+                </span>
+            </button>
+            <button pButton pRipple type="button" class="p-button-danger form-button"
+                    (click)="close(null)">
+                Huỷ bỏ
+            </button>
+        </div>
+    </ng-template>
+</p-dialog>

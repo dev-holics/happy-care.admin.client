@@ -52,5 +52,9 @@ export const MODULES: ModuleOption[] = [
   {
     id: "TAG",
     name: "TAG"
+  },
+  {
+    id: "ORDER",
+    name: "ORDER"
   }
 ];

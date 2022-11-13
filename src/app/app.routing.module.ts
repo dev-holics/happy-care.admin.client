@@ -67,7 +67,6 @@ const routes: Routes = [
           ),
         data: { breadcrumb: 'Branches' },
       },
-
       {
         path: 'permissions',
         loadChildren: () =>
@@ -75,6 +74,14 @@ const routes: Routes = [
             (m) => m.PermissionsModule
           ),
         data: { breadcrumb: 'Permissions' },
+      },
+      {
+        path: 'users',
+        loadChildren: () =>
+          import('./pages/users/users.module').then(
+            (m) => m.UsersModule
+          ),
+        data: { breadcrumb: 'Users' },
       },
     ],
   },
