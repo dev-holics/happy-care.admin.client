@@ -1,8 +1,25 @@
-export class User{
-    id: number = 0;
-    username: string = '';
-    email: string = '';
+import { Role } from "./role";
+
+export class UserDto {
+  id: string;
+  isActive: boolean;
+  phoneNumber: string;
+  email: string;
+  fullname: string;
+  gender: string;
+  birthday: Date;
+  role: Role;
 }
+
+export class UserCreate {
+  phoneNumber: string;
+  password: string;
+  fullname: string;
+  email: string;
+  gender: string;
+  role: string;
+}
+
 export class UserToken{
     phoneNumber: string = '';
     accessToken: string = '';

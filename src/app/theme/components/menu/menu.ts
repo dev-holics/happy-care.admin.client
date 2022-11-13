@@ -16,6 +16,7 @@ export const verticalMenuItems = [
     new Menu (306, 'Quản lý hệ thống', '/', null, null, null, true, 0),
     new Menu (307, 'Vai trò', null, '/roles', null, null, false, 306),
     new Menu (308, 'Quyền', null, '/permissions', null, null, false, 306),
+    new Menu (309, 'Người dùng', null, '/users', null, null, false, 306),
 ];
 
 export const horizontalMenuItems = [

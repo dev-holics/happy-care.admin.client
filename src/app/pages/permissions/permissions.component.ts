@@ -66,7 +66,6 @@ export class PermissionsComponent implements OnInit {
   }
 
   public addPermission(permission: PermissionCreate) {
-    console.log(permission);
     this.permissionsService
       .create(permission)
       .subscribe((response) =>

@@ -16,6 +16,28 @@ export function passwordValidator(): ValidatorFn {
   };
 }
 
+export function phoneNumberFormat(phoneNumberKey: string) {
+  return (group: FormGroup) => {
+      const value = group.controls[phoneNumberKey].value;
+      const phoneNumberRegexp = /[- +()0-9]{10,14}/g;
+      const validPhoneNumber = phoneNumberRegexp.test(value);
+      if (!validPhoneNumber && value) {
+        return  group.controls[phoneNumberKey].setErrors({invalidPhoneNumber: true})
+      }
+  }
+}
+
+export function passwordFormat(passwordKey: string) {
+  return (group: FormGroup) => {
+      const value = group.controls[passwordKey].value;
+      const passwordRegexp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/g;
+      const validPhoneNumber = passwordRegexp.test(value);
+      if (!validPhoneNumber && value) {
+        return  group.controls[passwordKey].setErrors({invalidPassword: true})
+      }
+  }
+}
+
 export function matchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
     return (group: FormGroup) => {
         let password= group.controls[passwordKey];
