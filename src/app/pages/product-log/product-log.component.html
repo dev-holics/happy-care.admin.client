@@ -1,0 +1,56 @@
+<app-product-log-dialog
+  *ngIf="displayDialog"
+  [display]="displayDialog"
+  [branches]="branchOptions"
+  [products]="productOptions"
+  (closeDialog)="onHideDialog($event)">
+</app-product-log-dialog>
+<p-confirmDialog #cd [style]="{width: '40vw'}">
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" class="p-button-outlined p-button-info" label="No" (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>
+<p-toast></p-toast>
+<div class="col p-4 data-table">
+    <div class="flex flex-row pb-3 justify-content-between align-items-center">
+        <h2 class="m-0">Quản lí nhập kho</h2>
+        <button pButton pRipple type="button" label="Create" class="p-button-success" (click)="openDialog(null)"></button>
+    </div>
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="right">
+        </ng-template>
+    </p-toolbar>
+    <p-table [value]="productLogs" responsiveLayout="scroll" styleClass="w-full p-datatable-gridlines p-datatable-striped mt-2"
+                [lazy]="true" [paginator]="true" [rows]="limit" [totalRecords]="totalData"
+                [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10, 15, 20]"
+                (onPage)="paginate($event)">
+        <ng-template pTemplate="header">
+            <tr>
+                <th scope="col" style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th scope="col">Ngày</th>
+                <th scope="col">Chi nhánh</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Loại</th>
+                <th scope="col"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-productLog>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="productLog"></p-tableCheckbox>
+                </td>
+                <td>{{productLog.transactionDate.substring(0,10)}}</td>
+                <td>{{productLog.branch.address}}</td>
+                <td>{{productLog.product.name}}</td>
+                <td>{{productLog.quantity}}</td>
+                <td>{{productLog.type}}</td>
+                <td style="text-align: center;">
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
