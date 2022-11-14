@@ -83,6 +83,14 @@ const routes: Routes = [
           ),
         data: { breadcrumb: 'Users' },
       },
+      {
+        path: 'productLog',
+        loadChildren: () =>
+          import('./pages/product-log/product-log.module').then(
+            (m) => m.ProductLogModule
+          ),
+        data: { breadcrumb: 'ProductLog' },
+      },
     ],
   },
   {
