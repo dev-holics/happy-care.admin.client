@@ -25,7 +25,7 @@ export class BrandsComponent implements OnInit {
     limit: 10,
     totalData: 0,
   };
-  searchText: string = '';
+  public searchText: string = '';
 
   constructor(
     public brandsService: BrandsService,

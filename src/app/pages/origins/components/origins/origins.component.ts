@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
 import { OriginModel } from '../../models/origin.model';
 import { OriginsService } from '../../services/origins.service';
 
@@ -11,17 +11,19 @@ import { OriginsService } from '../../services/origins.service';
 })
 export class OriginsComponent implements OnInit {
   public displayDialog: boolean;
-  public originData: OriginModel;
+  public selectedOrigin: OriginModel;
   public origins: OriginModel[];
   public paginator: any ={
     page: 1,
     limit: 10,
     totalData: 0
   }
+  public searchText: string = '';
 
   constructor(
     public originsService: OriginsService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -58,8 +60,20 @@ export class OriginsComponent implements OnInit {
     this.getOrigins();
   }
 
-  showDialog() {
+  paginate(event): void {
+    this.paginator.limit = event.rows;
+    this.paginator.page = event.first / event.rows + 1;
+    document.getElementById('main-content')!.scrollTop = 0;
+    this.getOrigins();
+  }
+
+  openDialog(origin): void {
     this.displayDialog = true;
+    if (origin) {
+      this.selectedOrigin = origin;
+    } else {
+      this.selectedOrigin = new OriginModel();
+    }
   }
 
   onHideDialog(data): void {
@@ -67,5 +81,33 @@ export class OriginsComponent implements OnInit {
     if (data) {
       data.id ? this.updateOrigin(data) : this.addOrigin(data);
     }
+  }
+
+  openConfirmDialog(trademark): void {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+      },
+      reject: (type) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Rejected',
+              detail: 'You have rejected',
+            });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Cancelled',
+              detail: 'You have cancelled',
+            });
+            break;
+        }
+      },
+    });
   }
 }
