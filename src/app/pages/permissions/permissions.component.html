@@ -1,6 +1,6 @@
-<app-branches-dialog *ngIf="displayDialog" [display]="displayDialog" [Cities]="cityOptions"
+<app-permissions-dialog *ngIf="displayDialog" [display]="displayDialog" [modules]="moduleOptions"
                         [Id]="selectedId" (closeDialog)="onHideDialog($event)">
-</app-branches-dialog>
+</app-permissions-dialog>
 <p-confirmDialog #cd [style]="{width: '40vw'}">
     <ng-template pTemplate="footer">
         <button type="button" pButton icon="pi pi-times" class="p-button-outlined p-button-info" label="No" (click)="cd.reject()"></button>
@@ -10,18 +10,14 @@
 <p-toast></p-toast>
 <div class="col p-4 data-table">
     <div class="flex flex-row pb-3 justify-content-between align-items-center">
-        <h2 class="m-0">Chi nhánh</h2>
+        <h2 class="m-0">Quyền</h2>
         <button pButton pRipple type="button" label="Create" class="p-button-success" (click)="openDialog(null)"></button>
     </div>
     <p-toolbar styleClass="mb-4">
-        <ng-template pTemplate="left">
-            <button pButton pRipple icon="pi pi-trash" class="p-button-danger"></button>
-        </ng-template>
-
         <ng-template pTemplate="right">
         </ng-template>
     </p-toolbar>
-    <p-table [value]="branches" responsiveLayout="scroll" styleClass="w-full p-datatable-gridlines p-datatable-striped mt-2"
+    <p-table [value]="permissions" responsiveLayout="scroll" styleClass="w-full p-datatable-gridlines p-datatable-striped mt-2"
                 [lazy]="true" [paginator]="true" [rows]="limit" [totalRecords]="totalData"
                 [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10, 15, 20]"
                 (onPage)="paginate($event)">
@@ -30,28 +26,37 @@
                 <th scope="col" style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th scope="col">Địa chỉ</th>
-                <th scope="col">Quận</th>
-                <th scope="col">Thành phố</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Module</th>
+                <th scope="col">Mô tả</th>
+                <th scope="col">Đang hoạt động</th>
                 <th scope="col"></th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-branch>
+        <ng-template pTemplate="body" let-permission>
             <tr>
                 <td>
-                    <p-tableCheckbox [value]="branch"></p-tableCheckbox>
+                    <p-tableCheckbox [value]="permission"></p-tableCheckbox>
                 </td>
-                <td>{{branch.address}}</td>
-                <td>{{branch.district.name}}</td>
-                <td>{{branch.district.city.name}}</td>
+                <td>{{permission.name}}</td>
+                <td>{{permission.module}}</td>
+                <td>{{permission.description}}</td>
+                <td>
+                  <em *ngIf="permission.isActive" class="pi pi-check"></em>
+                  <em *ngIf="!permission.isActive" class="pi pi-times"></em>
+                </td>
                 <td style="text-align: center;">
                     <button pButton pRipple icon="pi pi-pencil"
                             class="p-button-warning m-1"
-                            (click)="openDialog(branch.id)">
+                            (click)="openDialog(permission.id)">
                     </button>
-                    <button pButton pRipple icon="pi pi-trash"
-                            class="p-button-danger m-1"
-                            (click)="openConfirmDialog(branch.id)">
+                    <button *ngIf="permission.isActive" pButton pRipple icon="pi pi-lock"
+                            class="p-button-warning m-1"
+                            (click)="openInActiveDialog(permission.id)">
+                    </button>
+                    <button *ngIf="!permission.isActive" pButton pRipple icon="pi pi-unlock"
+                            class="p-button-warning m-1"
+                            (click)="openActiveDialog(permission.id)">
                     </button>
                 </td>
             </tr>

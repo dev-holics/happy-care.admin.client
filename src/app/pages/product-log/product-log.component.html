@@ -1,6 +1,10 @@
-<app-branches-dialog *ngIf="displayDialog" [display]="displayDialog" [Cities]="cityOptions"
-                        [Id]="selectedId" (closeDialog)="onHideDialog($event)">
-</app-branches-dialog>
+<app-product-log-dialog
+  *ngIf="displayDialog"
+  [display]="displayDialog"
+  [branches]="branchOptions"
+  [products]="productOptions"
+  (closeDialog)="onHideDialog($event)">
+</app-product-log-dialog>
 <p-confirmDialog #cd [style]="{width: '40vw'}">
     <ng-template pTemplate="footer">
         <button type="button" pButton icon="pi pi-times" class="p-button-outlined p-button-info" label="No" (click)="cd.reject()"></button>
@@ -10,18 +14,14 @@
 <p-toast></p-toast>
 <div class="col p-4 data-table">
     <div class="flex flex-row pb-3 justify-content-between align-items-center">
-        <h2 class="m-0">Chi nhánh</h2>
+        <h2 class="m-0">Quản lí nhập kho</h2>
         <button pButton pRipple type="button" label="Create" class="p-button-success" (click)="openDialog(null)"></button>
     </div>
     <p-toolbar styleClass="mb-4">
-        <ng-template pTemplate="left">
-            <button pButton pRipple icon="pi pi-trash" class="p-button-danger"></button>
-        </ng-template>
-
         <ng-template pTemplate="right">
         </ng-template>
     </p-toolbar>
-    <p-table [value]="branches" responsiveLayout="scroll" styleClass="w-full p-datatable-gridlines p-datatable-striped mt-2"
+    <p-table [value]="productLogs" responsiveLayout="scroll" styleClass="w-full p-datatable-gridlines p-datatable-striped mt-2"
                 [lazy]="true" [paginator]="true" [rows]="limit" [totalRecords]="totalData"
                 [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10, 15, 20]"
                 (onPage)="paginate($event)">
@@ -30,29 +30,25 @@
                 <th scope="col" style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th scope="col">Địa chỉ</th>
-                <th scope="col">Quận</th>
-                <th scope="col">Thành phố</th>
+                <th scope="col">Ngày</th>
+                <th scope="col">Chi nhánh</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Loại</th>
                 <th scope="col"></th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-branch>
+        <ng-template pTemplate="body" let-productLog>
             <tr>
                 <td>
-                    <p-tableCheckbox [value]="branch"></p-tableCheckbox>
+                    <p-tableCheckbox [value]="productLog"></p-tableCheckbox>
                 </td>
-                <td>{{branch.address}}</td>
-                <td>{{branch.district.name}}</td>
-                <td>{{branch.district.city.name}}</td>
+                <td>{{productLog.transactionDate.substring(0,10)}}</td>
+                <td>{{productLog.branch.address}}</td>
+                <td>{{productLog.product.name}}</td>
+                <td>{{productLog.quantity}}</td>
+                <td>{{productLog.type}}</td>
                 <td style="text-align: center;">
-                    <button pButton pRipple icon="pi pi-pencil"
-                            class="p-button-warning m-1"
-                            (click)="openDialog(branch.id)">
-                    </button>
-                    <button pButton pRipple icon="pi pi-trash"
-                            class="p-button-danger m-1"
-                            (click)="openConfirmDialog(branch.id)">
-                    </button>
                 </td>
             </tr>
         </ng-template>

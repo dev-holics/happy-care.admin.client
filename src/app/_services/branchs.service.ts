@@ -13,8 +13,13 @@ export class BranchsService {
   };
   constructor(private httpClient: HttpClient) { }
 
-  getBranches() : Observable<Branch[]> {
-    return this.httpClient.get<Branch[]>(`${environment.baseUrl}/public/branches/list`);
+  getBranches(page: number, limit: number, cityId: string = '', districtId: string = '') : Observable<Branch[]> {
+    return this.httpClient.get<Branch[]>(`${environment.baseUrl}/public/branches/list`, {
+      params: {
+        page,
+        limit,
+      }
+    });
   }
 
   getBranchById(branchId: string) : Observable<Branch> {

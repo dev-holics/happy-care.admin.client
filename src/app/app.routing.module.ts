@@ -67,6 +67,30 @@ const routes: Routes = [
           ),
         data: { breadcrumb: 'Branches' },
       },
+      {
+        path: 'permissions',
+        loadChildren: () =>
+          import('./pages/permissions/permissions.module').then(
+            (m) => m.PermissionsModule
+          ),
+        data: { breadcrumb: 'Permissions' },
+      },
+      {
+        path: 'users',
+        loadChildren: () =>
+          import('./pages/users/users.module').then(
+            (m) => m.UsersModule
+          ),
+        data: { breadcrumb: 'Users' },
+      },
+      {
+        path: 'productLog',
+        loadChildren: () =>
+          import('./pages/product-log/product-log.module').then(
+            (m) => m.ProductLogModule
+          ),
+        data: { breadcrumb: 'ProductLog' },
+      },
     ],
   },
   {

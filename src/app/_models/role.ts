@@ -13,6 +13,11 @@ export class RoleUpdate {
   permissions: string[] = [];
 }
 
+export class RoleOption {
+  id: string = '';
+  name: string = '';
+}
+
 export class Permission {
   id: string = '';
   name: string = '';

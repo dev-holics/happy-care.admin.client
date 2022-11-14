@@ -38,8 +38,11 @@ export class BranchesComponent implements OnInit {
 
   fetchBranches() {
     this.branches = [];
-    this.branchService.getBranches().subscribe(
+    this.branchService.getBranches(this.page, this.limit, "", "").subscribe(
       (response: any) => {
+        this.page = response.currentPage;
+        this.limit = response.limit;
+        this.totalData = response.totalData;
         this.branches = response.data;
       }
     )

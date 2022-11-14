@@ -1,0 +1,58 @@
+<p-dialog [(visible)]="isVisible" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false" [maximizable]="true" [modal]="true" [contentStyle]="{'overflow-y':'visible'}">
+    <ng-template pTemplate="header">
+        <h1> Nhập kho </h1>
+    </ng-template>
+    <ng-template pTemplate="content">
+        <form [formGroup]="form">
+            <div class="flex flex-column flex-1 form">
+                <div class="field">
+                    <label for="productId" class="block form-label">Sản phẩm</label>
+                    <p-dropdown id="productId" [options]="products" placeholder="Chọn sản phẩm" [style]="{'width':'100%'}"
+                                aria-describedby="origin-help" optionLabel="name" optionValue="id"
+                                [filter]="true" filterBy="name"
+                                formControlName="productId" [class.ng-dirty]="form.controls.productId.touched">
+                    </p-dropdown>
+                </div>
+                <div class="field">
+                  <label for="branchId" class="block form-label">Chi nhánh</label>
+                  <p-dropdown id="branchId" [options]="branches" placeholder="Chọn chi nhánh" [style]="{'width':'100%'}"
+                              aria-describedby="origin-help" optionLabel="address" optionValue="id"
+                              [filter]="true" filterBy="address"
+                              formControlName="branchId" [class.ng-dirty]="form.controls.branchId.touched">
+                  </p-dropdown>
+                </div>
+                <div class="field">
+                  <label for="transactionDate" class="block form-label">Ngày nhập kho</label>
+                  <input pInputText id="transactionDate" type="date"
+                          aria-describedby="code-help" class="w-full" formControlName="transactionDate" [class.ng-dirty]="form.controls.transactionDate.touched"/>
+                  <div *ngIf="form.controls.transactionDate.invalid && (form.controls.transactionDate.dirty || form.controls.transactionDate.touched)">
+                      <small *ngIf="form.controls.transactionDate.errors?.required" id="name-help" class="p-error block">Không được bỏ trống trường này.</small>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="quantity" class="block form-label">Số lượng</label>
+                  <input pInputText id="quantity" type="number" placeholder="Số lượng"
+                          aria-describedby="code-help" class="w-full" formControlName="quantity" [class.ng-dirty]="form.controls.quantity.touched"/>
+                  <div *ngIf="form.controls.quantity.invalid && (form.controls.quantity.dirty || form.controls.quantity.touched)">
+                      <small *ngIf="form.controls.quantity.errors?.required" id="name-help" class="p-error block">Không được bỏ trống trường này.</small>
+                  </div>
+              </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <div class="flex flex-row justify-content-end align-items-center form-actions">
+            <button pButton pRipple [disabled]="!form.valid" class="form-button"
+                    (click)="close(form.value)">
+                <span>
+                    Lưu
+                </span>
+            </button>
+            <button pButton pRipple type="button" class="p-button-danger form-button"
+                    (click)="close(null)">
+                Huỷ bỏ
+            </button>
+        </div>
+    </ng-template>
+</p-dialog>
