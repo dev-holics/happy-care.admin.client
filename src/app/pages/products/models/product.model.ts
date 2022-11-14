@@ -1,8 +1,8 @@
 import { Category } from "src/app/_models/category";
 import { Image } from "src/app/_models/image.model";
-import { OriginModel } from "../origins/models/origin.model";
-import { BrandModel } from "../brands/models/brand.model";
-export class Product {
+import { OriginModel } from "../../origins/models/origin.model";
+import { BrandModel } from "../../brands/models/brand.model";
+export class ProductModel {
     id: number;
     code: string;
     name: string;  

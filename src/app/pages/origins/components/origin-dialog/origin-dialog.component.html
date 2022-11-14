@@ -1,7 +1,7 @@
 <p-dialog [(visible)]="isVisible" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
     [draggable]="false" [resizable]="false" [maximizable]="true" [modal]="true">
     <ng-template pTemplate="header">
-        <h1><span *ngIf="!originData.id">Add</span><span *ngIf="originData.id">Edit</span> origin</h1>
+        <h1><span *ngIf="!origin.id">Add</span><span *ngIf="origin.id">Edit</span> origin</h1>
     </ng-template>
     <ng-template pTemplate="content">
         <form [formGroup]="form">
@@ -21,10 +21,10 @@
         <div class="flex flex-row justify-content-end align-items-center form-actions">
             <button pButton pRipple [disabled]="!form.valid" class="form-button"
                     (click)="close(form.value)">
-                <span *ngIf="!originData.id">
+                <span *ngIf="!origin.id">
                     Save
                 </span>
-                <span *ngIf="originData.id">
+                <span *ngIf="origin.id">
                     Update
                 </span>
             </button>

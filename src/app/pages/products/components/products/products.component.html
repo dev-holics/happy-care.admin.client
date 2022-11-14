@@ -1,6 +1,6 @@
-<!-- <app-trademark-dialog *ngIf="displayDialog" [display]="displayDialog" [origins]="origins" 
-                        [trademark]="selectedTrademark" (closeDialog)="onHideDialog($event)">
-</app-trademark-dialog> -->
+<app-product-dialog *ngIf="displayDialog" [display]="displayDialog"
+                        [product]="selectedProduct" (closeDialog)="onHideDialog($event)">
+</app-product-dialog>
 <p-confirmDialog #cd [style]="{width: '40vw'}">
     <ng-template pTemplate="footer">
         <button type="button" pButton icon="pi pi-times" class="p-button-outlined p-button-info" label="No" (click)="cd.reject()"></button>
@@ -10,8 +10,8 @@
 <p-toast></p-toast>
 <div class="col p-4 data-table">
     <div class="flex flex-row pb-3 justify-content-between align-items-center">
-        <h2 class="m-0">Products</h2>
-        <button pButton pRipple type="button" label="Create" class="p-button-success" (click)="openDialog(null)"></button>
+        <h2 class="m-0">Sản phẩm</h2>
+        <button pButton pRipple type="button" label="Tạo mới" class="p-button-success" (click)="openDialog(null)"></button>
     </div>
     <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
@@ -19,10 +19,17 @@
         </ng-template>
 
         <ng-template pTemplate="right">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" ngDefaultControl [(ngModel)]="searchText" placeholder="Search..." />
+            </span>
+            <button pButton pRipple type="button" class="p-button-primary ml-2" (click)="getProducts()">
+                Tìm kiếm
+            </button>
         </ng-template>
     </p-toolbar>
     <p-table [value]="products" responsiveLayout="scroll" styleClass="w-full p-datatable-gridlines p-datatable-striped mt-2"
-                [lazy]="true" [paginator]="true" [rows]="limit" [totalRecords]="totalData"
+                [lazy]="true" [paginator]="true" [rows]="paginator.limit" [totalRecords]="paginator.totalData"
                 [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10, 15, 20]"
                 (onPage)="paginate($event)">
         <ng-template pTemplate="header">
@@ -30,10 +37,10 @@
                 <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th>Name</th>
-                <th>Packing specification</th>
-                <th>Price</th>
-                <th>Origin</th>
+                <th>Tên</th>
+                <th>Quy cách đóng gói</th>
+                <th>Giá</th>
+                <th>Nguồn gốc</th>
                 <th></th>
             </tr>
         </ng-template>
@@ -45,7 +52,7 @@
                 <td>{{product.name}}</td>
                 <td>{{product.packingSpec}}</td>
                 <td>{{product.price | currency:'VND'}}</td>
-                <td>{{product.category.name}}</td>
+                <td>{{product.origin?.name}}</td>
                 <td style="text-align: center;">
                     <button pButton pRipple icon="pi pi-pencil" 
                             class="p-button-warning m-1"

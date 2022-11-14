@@ -10,7 +10,7 @@ import { OriginModel } from '../../models/origin.model';
 })
 export class OriginDialogComponent implements OnInit {
   @Input('display') display: boolean;
-  @Input('origin') originData: OriginModel;
+  @Input('origin') origin: OriginModel;
   @Output() closeDialog = new EventEmitter<any>();
   public form: FormGroup;
 
@@ -22,10 +22,10 @@ export class OriginDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.originData) {
-      this.form.patchValue(this.originData);
+    if(this.origin) {
+      this.form.patchValue(this.origin);
     } else {
-      this.originData = new OriginModel();
+      this.origin = new OriginModel();
     }
   }
 
