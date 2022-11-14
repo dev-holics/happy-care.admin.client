@@ -27,6 +27,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BlockUIComponent } from './shared/components/block-ui/block-ui.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { BlockUIComponent } from './shared/components/block-ui/block-ui.componen
     Ng2OrderModule,
     NgxPaginationModule,
     TableModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    FormsModule
   ],
   providers: [AppSettings,
     { provide: HTTP_INTERCEPTORS, useClass:JwtInterceptor, multi: true},

@@ -25,6 +25,7 @@ export class BrandsComponent implements OnInit {
     limit: 10,
     totalData: 0,
   };
+  searchText: string = '';
 
   constructor(
     public brandsService: BrandsService,
@@ -50,6 +51,7 @@ export class BrandsComponent implements OnInit {
     let query: any = {
 			page: this.paginator.page,
 			limit: this.paginator.limit,
+      search: this.searchText
 		};
     const res = await this.brandsService.getBrands(query);
     this.brands = res.data.map((brand) => {
@@ -57,6 +59,8 @@ export class BrandsComponent implements OnInit {
       return brand;
     });
     this.paginator = res.paginator;
+    console.log(this.brands);
+    console.log(this.paginator.totalData);
   }
 
   async addBrand(brand: BrandModel) {
