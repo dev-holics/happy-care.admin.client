@@ -45,6 +45,12 @@ const routes: Routes = [
         data: { breadcrumb: 'Products' },
       },
       {
+        path: 'orders',
+        loadChildren: () =>
+          import('./pages/orders/orders.module').then((m) => m.OrdersModule),
+        data: { breadcrumb: 'Orders' },
+      },
+      {
         path: 'brands',
         loadChildren: () =>
           import('./pages/brands/brands.module').then(
@@ -58,7 +64,6 @@ const routes: Routes = [
           import('./pages/origins/origins.module').then((m) => m.OriginsModule),
         data: { breadcrumb: 'Origins' },
       },
-
       {
         path: 'branches',
         loadChildren: () =>

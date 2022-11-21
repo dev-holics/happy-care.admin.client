@@ -31,17 +31,33 @@
                 <div class="field">
                     <label for="packingSpec" class="block form-label">Quy cách đóng gói</label>
                     <input pInputText id="packingSpec" type="text" placeholder="Product packing specifition"
-                            aria-describedby="packingSpec-help" class="w-full" formControlName="name" [class.ng-dirty]="form.controls.packingSpec.touched"/>
+                            aria-describedby="packingSpec-help" class="w-full" formControlName="packingSpec" [class.ng-dirty]="form.controls.packingSpec.touched"/>
                     <div *ngIf="form.controls.packingSpec.invalid && (form.controls.packingSpec.dirty || form.controls.packingSpec.touched)">
                         <small *ngIf="form.controls.packingSpec.errors?.required" id="packingSpec-help" class="p-error block">Product packing specifition is required.</small>
                     </div>
                 </div>
+                <div class="flex w-full justify-content-between">
+                    <div class="field w-5">
+                        <label for="price" class="block form-label">Giá</label>
+                        <input pInputText id="price" type="text" placeholder="Product price"
+                                aria-describedby="price-help" class="w-full" formControlName="price" [class.ng-dirty]="form.controls.price.touched"/>
+                        <div *ngIf="form.controls.price.invalid && (form.controls.price.dirty || form.controls.price.touched)">
+                            <small *ngIf="form.controls.price.errors?.required" id="price-help" class="p-error block">Product price is required.</small>
+                        </div>
+                    </div>
+                    <div class="field w-5">
+                        <label for="discount" class="block form-label">Khuyến mãi</label>
+                        <input pInputText id="discount" type="text" placeholder="Product discount"
+                                aria-describedby="discount-help" class="w-full" formControlName="discount"/>
+                    </div>
+                </div>
                 <div class="field">
-                    <label for="price" class="block form-label">Giá</label>
-                    <input pInputText id="price" type="text" placeholder="Product price" [style]="{'width':'30%'}"
-                            aria-describedby="price-help" formControlName="price" [class.ng-dirty]="form.controls.price.touched"/>
-                    <div *ngIf="form.controls.price.invalid && (form.controls.price.dirty || form.controls.price.touched)">
-                        <small *ngIf="form.controls.price.errors?.required" id="price-help" class="p-error block">Product price is required.</small>
+                    <label for="element" class="block form-label">Thành phần</label>
+                    <textarea pInputTextarea rows="5" id="element" type="text" placeholder="Product element"
+                            aria-describedby="element-help" class="w-full" formControlName="element" [class.ng-dirty]="form.controls.element.touched">
+                    </textarea>
+                    <div *ngIf="form.controls.element.invalid && (form.controls.element.dirty || form.controls.element.touched)">
+                        <small *ngIf="form.controls.element.errors?.required" id="element-help" class="p-error block">Product element is required.</small>
                     </div>
                 </div>
             </div>

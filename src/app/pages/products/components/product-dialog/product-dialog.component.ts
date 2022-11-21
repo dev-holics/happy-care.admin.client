@@ -52,7 +52,6 @@ export class ProductDialogComponent implements OnInit {
   }
   
   public set isVisible(val: boolean) {
-    console.log("Bien");
     this.close(null);
   }
 
