@@ -131,6 +131,7 @@ export class UsersComponent implements OnInit {
   }
 
   public updateUserInfo(id: string, userUpdate: UserCreate) {
+    delete userUpdate.password;
     this.usersService
       .updateUser(id, userUpdate)
       .subscribe((response) =>

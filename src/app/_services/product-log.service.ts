@@ -14,14 +14,20 @@ export class ProductLogService {
   };
   constructor(private httpClient: HttpClient) { }
 
-  getProductLog(page: number, limit: number, transactionDate?: Date, branchId?: string) : Observable<ProductLogDto[]> {
+  getProductLog(
+      page: number,
+      limit: number,
+      query?: string,
+      branchId?: string,
+      transactionDate?: Date) : Observable<ProductLogDto[]> {
     let transacetionDateString = '';
     if (transactionDate) transacetionDateString = transactionDate.toString();
-    const params : {page: number, limit: number, transacetionDateString?: string, branchId?: string}
+    const params : {page: number, limit: number, query?: string, transacetionDateString?: string, branchId?: string}
       = { page, limit, transacetionDateString, branchId};
 
     if (!transactionDate) delete params.transacetionDateString;
     if (!branchId) delete params.branchId;
+    if (!query) delete params.query;
     return this.httpClient.get<ProductLogDto[]>(`${environment.baseUrl}/admin/products/logs`, {params: params})
       .pipe(
         map((response: any) => {
