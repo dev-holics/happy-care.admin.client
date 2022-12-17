@@ -1,0 +1,17 @@
+@charset "UTF-8";
+/*-------------------------------------------------
+	Style file contain theme components style
+-------------------------------------------------*/
+
+// custom
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+// library
+@import "~primeicons/primeicons.css";
+@import "~primeng/resources/themes/saga-blue/theme.css";
+@import "~primeng/resources/primeng.min.css";
