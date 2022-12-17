@@ -23,6 +23,7 @@ export class RolesDialogComponent implements OnInit {
   basicPermissions: Permission[] = [];
   userPermissions: Permission[] = [];
   productPermissions: Permission[] = [];
+  productLogPermissions: Permission[] = [];
   permissionPermissions: Permission[] = [];
   rolePermissions: Permission[] = [];
   cartPermissions: Permission[] = [];
@@ -80,6 +81,7 @@ export class RolesDialogComponent implements OnInit {
         this.userPermissions = this.permissions.filter((permission) => { return permission.module === "USER"});
         this.permissionPermissions = this.permissions.filter((permission) => { return permission.module === "PERMISSION"});
         this.productPermissions = this.permissions.filter((permission) => { return permission.module === "PRODUCT"});
+        this.productLogPermissions = this.permissions.filter((permission) => { return permission.module === "PRODUCT_LOG"});
         this.rolePermissions = this.permissions.filter((permission) => { return permission.module === "ROLE"});
         this.cartPermissions = this.permissions.filter((permission) => { return permission.module === "CART"});
         this.originPermissions = this.permissions.filter((permission) => { return permission.module === "ORIGIN"});

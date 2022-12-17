@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Branch } from 'src/app/_models/branch';
 import { ImportProductDto, ProductLogDto } from 'src/app/_models/product_log';
+import { AccountsService } from 'src/app/_services/accounts.service';
 import { BranchsService } from 'src/app/_services/branchs.service';
 import { ProductLogService } from 'src/app/_services/product-log.service';
 import { Product } from '../products/product.model';
 import { ProductsService } from '../products/product.service';
+import decode from 'jwt-decode';
 
 @Component({
   selector: 'app-product-log',
@@ -25,17 +27,28 @@ export class ProductLogComponent implements OnInit {
   public branchId: string = '';
   public query: string = '';
   public transactionDate?: Date;
+  public canAdd: boolean = true;
 
   constructor(
     public branchesService: BranchsService,
     public productsService: ProductsService,
     public productLogService: ProductLogService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private accountsService: AccountsService) { }
 
     ngOnInit(): void {
       this.fetchProductLogs();
       this.fetchOptions();
+      const currentUser = this.accountsService.currentUserValue;
+      if (currentUser) {
+        const tokenPayload:any = decode(currentUser.accessToken)
+        const filteredPermission = tokenPayload.role.permissions
+          .some((permission) => permission.name == 'create_product_log')
+        if (!filteredPermission) {
+          this.canAdd = false;
+        }
+      }
     }
 
     fetchProductLogs() {

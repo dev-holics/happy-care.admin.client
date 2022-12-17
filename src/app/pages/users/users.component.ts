@@ -4,9 +4,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Branch } from 'src/app/_models/branch';
 import { RoleOption } from 'src/app/_models/role';
 import { UserCreate, UserDto } from 'src/app/_models/user';
+import { AccountsService } from 'src/app/_services/accounts.service';
 import { BranchsService } from 'src/app/_services/branchs.service';
 import { RolesService } from 'src/app/_services/roles.service';
 import { UsersService } from 'src/app/_services/users.service';
+import decode from "jwt-decode";
 
 @Component({
   selector: 'app-users',
@@ -24,17 +26,34 @@ export class UsersComponent implements OnInit {
   public page: number = 1;
   public limit: number = 10;
   public totalData: number = 0;
+  public canUpdateInfo: boolean = true;
+  public canAdd: boolean = true;
+  public canUpdateRole: boolean = true;
 
   constructor(
     public usersService: UsersService,
     public branchesService: BranchsService,
     public rolesService: RolesService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private accountsService: AccountsService) { }
 
   ngOnInit(): void {
     this.fetchUsers();
     this.fetchOptions();
+    const currentUser = this.accountsService.currentUserValue;
+    if (currentUser) {
+      const tokenPayload:any = decode(currentUser.accessToken)
+      const permissions = tokenPayload.role.permissions;
+
+      this.canAdd = this.isAccess(permissions, 'create_user');
+      this.canUpdateInfo = this.isAccess(permissions, 'update_user');
+      this.canUpdateRole = this.isAccess(permissions, 'update_user_role');
+    }
+  }
+
+  isAccess(permissions: any, permission: string) {
+    return permissions.some((x) => x.name == permission);
   }
 
   fetchUsers() {
