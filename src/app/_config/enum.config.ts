@@ -7,4 +7,10 @@ export enum QUESTION_CONTROL_TYPE {
 	PASSWORD = 'password',
 	CHECKBOX = 'checkbox',
 	RADIO_BUTTON_GROUP = 'radio_button_group',
+	FORM_ARRAY = 'form_array'
+}
+
+export enum PAYMENT_TYPE {
+	TRANSFER = 'TRANSFER',
+	CASH = 'CASH',
 }

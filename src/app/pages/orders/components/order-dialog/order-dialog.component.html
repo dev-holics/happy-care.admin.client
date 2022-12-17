@@ -1,0 +1,44 @@
+<p-dialog [(visible)]="isVisible"
+        [draggable]="false" [resizable]="false" [maximizable]="true" [modal]="true">
+    <ng-template pTemplate="header">
+        <h3>
+            <span *ngIf="!order.id">Tạo mới</span>
+            <span *ngIf="order.id">Chỉnh sửa</span> 
+            hoá đơn
+        </h3>
+    </ng-template>
+    <form [formGroup]="orderInfoFormGroup">
+        <ng-container formArrayName="products" *ngFor="let product of products.controls; let i = index">
+            <div class="flex flex-row justify-content-between align-items-center border-bottom-hover">
+                <span class="mr-2">Sản phẩm {{i + 1}}</span>
+                <button pButton pRipple type="button" icon="pi pi-times" 
+                        class="p-button-rounded p-button-text p-button-danger" (click)="removeProduct(i)">
+                </button>
+            </div>
+            <div [formGroupName]="i">
+                <div *ngFor="let productQuestion of productInfoQuestionArray[i]">
+                    <dynamic-form-question [question]="productQuestion" [formGroup]="productInfoFormGroupArray[i]">
+                    </dynamic-form-question>
+                </div>
+            </div>
+        </ng-container>
+        <div class="field">
+            <p-button label="Thêm sản phẩm" (click)="addProduct()"></p-button>
+        </div>
+        <div *ngFor="let question of orderInfoQuestions">
+            <dynamic-form-question [question]="question" [formGroup]="orderInfoFormGroup">
+            </dynamic-form-question>
+        </div>
+    </form>
+    <ng-template pTemplate="footer">
+        <div class="flex flex-row justify-content-end align-items-center">
+            <button pButton pRipple type="button" class="p-button-danger"
+                    (click)="close(null)">
+                Huỷ
+            </button>
+            <button pButton pRipple [disabled]="!orderInfoFormGroup.valid">
+                Submit
+            </button>
+        </div>
+    </ng-template>
+</p-dialog>

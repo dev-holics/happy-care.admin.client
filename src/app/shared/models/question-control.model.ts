@@ -32,3 +32,7 @@ export class CheckboxControl extends QuestionBaseModel<boolean> {
 export class RadioButtonGroupControl extends QuestionBaseModel<string> {
   override controlType = QUESTION_CONTROL_TYPE.RADIO_BUTTON_GROUP;
 }
+
+export class FormArrayControl extends QuestionBaseModel<any[]> {
+  override controlType = QUESTION_CONTROL_TYPE.FORM_ARRAY;
+}

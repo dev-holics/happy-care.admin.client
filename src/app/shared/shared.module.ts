@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { DynamicFormQuestionComponent } from './components/dynamic-form-question/dynamic-form-question.component';
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
+import { BlockUIComponent } from './components/block-ui/block-ui.component';
 
 const PROVIDERS: never[] = [];
 
@@ -16,6 +17,7 @@ const MODULE_SHARED = [
 
 @NgModule({
 	declarations: [
+		BlockUIComponent,
 		DynamicFormQuestionComponent,
 		DynamicFormComponent
 	],
@@ -25,6 +27,7 @@ const MODULE_SHARED = [
     ],
 	exports: [
 		...MODULE_SHARED,
+		BlockUIComponent,
 		DynamicFormQuestionComponent,
 		DynamicFormComponent
 	],

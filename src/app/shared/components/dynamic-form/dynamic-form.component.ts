@@ -8,9 +8,10 @@ import { QuestionControlService } from '../../services/question-control.service'
   templateUrl: './dynamic-form.component.html',
   providers: [ QuestionControlService ]
 })
+
 export class DynamicFormComponent implements OnInit {
 
-  @Input() questions: QuestionBaseModel<string>[] | null = [];
+  @Input() questions: QuestionBaseModel<string | string[]>[] | null = [];
   form!: FormGroup;
   payLoad = '';
 

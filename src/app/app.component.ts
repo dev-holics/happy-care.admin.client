@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { QuestionBaseModel } from './shared/models/question-base.model';
-import { QuestionControlService } from './shared/services/question-control.service';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { Subscriber } from 'rxjs';
+import { UiHelper } from './_helpers/ui.helper';
 
 @Component({
   selector: 'app-root',
@@ -9,12 +9,30 @@ import { QuestionControlService } from './shared/services/question-control.servi
 })
 export class AppComponent {
   title = 'happy-care.admin.client';
-  public questions: QuestionBaseModel<string>[] = [];
+  
+  subscribe = new Subscriber();
+  public isAppLoading: boolean;
 
-  constructor(private service: QuestionControlService) {
+  constructor(private cd: ChangeDetectorRef) {
   }
 
-  ngOnInit() {
-    this.questions = this.service.getQuestions();
+  ngOnInit(): void {
   }
+
+  ngOnDestroy() {
+		this.subscribe.unsubscribe();
+	}
+
+	ngAfterContentChecked() {
+		this.subscribeBlockUi();
+    this.cd.detectChanges();
+	}
+
+  subscribeBlockUi() {
+		this.subscribe.add(
+			UiHelper.subscribeBlockUI(isBlock => {
+				this.isAppLoading = isBlock;
+			}),
+		);
+	}
 }

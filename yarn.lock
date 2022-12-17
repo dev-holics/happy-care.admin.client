@@ -5105,6 +5105,11 @@ pretty-bytes@^5.3.0:
   resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-5.6.0.tgz#356256f643804773c82f64723fe78c92c62beaeb"
   integrity sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==
 
+primeflex@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/primeflex/-/primeflex-3.3.0.tgz#6c755230ddf30c8fffed9f817efed28d5fe2bdff"
+  integrity sha512-4hvyIO7lERN5bnyURn67Qpozghins8Jq/GSXO6tymc3oa2ADHWuiYBti8ZptPwHu+uD/HTEisS26NEmeIGfPZQ==
+
 primeicons@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/primeicons/-/primeicons-6.0.1.tgz#431fa7c79825934eefd62087d8e1faa6a9e376ad"
@@ -5174,6 +5179,11 @@ queue-microtask@^1.2.2:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
+
+radash@^10.3.0:
+  version "10.3.0"
+  resolved "https://registry.yarnpkg.com/radash/-/radash-10.3.0.tgz#ee161da6518fe9a9266cdd682d0a30101fabc1d7"
+  integrity sha512-ALTB1mg2/ATLYH/Ru/Or0ohg1R1YQ7aJA/DV/4PQAEhp4gBlCpx+XmJMeNkdF3kCVOTpZ+8Jj6fYpjZeboGyzA==
 
 randombytes@^2.1.0:
   version "2.1.0"

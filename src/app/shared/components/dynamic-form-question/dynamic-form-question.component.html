@@ -33,7 +33,7 @@
   
       <div class="field-value" *ngSwitchCase="'dropdown'">
         <p-dropdown [appendTo]="'body'" [options]="question.options" [formControlName]="question.key"
-                    [filter]="true" placeholder="{{'Chọn ' + question.label }}"
+                    [filter]="question.optionFilter" placeholder="{{'Chọn ' + question.label }}"
                     optionLabel="{{question.optionLabel}}" optionValue="{{question.optionValue}}"
                     [showClear]="true" (onChange)="question.onChange && question.onChange($event)">
         </p-dropdown>
