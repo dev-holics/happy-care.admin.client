@@ -11,11 +11,18 @@
 <div class="col p-4 data-table">
     <div class="flex flex-row pb-3 justify-content-between align-items-center">
         <h2 class="m-0">Quyền</h2>
-        <button pButton pRipple type="button" label="Create" class="p-button-success" (click)="openDialog(null)"></button>
+        <button *ngIf="canAdd" pButton pRipple type="button" label="Create" class="p-button-success" (click)="openDialog(null)"></button>
     </div>
     <p-toolbar styleClass="mb-4">
-        <ng-template pTemplate="right">
-        </ng-template>
+      <div class="field col-3">
+        <label for="moduleId" class="block form-label">Module</label>
+        <p-dropdown [(ngModel)]="moduleId" [options]="moduleOptions" placeholder="Chọn module" [style]="{'width':'100%'}"
+                    aria-describedby="origin-help" optionLabel="name" optionValue="id"
+                    [filter]="true" filterBy="name" (onChange)="onChangeModule($event)"
+                    [showClear]="true"
+        >
+        </p-dropdown>
+      </div>
     </p-toolbar>
     <p-table [value]="permissions" responsiveLayout="scroll" styleClass="w-full p-datatable-gridlines p-datatable-striped mt-2"
                 [lazy]="true" [paginator]="true" [rows]="limit" [totalRecords]="totalData"
@@ -46,15 +53,15 @@
                   <em *ngIf="!permission.isActive" class="pi pi-times"></em>
                 </td>
                 <td style="text-align: center;">
-                    <button pButton pRipple icon="pi pi-pencil"
+                    <button *ngIf="canUpdate" pButton pRipple icon="pi pi-pencil"
                             class="p-button-warning m-1"
                             (click)="openDialog(permission.id)">
                     </button>
-                    <button *ngIf="permission.isActive" pButton pRipple icon="pi pi-lock"
+                    <button *ngIf="permission.isActive && canUpdate" pButton pRipple icon="pi pi-lock"
                             class="p-button-warning m-1"
                             (click)="openInActiveDialog(permission.id)">
                     </button>
-                    <button *ngIf="!permission.isActive" pButton pRipple icon="pi pi-unlock"
+                    <button *ngIf="!permission.isActive && canUpdate" pButton pRipple icon="pi pi-unlock"
                             class="p-button-warning m-1"
                             (click)="openActiveDialog(permission.id)">
                     </button>

@@ -45,7 +45,7 @@
                 <td>{{role.description}}</td>
                 <td>{{role.accessLevel}}</td>
                 <td style="text-align: center;">
-                    <button pButton pRipple icon="pi pi-pencil"
+                    <button *ngIf="canUpdate" pButton pRipple icon="pi pi-pencil"
                             class="p-button-warning m-1"
                             (click)="openDialog(role.id)">
                     </button>

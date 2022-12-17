@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Role, RoleUpdate } from 'src/app/_models/role';
+import { AccountsService } from 'src/app/_services/accounts.service';
 import { RolesService } from 'src/app/_services/roles.service';
+import decode from "jwt-decode";
 
 @Component({
   selector: 'app-roles',
@@ -17,14 +19,27 @@ export class RolesComponent implements OnInit {
   public page: number = 1;
   public limit: number = 10;
   public totalData: number = 0;
+  public canAdd: boolean = true;
+  public canUpdate: boolean = true;
 
   constructor(public rolesService: RolesService,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private accountsService: AccountsService) { }
 
   ngOnInit(): void {
     this.fetchRoles();
+    const currentUser = this.accountsService.currentUserValue;
+    if (currentUser) {
+      const tokenPayload:any = decode(currentUser.accessToken)
+      const permissions = tokenPayload.role.permissions;
+
+      this.canUpdate = this.isAccess(permissions, 'update_role');
+    }
   }
 
+  isAccess(permissions: any, permission: string) {
+    return permissions.some((x) => x.name == permission);
+  }
   fetchRoles() : void {
     this.rolesService.getRoles().subscribe(
       (response: Role[]) => {

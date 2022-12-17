@@ -3,11 +3,13 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Branch } from 'src/app/_models/branch';
 import { ProductOfBranchDto } from 'src/app/_models/product';
 import { ImportProductDto } from 'src/app/_models/product_log';
+import { AccountsService } from 'src/app/_services/accounts.service';
 import { BranchsService } from 'src/app/_services/branchs.service';
 import { ProductLogService } from 'src/app/_services/product-log.service';
 import { ProductsOfBranchesService } from 'src/app/_services/products-of-branches.service';
 import { Product } from '../products/product.model';
 import { ProductsService } from '../products/product.service';
+import decode from "jwt-decode";
 
 @Component({
   selector: 'app-products-of-branches',
@@ -26,18 +28,30 @@ export class ProductsOfBranchesComponent implements OnInit {
   public totalData: number = 0;
   public branchId: string = '';
   public query?: string = '';
+  public canImport: boolean = true;
 
   constructor(
     public branchesService: BranchsService,
     public productOfBranchService: ProductsOfBranchesService,
     public productLogService: ProductLogService,
     public productsService: ProductsService,
-    private confirmationService: ConfirmationService,
+    private accountsService: AccountsService,
     private messageService: MessageService) { }
 
     ngOnInit(): void {
       this.fetchProductsOfBranches();
       this.fetchOptions();
+      const currentUser = this.accountsService.currentUserValue;
+      if (currentUser) {
+        const tokenPayload:any = decode(currentUser.accessToken)
+        const permissions = tokenPayload.role.permissions;
+
+        this.canImport = this.isAccess(permissions, 'create_product_log');
+      }
+    }
+
+    isAccess(permissions: any, permission: string) {
+      return permissions.some((x) => x.name == permission);
     }
 
     fetchProductsOfBranches() {

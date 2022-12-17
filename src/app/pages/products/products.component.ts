@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
+import { AccountsService } from 'src/app/_services/accounts.service';
 import { Product } from './product.model';
 import { ProductsService } from './product.service';
+import decode from "jwt-decode";
+
 
 @Component({
   selector: 'app-products',
@@ -16,17 +19,33 @@ export class ProductsComponent implements OnInit {
   public page: number = 1;
   public limit: number = 10;
   public totalData: number = 0;
+  public canUpdate: boolean = true;
+  public canAdd: boolean = true;
+  public canDelete: boolean = true;
 
   constructor(
     public productsService: ProductsService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private accountsService: AccountsService
   ) {}
 
   ngOnInit(): void {
     this.getProducts(this.page, this.limit);
+    const currentUser = this.accountsService.currentUserValue;
+    if (currentUser) {
+      const tokenPayload:any = decode(currentUser.accessToken)
+      const permissions = tokenPayload.role.permissions;
+
+      this.canAdd = this.isAccess(permissions, 'create_product');
+      this.canUpdate = this.isAccess(permissions, 'update_product');
+      this.canDelete = this.isAccess(permissions, 'delete_product');
+    }
   }
 
+  isAccess(permissions: any, permission: string) {
+    return permissions.some((x) => x.name == permission);
+  }
   public getProducts(page: number, limit: number): void {
     this.products = []; // for show spinner each time
     this.productsService.getProducts(page, limit).subscribe((obj) => {
