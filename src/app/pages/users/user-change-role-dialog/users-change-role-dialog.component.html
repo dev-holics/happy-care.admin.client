@@ -1,0 +1,42 @@
+<p-dialog [(visible)]="isVisible" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false" [maximizable]="true" [modal]="true" [contentStyle]="{'overflow-y':'visible'}">
+    <ng-template pTemplate="header">
+        <h1><span *ngIf="!id">Thêm mới</span><span *ngIf="id">Cập nhật</span> Người dùng </h1>
+    </ng-template>
+    <ng-template pTemplate="content">
+        <form [formGroup]="form">
+            <div class="flex flex-column flex-1 form">
+                <div class="field">
+                    <label for="role" class="block form-label">Vai trò</label>
+                    <p-dropdown id="role" [options]="roles" placeholder="Chọn vai trò" [style]="{'width':'100%'}"
+                                aria-describedby="origin-help" optionLabel="name" optionValue="id"
+                                [filter]="true" filterBy="name"
+                                formControlName="role" [class.ng-dirty]="form.controls.role.touched">
+                    </p-dropdown>
+                </div>
+                <div *ngIf="form.controls['role'].value === phamarcistId" class="field">
+                  <label for="branch" class="block form-label">Chi nhánh</label>
+                  <p-dropdown id="branch" [options]="branches" placeholder="Chọn Chi nhánh" [style]="{'width':'100%'}"
+                              aria-describedby="origin-help" optionLabel="address" optionValue="id"
+                              [filter]="true" filterBy="address"
+                              formControlName="branch" [class.ng-dirty]="form.controls.branch.touched">
+                  </p-dropdown>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <div class="flex flex-row justify-content-end align-items-center form-actions">
+            <button pButton pRipple [disabled]="!form.valid" class="form-button"
+                    (click)="close(form.value)">
+                <span>
+                    Lưu
+                </span>
+            </button>
+            <button pButton pRipple type="button" class="p-button-danger form-button"
+                    (click)="close(null)">
+                Huỷ bỏ
+            </button>
+        </div>
+    </ng-template>
+</p-dialog>

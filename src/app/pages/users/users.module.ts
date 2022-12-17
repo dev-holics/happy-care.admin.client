@@ -16,6 +16,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { UsersComponent } from './users.component';
 import { UsersDialogComponent } from './users-dialog/users-dialog.component';
+import { UserChangeRoleDialogComponent } from './user-change-role-dialog/users-change-role-dialog.component';
 
 
 export const routes = [
@@ -29,6 +30,7 @@ export const routes = [
   declarations: [
     UsersComponent,
     UsersDialogComponent,
+    UserChangeRoleDialogComponent,
   ],
   imports: [
     CommonModule,

@@ -1,6 +1,11 @@
 <app-users-dialog *ngIf="displayDialog" [display]="displayDialog" [roles]="roleOptions"
+                        [branches]="branchOptions"
                         [Id]="selectedId" (closeDialog)="onHideDialog($event)">
 </app-users-dialog>
+<app-users-change-role-dialog *ngIf="displayChangeRoleDialog" [display]="displayChangeRoleDialog" [roles]="roleOptions"
+                        [branches]="branchOptions"
+                        [Id]="selectedId" (closeDialog)="onHideChangeRoleDialog($event)">
+</app-users-change-role-dialog>
 <p-confirmDialog #cd [style]="{width: '40vw'}">
     <ng-template pTemplate="footer">
         <button type="button" pButton icon="pi pi-times" class="p-button-outlined p-button-info" label="No" (click)="cd.reject()"></button>
@@ -52,9 +57,13 @@
                   <em *ngIf="!user.isActive" class="pi pi-times"></em>
                 </td>
                 <td style="text-align: center;">
-                    <button pButton pRipple icon="pi pi-pencil"
+                    <button pButton pRipple icon="pi pi-user-edit"
                             class="p-button-warning m-1"
                             (click)="openDialog(user.id)">
+                    </button>
+                    <button pButton pRipple icon="pi pi-pencil"
+                            class="p-button-info m-1"
+                            (click)="openChangeRoleDialog(user.id)">
                     </button>
                     <!-- <button *ngIf="user.isActive" pButton pRipple icon="pi pi-lock"
                             class="p-button-warning m-1"

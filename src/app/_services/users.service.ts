@@ -44,8 +44,17 @@ export class UsersService {
     );
   }
 
-  put(userId: string, roleId: string) : Observable<any> {
-    const params = {roleId: roleId};
+  updateUser(userId: string, userUpdate:UserCreate ) : Observable<any> {
+    return this.httpClient.put(`${environment.baseUrl}/admin/users/${userId}`, userUpdate, this.httpOptions)
+    .pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
+
+  updateRole(userId: string, roleId: string, branchId: string) : Observable<any> {
+    const params = {roleId: roleId, branchId: branchId};
     return this.httpClient.put(`${environment.baseUrl}/admin/users/${userId}/update-role`, params, this.httpOptions)
     .pipe(
       map((response: any) => {
