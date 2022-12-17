@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { QuestionBaseModel } from './shared/models/question-base.model';
+import { QuestionControlService } from './shared/services/question-control.service';
 
 @Component({
   selector: 'app-root',
@@ -7,15 +9,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'happy-care.admin.client';
-  cities: any[];
+  public questions: QuestionBaseModel<string>[] = [];
 
-  constructor() {
-    this.cities = [
-      {name: 'New York', code: 'NY'},
-      {name: 'Rome', code: 'RM'},
-      {name: 'London', code: 'LDN'},
-      {name: 'Istanbul', code: 'IST'},
-      {name: 'Paris', code: 'PRS'}
-    ];
+  constructor(private service: QuestionControlService) {
+  }
+
+  ngOnInit() {
+    this.questions = this.service.getQuestions();
   }
 }
