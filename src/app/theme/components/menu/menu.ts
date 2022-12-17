@@ -7,6 +7,7 @@ export const verticalMenuItems = [
 
     new Menu (303, 'Chi nhánh', '/', null, null, null, true, 0),
     new Menu (305, 'Danh sách chi nhánh', null, '/branches', null, null, false, 303),
+    new Menu (316, 'Sản phẩm của chi nhánh', null, '/products-of-branches', null, null, false, 303),
 
     new Menu (308, 'Sản phẩm', null, null, 'event', null, true, 0),
     new Menu (309, 'Nguồn gốc', null, '/origins', 'event', null, false, 308),

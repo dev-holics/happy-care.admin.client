@@ -15,7 +15,7 @@ export class UserDto {
 
 export class UserCreate {
   phoneNumber: string;
-  password: string;
+  password?: string;
   fullname: string;
   email: string;
   gender: string;

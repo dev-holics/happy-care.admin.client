@@ -1,10 +1,10 @@
 export const GENDER = [
   {
     id: "MALE",
-    name: "MALE"
+    name: "Nam"
   },
   {
     id: "FEMALE",
-    name: "FEMALE"
+    name: "Nữ"
   }
 ]

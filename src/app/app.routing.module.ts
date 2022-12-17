@@ -91,6 +91,14 @@ const routes: Routes = [
           ),
         data: { breadcrumb: 'ProductLog' },
       },
+      {
+        path: 'products-of-branches',
+        loadChildren:() =>
+          import ('./pages/products-of-branches/products-of-branches.module').then(
+            (m) => m.ProductsOfBranchesModule
+          ),
+        data: { breadcrumb: 'Products Of Branches'}
+      }
     ],
   },
   {
