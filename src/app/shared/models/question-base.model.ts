@@ -7,6 +7,7 @@ export class QuestionBaseModel<T> {
 	controlType: string;
 	type: string;
 	options: any[];
+	optionFilter: boolean;
 	optionLabel: string;
 	optionValue: string;
 	onChange?: (_event?: any) => void;
@@ -30,6 +31,7 @@ export class QuestionBaseModel<T> {
 			controlType?: string;
 			type?: string;
 			options?: any[];
+			optionFilter?: boolean;
 			optionLabel?: string;
 			optionValue?: string;
 			validates?: {
@@ -51,6 +53,7 @@ export class QuestionBaseModel<T> {
 		this.controlType = options.controlType || '';
 		this.type = options.type || '';
 		this.options = options.options || [];
+		this.optionFilter = options.optionFilter || false;
 		this.optionLabel = options.optionLabel || '';
 		this.optionValue = options.optionValue || '';
 		this.validates = options.validates || {};
