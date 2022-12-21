@@ -1,1 +1,7 @@
-<p>dynamic-form works!</p>
+<div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+        <div *ngFor="let question of questions">
+            <dynamic-form-question [question]="question" [formGroup]="form"></dynamic-form-question>
+        </div>
+    </form>
+</div>
