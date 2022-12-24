@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { SETTING_CONTROL_TYPE } from 'src/app/_config/enum.config';
+import { QUESTION_CONTROL_TYPE } from 'src/app/_config';
 import { QuestionBaseModel } from '../models/question-base.model';
 
 @Injectable({ providedIn: 'root' })
@@ -36,11 +36,11 @@ export class QuestionControlService {
   getDefaultValue(question: QuestionBaseModel<any>) {
     let defaultValue: any;
     switch (question.controlType) {
-      case SETTING_CONTROL_TYPE.DROPDOWN: {
+      case QUESTION_CONTROL_TYPE.DROPDOWN: {
         defaultValue = null;
         break;
       }
-      case SETTING_CONTROL_TYPE.CHECKBOX_GROUP: {
+      case QUESTION_CONTROL_TYPE.CHECKBOX_GROUP: {
         defaultValue = [];
         break;
       }
@@ -58,7 +58,7 @@ export class QuestionControlService {
       const validators = this.getValidators(question);
       const defaultValue = this.getDefaultValue(question);
       switch (question.controlType) {
-        case SETTING_CONTROL_TYPE.DYNAMIC_TEXT_BOX: {
+        case QUESTION_CONTROL_TYPE.DYNAMIC_TEXT_BOX: {
           group[question.key] = new FormArray(
             [],
             [Validators.required, Validators.maxLength(50)]
@@ -144,7 +144,7 @@ export class QuestionControlService {
         return item;
       }
       switch (question.controlType) {
-        case SETTING_CONTROL_TYPE.TEXT_BOX: {
+        case QUESTION_CONTROL_TYPE.TEXT_BOX: {
           item[`${question.key}`] = formControl?.value || '';
           break;
         }
