@@ -6,10 +6,13 @@ import { DynamicFormComponent } from 'src/app/shared/components/dynamic-form/dyn
 import { ReactiveFormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { DynamicFormQuestionComponent } from './components/dynamic-form-question/dynamic-form-question.component';
+import { BlockUIComponent } from './components/block-ui/block-ui.component';
+import { CustomMaterialModule } from './material.module';
 
 const PROVIDERS: never[] = [];
 
 const MODULE_SHARED = [
+	CustomMaterialModule,
 	CustomPrimengModule,
 	ReactiveFormsModule,
 	PasswordModule,
@@ -17,6 +20,7 @@ const MODULE_SHARED = [
 
 @NgModule({
 	declarations: [
+		BlockUIComponent,
     	DynamicFormQuestionComponent,
 		DynamicFormComponent,
 	],
@@ -27,6 +31,7 @@ const MODULE_SHARED = [
 	],
 	exports: [
 		...MODULE_SHARED,
+		BlockUIComponent,
     	DynamicFormQuestionComponent,
 		DynamicFormComponent,
 	],

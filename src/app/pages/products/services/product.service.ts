@@ -3,7 +3,7 @@ import { HttpService } from 'src/app/_services/http.service';
 import { URL_CONFIG } from 'src/app/_config/url.config';
 import { ProductModel } from '../models/product.model';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ProductsService {
   constructor(public httpService: HttpService) {}
 
@@ -35,7 +35,7 @@ export class ProductsService {
     await this.httpService.put(url, product);
   }
 
-  async deleteProduct(id: number) {
+  async deleteProduct(id: string) {
     const url = `${URL_CONFIG.ORIGIN_ADMIN_URL}/${id}`;
     return this.httpService.delete(url);
   }

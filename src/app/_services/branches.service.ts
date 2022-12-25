@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { URL_CONFIG } from '../_config';
 import { Branch, BranchCreateUpdate, City, District } from '../_models/branch';
 
 @Injectable({
@@ -11,10 +11,11 @@ export class BranchsService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type':'application/json'}),
   };
+  
   constructor(private httpClient: HttpClient) { }
 
   getBranches(page: number, limit: number, cityId: string = '', districtId: string = '') : Observable<Branch[]> {
-    return this.httpClient.get<Branch[]>(`${environment.baseUrl}/public/branches/list`, {
+    return this.httpClient.get<Branch[]>(`${URL_CONFIG.BRANCH_PUBLIC_URL}/list`, {
       params: {
         page,
         limit,
@@ -23,19 +24,19 @@ export class BranchsService {
   }
 
   getBranchById(branchId: string) : Observable<Branch> {
-    return this.httpClient.get<Branch>(`${environment.baseUrl}/public/branches/${branchId}`);
+    return this.httpClient.get<Branch>(`${URL_CONFIG.BRANCH_PUBLIC_URL}/${branchId}`);
   }
 
   getCities() : Observable<City[]> {
-    return this.httpClient.get<City[]>(`${environment.baseUrl}/public/cities`);
+    return this.httpClient.get<City[]>(`${URL_CONFIG.CITY_PUBLIC_URL}`);
   }
 
   getDistrictsByCityId(cityId: string): Observable<District[]> {
-    return this.httpClient.get<District[]>(`${environment.baseUrl}/public/cities/${cityId}/district`);
+    return this.httpClient.get<District[]>(`${URL_CONFIG.CITY_PUBLIC_URL}/${cityId}/district`);
   }
 
   create(branch: BranchCreateUpdate): Observable<any> {
-    return this.httpClient.post(`${environment.baseUrl}/admin/branches`, branch, this.httpOptions)
+    return this.httpClient.post(`${URL_CONFIG.BRANCH_ADMIN_URL}`, branch, this.httpOptions)
     .pipe(
       map((response: any) => {
         return response;
@@ -44,6 +45,6 @@ export class BranchsService {
   }
 
   put(id: string, branch: BranchCreateUpdate): Observable<any> {
-    return this.httpClient.put(`${environment.baseUrl}/admin/branches/${id}`, branch, this.httpOptions);
+    return this.httpClient.put(`${URL_CONFIG.BRANCH_ADMIN_URL}/${id}`, branch, this.httpOptions);
   }
 }

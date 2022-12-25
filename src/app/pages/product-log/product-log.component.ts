@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Branch } from 'src/app/_models/branch';
 import { ImportProductDto, ProductLogDto } from 'src/app/_models/product_log';
-import { BranchsService } from 'src/app/_services/branchs.service';
+import { BranchsService } from 'src/app/_services/branches.service';
 import { ProductLogService } from 'src/app/_services/product-log.service';
 import { ProductModel } from '../products/models/product.model';
 import { ProductsService } from '../products/services/product.service';

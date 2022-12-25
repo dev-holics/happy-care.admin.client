@@ -74,6 +74,10 @@ export class QuestionControlService {
           });
           break;
         }
+        case QUESTION_CONTROL_TYPE.FORM_ARRAY: {
+          group[question.key] = new FormArray([]);
+          break;
+        }
         default: {
           group[question.key] = new FormControl(
             question.value || defaultValue,

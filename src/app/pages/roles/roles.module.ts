@@ -37,7 +37,7 @@ export const routes = [
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    SharedModule,
+    SharedModule.forRoot(),
     RouterModule.forChild(routes),
     NgbModule,
     NgxPaginationModule,

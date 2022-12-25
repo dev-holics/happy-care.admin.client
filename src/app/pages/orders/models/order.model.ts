@@ -1,10 +1,7 @@
 export class OrderModel {
     id: string;
-    code: string;
+    products: any[];
     paymentType: string;
-    orderType: string;
-    status: string;
-    freeShipping: boolean;
-    total: number;
-    createdDate: Date;
+    totalPrice: number;
+    customerId: string;
 }

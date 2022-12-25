@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 import { Branch, BranchCreateUpdate, City } from 'src/app/_models/branch';
-import { BranchsService } from 'src/app/_services/branchs.service';
+import { BranchsService } from 'src/app/_services/branches.service';
 
 @Component({
   selector: 'app-branches',

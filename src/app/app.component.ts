@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Subscriber } from 'rxjs';
 import { AppSettings } from './app.settings';
 import { Settings } from './app.settings.model';
+import { QuestionBaseModel } from './shared/models/question-base.model';
+import { QuestionControlService } from './shared/services/question-control.service';
 import { UiHelper } from './_helpers/ui.helper';
 import { AccountsService } from './_services/accounts.service';
 
@@ -16,11 +18,14 @@ export class AppComponent implements OnInit {
   subscribe = new Subscriber();
   public isAppLoading: boolean;
   public settings: Settings;
+  questions: QuestionBaseModel<any>[];
+  cities: any[];
 
   constructor(
     public appSettings:AppSettings, 
     public accountsService: AccountsService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private service: QuestionControlService
   ){
       this.settings = this.appSettings.settings;
   }

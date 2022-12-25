@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Branch, BranchCreateUpdate, City, District } from 'src/app/_models/branch';
-import { BranchsService } from 'src/app/_services/branchs.service';
+import { BranchsService } from 'src/app/_services/branches.service';
 
 @Component({
   selector: 'app-branches-dialog',

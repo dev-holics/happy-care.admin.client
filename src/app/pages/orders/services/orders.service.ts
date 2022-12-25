@@ -3,7 +3,7 @@ import { HttpService } from 'src/app/_services/http.service';
 import { URL_CONFIG } from 'src/app/_config/url.config';
 import { OrderModel } from '../models/order.model';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class OrdersService {
   constructor(public httpService: HttpService) {}
 
@@ -16,27 +16,27 @@ export class OrdersService {
     const paginator = {
       page: res.currentPage,
       limit: res.limit,
-      totalData: res.totalData
-    }
+      totalData: res.totalData,
+    };
 
     return {
       data: data,
-      paginator: paginator
-    }
+      paginator: paginator,
+    };
   }
 
   async addOrder(order: OrderModel) {
-    const url = `${URL_CONFIG.ORIGIN_ADMIN_URL}`;
+    const url = `${URL_CONFIG.ORDER_ADMIN_URL}`;
     await this.httpService.post(url, order);
   }
 
   async updateOrder(order: OrderModel) {
-    const url = `${URL_CONFIG.ORIGIN_ADMIN_URL}/${order.id}`;
+    const url = `${URL_CONFIG.ORDER_ADMIN_URL}/${order.id}`;
     await this.httpService.put(url, order);
   }
 
   async deleteOrder(id: number) {
-    const url = `${URL_CONFIG.ORIGIN_ADMIN_URL}/${id}`;
+    const url = `${URL_CONFIG.ORDER_ADMIN_URL}/${id}`;
     return this.httpService.delete(url);
   }
 }
