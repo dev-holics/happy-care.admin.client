@@ -33,3 +33,9 @@ export class PermissionStatus {
     this.status = status;
   }
 }
+
+export class PermissionOfUser {
+  code: string = '';
+  name: string = '';
+  isActive: boolean = true;
+}

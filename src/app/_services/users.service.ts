@@ -55,18 +55,22 @@ export class UsersService {
       );
   }
 
-  put(userId: string, roleId: string): Observable<any> {
-    const params = { roleId: roleId };
-    return this.httpClient
-      .put(
-        `${URL_CONFIG.USER_URL}/${userId}/update-role`,
-        params,
-        this.httpOptions
-      )
-      .pipe(
-        map((response: any) => {
-          return response;
-        })
-      );
+  updateUser(userId: string, userUpdate:UserCreate ) : Observable<any> {
+    return this.httpClient.put(`${URL_CONFIG.USER_ADMIN_URL}/${userId}`, userUpdate, this.httpOptions)
+    .pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
+
+  updateRole(userId: string, roleId: string, branchId: string) : Observable<any> {
+    const params = {roleId: roleId, branchId: branchId};
+    return this.httpClient.put(`${URL_CONFIG.USER_ADMIN_URL}/${userId}/update-role`, params, this.httpOptions)
+    .pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
   }
 }

@@ -1,19 +1,26 @@
 ﻿import { Menu } from "./menu.model";
 
 export const verticalMenuItems = [
-    new Menu (1, 'Tổng quan', '/', null, 'fa-solid fa-house', null, false, 0),
-    new Menu (2, 'Sản phẩm', '/products', null, 'fa-solid fa-capsules', null, false, 0),
-    new Menu (3, 'Đơn hàng', '/orders', null, 'fa-solid fa-shopping-cart', null, false, 0),
-    new Menu (4, 'Danh mục', '/categories', null, 'fa-solid fa-chart-gantt', null, false, 0),
-    new Menu (5, 'Nguồn gốc', '/origins', null, 'fa-solid fa-location-dot', null, false, 0),
-    new Menu (6, 'Nhãn hiệu', '/brands', null, 'fa-solid fa-globe', null, false, 0),
-    new Menu (7, 'Kho', '/', null , 'fa-solid fa-warehouse', null, true, 0),
-    new Menu (8, 'Nhập kho', '/productLog', null, 'fa-solid fa-file-import', null, false, 7),
-    new Menu (9, 'Hệ thống', '/', null, 'fa-solid fa-gear', null, true, 0),
-    new Menu (10, 'Phân quyền', '/roles', null, null, null, false, 9),
-    new Menu (11, 'Chi nhánh', '/branches', null, 'fa-solid fa-code-branch', null, false, 9),
-    new Menu (12, 'Quyền', '/permissions', null, 'fa-solid fa-person-circle-question', null, false, 10),
-    new Menu (13, 'Người dùng', '/users', null, 'fa-solid fa-user', null, false, 9),
+    new Menu (1, 'Tổng quan', '/', null, 'pi pi-home', null, false, 0),
+    new Menu (300, 'Danh mục', '/', null, null, null, true, 0),
+    new Menu (302, 'Danh sách danh mục', null, '/categories', null, null, false, 300),
+
+    new Menu (303, 'Chi nhánh', '/', null, null, null, true, 0),
+    new Menu (305, 'Danh sách chi nhánh', null, '/branches', null, null, false, 303),
+    new Menu (316, 'Sản phẩm của chi nhánh', null, '/products-of-branches', null, null, false, 303),
+
+    new Menu (308, 'Sản phẩm', null, null, 'event', null, true, 0),
+    new Menu (309, 'Nguồn gốc', null, '/origins', 'event', null, false, 308),
+    new Menu (310, 'Sản phẩm', null, '/products', 'event', null, false, 308),
+    new Menu (311, 'Nhãn hiệu', null, '/brands', 'event', null, false, 308),
+
+    new Menu (306, 'Quản lý hệ thống', '/', null, null, null, true, 0),
+    new Menu (307, 'Vai trò', null, '/roles', null, null, false, 306),
+    new Menu (312, 'Quyền', null, '/permissions', null, null, false, 306),
+    new Menu (313, 'Người dùng', null, '/users', null, null, false, 306),
+
+    new Menu (314, 'Kho', '/', null , null, null, true, 0),
+    new Menu (315, 'Nhập kho', null, '/productLog', null, null, false, 314),
 ];
 
 export const horizontalMenuItems = [

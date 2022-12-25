@@ -11,6 +11,7 @@ export const URL_CONFIG = Object.freeze({
     CATEGORY_PUBLIC_URL: `${PUBLIC_URL}/categories`,
     CITY_PUBLIC_URL: `${PUBLIC_URL}/cities`,
     ORIGIN_PUBLIC_URL: `${PUBLIC_URL}/origins`,
+    PRODUCT_DETAIL_PUBLIC_URL: `${PUBLIC_URL}/product-details`,
     PRODUCT_PUBLIC_URL: `${PUBLIC_URL}/products`,
     BRAND_PUBLIC_URL: `${PUBLIC_URL}/trademarks`,
 
@@ -23,4 +24,5 @@ export const URL_CONFIG = Object.freeze({
     PRODUCT_ADMIN_URL: `${ADMIN_URL}/products`,
     BRAND_ADMIN_URL: `${ADMIN_URL}/trademarks`,
     ROLE_ADMIN_URL: `${ADMIN_URL}/roles`,
+    USER_ADMIN_URL: `${ADMIN_URL}/users`,
 });

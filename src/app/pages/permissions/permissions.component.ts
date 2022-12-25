@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
 import { ModuleOption, PermissionCreate, PermissionUpdate } from 'src/app/_models/permissions';
 import { Permission } from 'src/app/_models/role';
+import { AccountsService } from 'src/app/_services/accounts.service';
 import { PermissionsService } from 'src/app/_services/permissions.service';
 import { MODULES } from './permissions';
+import decode from "jwt-decode";
 
 @Component({
   selector: 'app-permissions',
@@ -15,23 +17,38 @@ export class PermissionsComponent implements OnInit {
   permissions: Permission[] = []
   public moduleOptions: ModuleOption[] = MODULES
   public displayDialog: boolean;
+  public moduleId: string = '';
   public selectedId: string;
   public page: number = 1;
   public limit: number = 10;
   public totalData: number = 0;
+  public canAdd: boolean = true;
+  public canUpdate: boolean = true;
 
   constructor(
     public permissionsService: PermissionsService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private accountsService: AccountsService) { }
 
   ngOnInit(): void {
     this.fetchPermissions();
+    const currentUser = this.accountsService.currentUserValue;
+    if (currentUser) {
+      const tokenPayload:any = decode(currentUser.accessToken)
+      const permissions = tokenPayload.role.permissions;
+
+      this.canAdd = this.isAccess(permissions, 'create_permission');
+      this.canUpdate = this.isAccess(permissions, 'update_permission');
+    }
   }
 
+  isAccess(permissions: any, permission: string) {
+    return permissions.some((x) => x.name == permission);
+  }
   fetchPermissions() {
     this.permissions = [];
-    this.permissionsService.getPermission(this.page, this.limit, "").subscribe(
+    this.permissionsService.getPermission(this.page, this.limit, this.moduleId).subscribe(
       (response: any) => {
         this.page = response.currentPage;
         this.limit = response.limit;
@@ -39,6 +56,10 @@ export class PermissionsComponent implements OnInit {
         this.permissions = response.data;
       }
     )
+  }
+
+  onChangeModule(event: any) {
+    this.fetchPermissions();
   }
 
   paginate(event): void {

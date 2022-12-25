@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 import { Branch, BranchCreateUpdate, City } from 'src/app/_models/branch';
+import decode from "jwt-decode";
+import { AccountsService } from 'src/app/_services/accounts.service';
 import { BranchsService } from 'src/app/_services/branches.service';
 
 @Component({
@@ -17,15 +19,32 @@ export class BranchesComponent implements OnInit {
   public page: number = 1;
   public limit: number = 10;
   public totalData: number = 0;
+  public canUpdate: boolean = true;
+  public canAdd: boolean = true;
+  public canDelete: boolean = true;
 
   constructor(
     public branchService: BranchsService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private accountsService: AccountsService) { }
 
   ngOnInit(): void {
     this.fetchBranches();
     this.fetchCities();
+    const currentUser = this.accountsService.currentUserValue;
+    if (currentUser) {
+      const tokenPayload:any = decode(currentUser.accessToken)
+      const permissions = tokenPayload.role.permissions;
+
+      this.canAdd = this.isAccess(permissions, 'create_branch');
+      this.canUpdate = this.isAccess(permissions, 'update_branch');
+      this.canDelete = this.isAccess(permissions, 'delete_branch');
+    }
+  }
+
+  isAccess(permissions: any, permission: string) {
+    return permissions.some((x) => x.name == permission);
   }
 
   fetchCities() {

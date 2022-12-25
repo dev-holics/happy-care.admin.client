@@ -1,72 +1,72 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Branch } from 'src/app/_models/branch';
-import { ImportProductDto, ProductLogDto } from 'src/app/_models/product_log';
+import { ProductOfBranchDto } from 'src/app/_models/product';
+import { ImportProductDto } from 'src/app/_models/product_log';
 import { AccountsService } from 'src/app/_services/accounts.service';
 import { ProductLogService } from 'src/app/_services/product-log.service';
-import decode from 'jwt-decode';
+import { ProductsOfBranchesService } from 'src/app/_services/products-of-branches.service';
+import decode from "jwt-decode";
+import { BranchsService } from 'src/app/_services/branches.service';
 import { ProductsService } from '../products/services/product.service';
 import { ProductModel } from '../products/models/product.model';
-import { BranchsService } from 'src/app/_services/branches.service';
 
 @Component({
-  selector: 'app-product-log',
-  templateUrl: './product-log.component.html',
-  styleUrls: ['./product-log.component.scss'],
-  providers: [ProductsService],
+  selector: 'app-products-of-branches',
+  templateUrl: './products-of-branches.component.html',
+  styleUrls: ['./products-of-branches.component.scss']
 })
-export class ProductLogComponent implements OnInit {
+export class ProductsOfBranchesComponent implements OnInit {
 
-  productLogs: ProductLogDto[] = []
-  public branchOptions: Branch[] = []
+  products: ProductOfBranchDto[] = []
   public productOptions: ProductModel[] = []
+  public branchOptions: Branch[] = []
   public displayDialog: boolean;
   public selectedId: string;
   public page: number = 1;
   public limit: number = 10;
   public totalData: number = 0;
   public branchId: string = '';
-  public query: string = '';
-  public transactionDate?: Date;
-  public canAdd: boolean = true;
+  public query?: string = '';
+  public canImport: boolean = true;
 
   constructor(
     public branchesService: BranchsService,
-    public productsService: ProductsService,
+    public productOfBranchService: ProductsOfBranchesService,
     public productLogService: ProductLogService,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private accountsService: AccountsService) { }
+    public productsService: ProductsService,
+    private accountsService: AccountsService,
+    private messageService: MessageService) { }
 
-    ngOnInit(): void {
-      this.fetchProductLogs();
-      this.fetchOptions();
+    async ngOnInit(): Promise<void> {
+      this.fetchProductsOfBranches();
+      await this.fetchOptions();
       const currentUser = this.accountsService.currentUserValue;
       if (currentUser) {
         const tokenPayload:any = decode(currentUser.accessToken)
-        const filteredPermission = tokenPayload.role.permissions
-          .some((permission) => permission.name == 'create_product_log')
-        if (!filteredPermission) {
-          this.canAdd = false;
-        }
+        const permissions = tokenPayload.role.permissions;
+
+        this.canImport = this.isAccess(permissions, 'create_product_log');
       }
     }
 
-    fetchProductLogs() {
-      this.productLogs = [];
+    isAccess(permissions: any, permission: string) {
+      return permissions.some((x) => x.name == permission);
+    }
+
+    fetchProductsOfBranches() {
+      this.products = [];
       if (!this.branchId) return;
-      this.productLogService.getProductLog(
+      this.productOfBranchService.getProductsOfBranches(
         this.page,
         this.limit,
         this.query,
-        this.branchId,
-        this.transactionDate
-        ).subscribe(
+        this.branchId).subscribe(
         (response: any) => {
           this.page = response.currentPage;
           this.limit = response.limit;
           this.totalData = response.totalData;
-          this.productLogs = response.data;
+          this.products = response.data;
         }
       )
     }
@@ -77,11 +77,7 @@ export class ProductLogComponent implements OnInit {
           this.branchOptions = response.data
         }
       )
-      let productQuery: any = {
-        page: 0,
-        limit: 200,
-      }
-      let res = await this.productsService.getProducts(productQuery);
+      let res = await this.productsService.getProducts(null);
       this.productOptions = res.data;
     }
 
@@ -90,14 +86,14 @@ export class ProductLogComponent implements OnInit {
       this.limit = event.rows;
       this.page = event.first / event.rows + 1;
       document.getElementById('main-content')!.scrollTop = 0;
-      this.fetchProductLogs();
+      this.fetchProductsOfBranches();
     }
 
 
-    openDialog(id: string | null): void {
+    openDialog(productId: string | null): void {
       this.displayDialog = true;
-      if (id) {
-        this.selectedId = id;
+      if (productId) {
+        this.selectedId = productId;
       } else {
         this.selectedId = '';
       }
@@ -115,7 +111,7 @@ export class ProductLogComponent implements OnInit {
         .create(productLog)
         .subscribe((response) =>
         {
-          this.fetchProductLogs()
+          this.fetchProductsOfBranches()
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
@@ -125,6 +121,7 @@ export class ProductLogComponent implements OnInit {
     }
 
     public onChangeBranch(event: any) {
-      this.fetchProductLogs();
+      this.branchId = event.value;
+      this.fetchProductsOfBranches();
     }
 }

@@ -1,3 +1,4 @@
+import { Branch } from "./branch";
 import { Role } from "./role";
 
 export class UserDto {
@@ -9,15 +10,17 @@ export class UserDto {
   gender: string;
   birthday: Date;
   role: Role;
+  branch: Branch;
 }
 
 export class UserCreate {
   phoneNumber: string;
-  password: string;
+  password?: string;
   fullname: string;
   email: string;
   gender: string;
   role: string;
+  branch: string;
 }
 
 export class UserToken{

@@ -14,23 +14,20 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { UsersComponent } from './users.component';
-import { UsersDialogComponent } from './users-dialog/users-dialog.component';
-import { UserChangeRoleDialogComponent } from './user-change-role-dialog/users-change-role-dialog.component';
-
+import { ProductsOfBranchesComponent } from './products-of-branches.component';
+import { ProductLogDialogComponent } from './product-log-dialog/product-log-dialog.component';
 
 export const routes = [
   {
       path: '',
-      component: UsersComponent,
+      component: ProductsOfBranchesComponent,
   }
 ];
 
 @NgModule({
   declarations: [
-    UsersComponent,
-    UsersDialogComponent,
-    UserChangeRoleDialogComponent,
+    ProductsOfBranchesComponent,
+    ProductLogDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -54,4 +51,4 @@ export const routes = [
     MessageService
   ]
 })
-export class UsersModule { }
+export class ProductsOfBranchesModule { }

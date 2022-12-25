@@ -11,7 +11,7 @@
 <div class="col p-4 data-table">
     <div class="flex flex-row pb-3 justify-content-between align-items-center">
         <h2 class="m-0">Chi nhánh</h2>
-        <button pButton pRipple type="button" label="Create" class="p-button-success" (click)="openDialog(null)"></button>
+        <button *ngIf="canAdd" pButton pRipple type="button" label="Create" class="p-button-success" (click)="openDialog(null)"></button>
     </div>
     <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
@@ -45,11 +45,11 @@
                 <td>{{branch.district.name}}</td>
                 <td>{{branch.district.city.name}}</td>
                 <td style="text-align: center;">
-                    <button pButton pRipple icon="pi pi-pencil"
+                    <button *ngIf="canUpdate" pButton pRipple icon="pi pi-pencil"
                             class="p-button-warning m-1"
                             (click)="openDialog(branch.id)">
                     </button>
-                    <button pButton pRipple icon="pi pi-trash"
+                    <button *ngIf="canDelete" pButton pRipple icon="pi pi-trash"
                             class="p-button-danger m-1"
                             (click)="openConfirmDialog(branch.id)">
                     </button>
