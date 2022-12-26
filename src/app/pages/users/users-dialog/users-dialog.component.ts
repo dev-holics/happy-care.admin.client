@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { GENDER } from 'src/app/shared/gender';
 import { passwordFormat, passwordValidator, phoneNumberFormat, phoneNumberValidator } from 'src/app/theme/utils/app-validators';
+import { GENDER } from 'src/app/_config/enum.config';
 import { Branch } from 'src/app/_models/branch';
 import { RoleOption } from 'src/app/_models/role';
 import { UsersService } from 'src/app/_services/users.service';
@@ -20,7 +20,10 @@ export class UsersDialogComponent implements OnInit {
   @Output() closeDialog = new EventEmitter<any>();
   public phamarcistId = '8902b1b3-a5be-4fff-9d29-1460b90641e9';
   public form: FormGroup;
-  public gender = GENDER;
+  public gender = [
+    { id: GENDER.MALE, name: 'Nam' },
+    { id: GENDER.FEMALE, name: 'Nữ' },
+  ];;
   submitted = false;
   constructor(public fb: FormBuilder, public usersService: UsersService) {
     this.form = this.fb.group({

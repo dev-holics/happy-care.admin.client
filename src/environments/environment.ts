@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://happy-care.apis.ductruong.com/api/v1',
+  apiUrl: 'https://happy-care.apis.ductruong.com'
 };
 
 /*

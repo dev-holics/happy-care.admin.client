@@ -3,22 +3,23 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Branch } from 'src/app/_models/branch';
 import { ImportProductDto, ProductLogDto } from 'src/app/_models/product_log';
 import { AccountsService } from 'src/app/_services/accounts.service';
-import { BranchsService } from 'src/app/_services/branchs.service';
 import { ProductLogService } from 'src/app/_services/product-log.service';
-import { Product } from '../products/product.model';
-import { ProductsService } from '../products/product.service';
 import decode from 'jwt-decode';
+import { ProductsService } from '../products/services/product.service';
+import { ProductModel } from '../products/models/product.model';
+import { BranchsService } from 'src/app/_services/branches.service';
 
 @Component({
   selector: 'app-product-log',
   templateUrl: './product-log.component.html',
-  styleUrls: ['./product-log.component.scss']
+  styleUrls: ['./product-log.component.scss'],
+  providers: [ProductsService],
 })
 export class ProductLogComponent implements OnInit {
 
   productLogs: ProductLogDto[] = []
   public branchOptions: Branch[] = []
-  public productOptions: Product[] = []
+  public productOptions: ProductModel[] = []
   public displayDialog: boolean;
   public selectedId: string;
   public page: number = 1;
@@ -70,17 +71,18 @@ export class ProductLogComponent implements OnInit {
       )
     }
 
-    fetchOptions() {
+    async fetchOptions() {
       this.branchesService.getBranches(0, 200).subscribe(
         (response: any) => {
           this.branchOptions = response.data
         }
       )
-      this.productsService.getProducts(0, 500).subscribe(
-        (response: any) => {
-          this.productOptions = response.data
-        }
-      )
+      let productQuery: any = {
+        page: 0,
+        limit: 200,
+      }
+      let res = await this.productsService.getProducts(productQuery);
+      this.productOptions = res.data;
     }
 
 

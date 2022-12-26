@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { URL_CONFIG } from '../_config';
 import { ProductOfBranchDto } from '../_models/product';
 
 @Injectable({
@@ -20,7 +21,7 @@ export class ProductsOfBranchesService {
 
     if (!search) delete params.search;
     if (!branchId) delete params.branchId;
-    return this.httpClient.get<ProductOfBranchDto[]>(`${environment.baseUrl}/public/product-details`, {params: params})
+    return this.httpClient.get<ProductOfBranchDto[]>(`${URL_CONFIG.PRODUCT_DETAIL_PUBLIC_URL}`, {params: params})
       .pipe(
         map((response: any) => {
           return response;

@@ -1,0 +1,181 @@
+<div class="field" [formGroup]="formGroup" *ngIf="!question.hidden">
+  <div
+    class="field-label"
+    [attr.for]="question.key"
+    *ngIf="question.controlType !== 'checkbox'"
+  >
+    {{ question.label }}
+    <span *ngIf="question.validates.required" class="color-red">*</span>
+  </div>
+
+  <div class="field-value" [ngSwitch]="question.controlType">
+    <div class="field-value" *ngSwitchCase="'textbox'">
+      <input
+        pInputText
+        type="text"
+        [ngClass]="{ 'p-disabled': question.disabled }"
+        [style]="{ width: '100%' }"
+        [formControlName]="question.key"
+        [id]="question.key"
+        [type]="question.type"
+        placeholder="{{ question.label }}"
+        (input)="question.validates.isDuplicate = false"
+        (keyup.enter)="question.validates.isDuplicate = false"
+      />
+    </div>
+
+    <div class="field-value" *ngSwitchCase="'textarea'">
+      <textarea
+        pInputTextarea
+        [formControlName]="question.key"
+        [style]="{ width: '100%' }"
+        placeholder="{{ question.label }}"
+        [id]="question.key"
+      >
+      </textarea>
+    </div>
+
+    <div class="field-value" *ngSwitchCase="'password'">
+      <p-password
+        [toggleMask]="true"
+        [feedback]="false"
+        [ngClass]="{ 'p-disabled': question.disabled }"
+        [formControlName]="question.key"
+        [id]="question.key"
+        placeholder="{{ question.label }}"
+        (input)="
+          questionControlService.validatePasswordMatch(formGroup, questions)
+        "
+        (keyup.enter)="
+          questionControlService.validatePasswordMatch(formGroup, questions)
+        "
+      >
+      </p-password>
+    </div>
+
+    <div class="field-value" *ngSwitchCase="'dropdown'">
+      <p-dropdown
+        [appendTo]="'body'"
+        [options]="question.options"
+        [formControlName]="question.key"
+        [filter]="question.optionFilter"
+        placeholder="{{ 'Chọn ' + question.label }}"
+        optionLabel="{{ question.optionLabel }}"
+        optionValue="{{ question.optionValue }}"
+        [showClear]="true"
+        (onChange)="question.onChange && question.onChange($event)"
+      >
+      </p-dropdown>
+    </div>
+
+    <div class="checkbox-group field-value" *ngSwitchCase="'checkbox_group'">
+      <div *ngFor="let option of question.options" class="px-3">
+        <p-checkbox
+          name="question.key"
+          value="{{ option }}"
+          label="{{ option }}"
+          [formControl]="$any(formGroup.controls[question.key])"
+        >
+        </p-checkbox>
+      </div>
+    </div>
+
+    <div class="" *ngSwitchCase="'checkbox'">
+      <p-checkbox
+        label="{{ question.label }}"
+        [formControlName]="question.key"
+        [binary]="true"
+      >
+      </p-checkbox>
+    </div>
+
+    <div class="" *ngSwitchCase="'dynamic_text_box'">
+      <div
+        *ngFor="
+          let formControl of getControls(question.key);
+          let i = index;
+          trackBy: trackByFn
+        "
+        class="pb-2"
+      >
+        <div class="d-flex">
+          <input
+            [id]="question.key + '_' + i"
+            class="dynamic-text-box"
+            type="text"
+            [formControl]="$any(formControl)"
+            [type]="question.type"
+            placeholder="{{ question.label }}"
+            (keyup.enter)="
+              handleEnterEventOfDynamicTextBox(
+                i,
+                getControls(question.key).length,
+                $any(formGroup.get(question.key)),
+                question
+              )
+            "
+          />
+          <button
+            class="btn btn-common ml-2 h-100"
+            type="button"
+            [disabled]="
+              question.validates.required &&
+              getControls(question.key).length === 1
+            "
+            (click)="removeDynamicTextBox($any(formGroup.get(question.key)), i)"
+          >
+            <i class="vnlp-icon vnlp-icon-filled-bin"></i>
+          </button>
+        </div>
+        <div
+          *ngIf="{
+            messageArr: questionControlService.getValidateMessage(
+              $any(formControl),
+              question,
+              isSubmit
+            )
+          } as vars"
+        >
+          <div
+            *ngIf="vars.messageArr.length"
+            [id]="question.key + '_validate_message'"
+          >
+            <div *ngFor="let message of vars.messageArr" class="error-validate">
+              {{ message }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        class="btn btn-primary ml-2 pr-3"
+        type="button"
+        (click)="addDynamicTextBox($any(formGroup.get(question.key)), question)"
+      >
+        <i
+          class="vnlp-icon vnlp-icon-filled-plus-math"
+          style="padding-bottom: 2px"
+        ></i>
+        {{ "create_new_" + question.label }}
+      </button>
+    </div>
+  </div>
+
+  <div
+    *ngIf="{
+      messageArr: questionControlService.getValidateMessage(
+        $any(formGroup.controls[question.key]),
+        question,
+        isSubmit
+      )
+    } as vars"
+  >
+    <div
+      *ngIf="vars.messageArr.length"
+      [id]="question.key + '_validate_message'"
+    >
+      <div *ngFor="let message of vars.messageArr" class="error-validate">
+        {{ message }}
+      </div>
+    </div>
+  </div>
+</div>

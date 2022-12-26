@@ -56,6 +56,7 @@ export class VerticalMenuComponent implements OnInit {
   }
 
   onClick(menuId) {
+    this.menuService.activateMenuItem(this.menuItems, menuId);
     this.menuService.toggleMenuItem(menuId);
     this.menuService.closeOtherSubMenus(this.menuItems, menuId);
     this.onClickMenuItem.emit(menuId);

@@ -1,0 +1,48 @@
+<p-dialog [(visible)]="isVisible" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false" [maximizable]="true" [modal]="true" [contentStyle]="{'overflow-y':'visible'}">
+    <ng-template pTemplate="header">
+        <h1><span *ngIf="!brand.id">Tạo mới</span><span *ngIf="brand.id">Cập nhật</span> nhãn hiệu</h1>
+    </ng-template>
+    <ng-template pTemplate="content">
+        <form [formGroup]="form">
+            <div class="flex flex-column flex-1 form">
+                <div class="field">
+                    <label for="name" class="block form-label">Tên</label>
+                    <input pInputText id="name" type="username" placeholder="Brand name" maxlength="100"
+                            aria-describedby="code-help" class="w-full" formControlName="name" [class.ng-dirty]="form.controls.name.touched"/>
+                    <div *ngIf="form.controls.name.invalid && (form.controls.name.dirty || form.controls.name.touched)">
+                        <small *ngIf="form.controls.name.errors?.required" id="name-help" class="p-error block">Brand is required.</small>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="orgin" class="block form-label">Nguồn gốc</label>
+                    <p-dropdown id="origin" [options]="origins" placeholder="Select a origin" [style]="{'width':'30%'}"
+                                aria-describedby="origin-help" optionLabel="name" optionValue="id"
+                                [filter]="true" filterBy="name"
+                                formControlName="originId" [class.ng-dirty]="form.controls.originId.touched">
+                    </p-dropdown>
+                    <div *ngIf="form.controls.originId.invalid && (form.controls.originId.dirty || form.controls.originId.touched)">
+                        <small *ngIf="form.controls.originId.errors?.required" id="origin-help" class="p-error block">Origin is required.</small>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <div class="flex flex-row justify-content-end align-items-center form-actions">
+            <button pButton pRipple [disabled]="!form.valid" class="form-button"
+                    (click)="close(form.value)">
+                <span *ngIf="!brand.id">
+                    Lưu
+                </span>
+                <span *ngIf="brand.id">
+                    Cập nhật
+                </span>
+            </button>
+            <button pButton pRipple type="button" class="p-button-danger form-button" 
+                    (click)="close(null)">
+                Huỷ
+            </button>
+        </div>
+    </ng-template>
+</p-dialog>

@@ -48,10 +48,15 @@ const routes: Routes = [
         data: { breadcrumb: 'Products', permission: 'can_read_product' },
       },
       {
+        path: 'orders',
+        loadChildren: () =>
+          import('./pages/orders/orders.module').then((m) => m.OrdersModule)
+      },
+      {
         path: 'brands',
         canActivate: [AuthGuard],
         loadChildren: () =>
-          import('./pages/trademarks/trademark.module').then(
+          import('./pages/brands/brands.module').then(
             (m) => m.TrademarksModule
           ),
         data: { breadcrumb: 'Products', permission: 'read_origin' },
@@ -63,7 +68,6 @@ const routes: Routes = [
           import('./pages/origins/origins.module').then((m) => m.OriginsModule),
         data: { breadcrumb: 'Origins', permission: 'read_origin' },
       },
-
       {
         path: 'branches',
         canActivate: [AuthGuard],

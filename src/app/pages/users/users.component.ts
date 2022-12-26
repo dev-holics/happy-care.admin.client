@@ -5,10 +5,10 @@ import { Branch } from 'src/app/_models/branch';
 import { RoleOption } from 'src/app/_models/role';
 import { UserCreate, UserDto } from 'src/app/_models/user';
 import { AccountsService } from 'src/app/_services/accounts.service';
-import { BranchsService } from 'src/app/_services/branchs.service';
 import { RolesService } from 'src/app/_services/roles.service';
 import { UsersService } from 'src/app/_services/users.service';
 import decode from "jwt-decode";
+import { BranchsService } from 'src/app/_services/branches.service';
 
 @Component({
   selector: 'app-users',

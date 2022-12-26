@@ -14,7 +14,7 @@ export const routes = [
     RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule.forRoot()
   ],
   declarations: [
     LoginComponent,

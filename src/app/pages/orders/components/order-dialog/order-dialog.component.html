@@ -1,0 +1,150 @@
+<p-dialog
+  [(visible)]="isVisible"
+  [draggable]="false"
+  [resizable]="false"
+  [maximizable]="true"
+  [modal]="true"
+>
+  <ng-template pTemplate="header">
+    <h3>
+      <span *ngIf="!order.id">Tạo mới</span>
+      <span *ngIf="order.id">Chỉnh sửa</span>
+      hoá đơn
+    </h3>
+  </ng-template>
+  <form [formGroup]="form">
+    <ng-container
+      formArrayName="products"
+      *ngFor="let productForm of productFormArray.controls; let i = index"
+    >
+      <div class="field flex justify-content-between align-items-center">
+        <span>Sản phẩm {{ i + 1 }}</span>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-times"
+          class="p-button-rounded p-button-danger p-button-text"
+          (click)="removeProductForm(i)"
+        ></button>
+      </div>
+      <div [formGroupName]="i">
+        <div class="field">
+          <div class="field-label" for="id">
+            Sản phẩm
+            <span class="color-red">*</span>
+          </div>
+          <div class="field-value">
+            <p-dropdown
+              [appendTo]="'body'"
+              [options]="products"
+              [filter]="true"
+              formControlName="id"
+              placeholder="Chọn sản phẩm"
+              optionLabel="name"
+              optionValue="id"
+              [showClear]="true"
+              (onChange)="onProductChange($event, i)"
+            >
+            </p-dropdown>
+          </div>
+        </div>
+        <div class="flex">
+          <div class="field mr-3">
+            <div class="field-label" for="price">Đơn giá</div>
+            <div class="field-value">
+              <input
+                pInputText
+                type="text"
+                [ngClass]="{ 'p-disabled': true }"
+                [style]="{ width: '100%' }"
+                formControlName="price"
+                [value]="
+                  productForm.get('price')?.value
+                    | currency : 'VND' : 'symbol' : '1.0-0'
+                "
+                id="price"
+                placeholder="Đơn giá"
+              />
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label" for="price">
+              Số lượng
+              <span class="color-red">*</span>
+            </div>
+            <div class="field-value">
+              <input
+                pInputText
+                type="text"
+                [style]="{ width: '100%' }"
+                formControlName="quantity"
+                id="price"
+                placeholder="Số lượng"
+                (input)="updateTotalPrice()"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <button pButton pRipple (click)="addProductForm()">Thêm sản phẩm</button>
+    <div class="field">
+      <div class="field-label" for="totalPrice">Tổng tiền</div>
+      <div class="field-value">
+        <input
+          pInputText
+          type="text"
+          [ngClass]="{ 'p-disabled': true }"
+          [style]="{ width: '100%' }"
+          formControlName="totalPrice"
+          [value]="
+            form.get('totalPrice')?.value
+              | currency : 'VND' : 'symbol' : '1.0-0'
+          "
+          id="totalPrice"
+          placeholder="Tổng tiền"
+        />
+      </div>
+    </div>
+    <div class="field">
+      <div class="field-label" for="paymentType">
+        Phương thức thanh toán
+        <span class="color-red">*</span>
+      </div>
+      <div class="field-value">
+        <p-dropdown
+          [appendTo]="'body'"
+          [options]="paymentTypes"
+          formControlName="paymentType"
+          placeholder="Chọn phương thức thanh toán"
+          optionLabel="name"
+          optionValue="id"
+          [showClear]="true"
+        >
+        </p-dropdown>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <div class="flex flex-row justify-content-end align-items-center">
+      <button
+        pButton
+        pRipple
+        type="button"
+        class="p-button-danger"
+        (click)="close(null)"
+      >
+        Huỷ
+      </button>
+      <button
+        pButton
+        pRipple
+        [disabled]="!form.valid"
+        (click)="close(form.value)"
+      >
+        Submit
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>

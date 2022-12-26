@@ -4,12 +4,12 @@ import { Branch } from 'src/app/_models/branch';
 import { ProductOfBranchDto } from 'src/app/_models/product';
 import { ImportProductDto } from 'src/app/_models/product_log';
 import { AccountsService } from 'src/app/_services/accounts.service';
-import { BranchsService } from 'src/app/_services/branchs.service';
 import { ProductLogService } from 'src/app/_services/product-log.service';
 import { ProductsOfBranchesService } from 'src/app/_services/products-of-branches.service';
-import { Product } from '../products/product.model';
-import { ProductsService } from '../products/product.service';
 import decode from "jwt-decode";
+import { BranchsService } from 'src/app/_services/branches.service';
+import { ProductsService } from '../products/services/product.service';
+import { ProductModel } from '../products/models/product.model';
 
 @Component({
   selector: 'app-products-of-branches',
@@ -19,7 +19,7 @@ import decode from "jwt-decode";
 export class ProductsOfBranchesComponent implements OnInit {
 
   products: ProductOfBranchDto[] = []
-  public productOptions: Product[] = []
+  public productOptions: ProductModel[] = []
   public branchOptions: Branch[] = []
   public displayDialog: boolean;
   public selectedId: string;
@@ -38,9 +38,9 @@ export class ProductsOfBranchesComponent implements OnInit {
     private accountsService: AccountsService,
     private messageService: MessageService) { }
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
       this.fetchProductsOfBranches();
-      this.fetchOptions();
+      await this.fetchOptions();
       const currentUser = this.accountsService.currentUserValue;
       if (currentUser) {
         const tokenPayload:any = decode(currentUser.accessToken)
@@ -71,17 +71,14 @@ export class ProductsOfBranchesComponent implements OnInit {
       )
     }
 
-    fetchOptions() {
+    async fetchOptions() {
       this.branchesService.getBranches(0, 200).subscribe(
         (response: any) => {
           this.branchOptions = response.data
         }
       )
-      this.productsService.getProducts(0, 500).subscribe(
-        (response: any) => {
-          this.productOptions = response.data
-        }
-      )
+      let res = await this.productsService.getProducts(null);
+      this.productOptions = res.data;
     }
 
 

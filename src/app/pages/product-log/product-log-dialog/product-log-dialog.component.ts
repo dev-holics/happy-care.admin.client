@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Branch } from 'src/app/_models/branch';
 import { ProductLogService } from 'src/app/_services/product-log.service';
-import { Product } from '../../products/product.model';
+import { ProductModel } from '../../products/models/product.model';
 
 @Component({
   selector: 'app-product-log-dialog',
@@ -12,7 +12,7 @@ import { Product } from '../../products/product.model';
 export class ProductLogDialogComponent implements OnInit {
   @Input('display') display: boolean;
   @Input('branches') branches: Branch[];
-  @Input('products') products: Product[];
+  @Input('products') products: ProductModel[];
 
   @Output() closeDialog = new EventEmitter<any>();
   public form: FormGroup;

@@ -1,0 +1,63 @@
+<app-origin-dialog *ngIf="displayDialog" [display]="displayDialog"
+                        [origin]="selectedOrigin" (closeDialog)="onHideDialog($event)">
+</app-origin-dialog>
+<p-confirmDialog #cd [style]="{width: '40vw'}">
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" class="p-button-outlined p-button-info" label="No" (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>
+<p-toast></p-toast>
+<div class="col p-4 data-table">
+    <div class="flex flex-row pb-3 justify-content-between align-items-center">
+        <h2 class="m-0">Nguồn gốc</h2>
+        <button pButton pRipple type="button" label="Tạo mới" class="p-button-success" (click)="openDialog(null)"></button>
+    </div>
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple icon="pi pi-trash" class="p-button-danger"></button>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" ngDefaultControl [(ngModel)]="searchText" placeholder="Search..." />
+            </span>
+            <button pButton pRipple type="button" class="p-button-primary ml-2" (click)="getOrigins()">
+                Tìm kiếm
+            </button>
+        </ng-template>
+    </p-toolbar>
+    <p-table [value]="origins" responsiveLayout="scroll" styleClass="w-full p-datatable-gridlines p-datatable-striped mt-2"
+                [lazy]="true" [paginator]="true" [rows]="paginator.limit" [totalRecords]="paginator.totalData"
+                [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10, 15, 20]"
+                (onPage)="paginate($event)">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th>Tên</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-origin>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="origin"></p-tableCheckbox>
+                </td>
+                <td>{{origin.name}}</td>
+                <td style="text-align: center;">
+                    <button pButton pRipple icon="pi pi-pencil"
+                            class="p-button-warning m-1"
+                            (click)="openDialog(origin)">
+                    </button>
+                    <button pButton pRipple icon="pi pi-trash"
+                            class="p-button-danger m-1"
+                            (click)="openConfirmDialog(origin)">
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
