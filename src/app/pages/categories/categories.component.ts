@@ -18,20 +18,22 @@ export class CategoriesComponent implements OnInit {
   public categoryOptions: CategoryOptions[] = []
   public displayDialog: boolean;
   public selectedId: string;
-  public page: number = 1;
-  public limit: number = 10;
-  public totalData: number = 0;
   public canUpdate: boolean = true;
   public canAdd: boolean = true;
   public canDelete: boolean = true;
+  public paginator: any = {
+    page: 1,
+    limit: 10,
+    totalData: 0,
+  };
   constructor(
     public categoryService: CategoriesService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private accountsService: AccountsService) { }
 
-  ngOnInit(): void {
-    this.fetchCategories();
+  async ngOnInit(): Promise<void> {
+    await this.fetchCategories();
     const currentUser = this.accountsService.currentUserValue;
     if (currentUser) {
       const tokenPayload:any = decode(currentUser.accessToken)
@@ -46,49 +48,42 @@ export class CategoriesComponent implements OnInit {
   isAccess(permissions: any, permission: string) {
     return permissions.some((x) => x.name == permission);
   }
-  fetchCategories() {
-    this.categories = [];
-    this.categoryService.getCategories().subscribe(
-      (response: any) => {
-        this.categories = response.data;
-        for (const category of response.data) {
-          this.categoryOptions.push(new CategoryOptions(category.id, category.name))
-        }
-      },
-      (error) => {console.error(error);},
-    )
-  }
-  public addCategory(category: CategoryCreateUpdate) {
-    this.categoryService
-      .create(category)
-      .subscribe((response) =>
-      {
-        this.fetchCategories()
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: response.message,
-        });
-      });
+
+  async fetchCategories() : Promise<void> {
+    let query: any = {
+			page: this.paginator.page,
+			limit: this.paginator.limit,
+		};
+
+    const res = await this.categoryService.getCategories(query);
+
+    this.categories = res.data;
+    this.paginator = res.paginator;
   }
 
-  public updateCategory(id: string, category: CategoryCreateUpdate) {
-    this.categoryService
-      .put(id, category)
-      .subscribe((response) =>
-      {
-        this.fetchCategories()
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: response.message,
-        });
-      });
+  async addCategory(category: CategoryCreateUpdate) {
+    await this.categoryService.create(category);
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Inserted',
+      detail: 'Record inserted',
+    });
+    await this.fetchCategories();
+  }
+
+  async updateCategory(id: string, category: CategoryCreateUpdate) {
+    await this.categoryService.update(id, category);
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Updated',
+      detail: 'Record updated',
+    });
+    await this.fetchCategories();
   }
 
   paginate(event): void {
-    this.limit = event.rows;
-    this.page = event.first / event.rows + 1;
+    this.paginator.limit = event.rows;
+    this.paginator.page = event.first / event.rows + 1;
     document.getElementById('main-content')!.scrollTop = 0;
     this.fetchCategories();
   }
