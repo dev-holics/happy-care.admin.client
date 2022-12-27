@@ -11,6 +11,7 @@ import { CustomMaterialModule } from './material.module';
 import { SidenavComponent } from '../theme/components/sidenav/sidenav.component';
 import { UserMenuComponent } from '../theme/components/user-menu/user-menu.component';
 import { VerticalMenuComponent } from '../theme/components/menu/vertical-menu/vertical-menu.component';
+import { AlertComponent } from './components/alert/alert.component';
 
 const PROVIDERS: never[] = [];
 
@@ -23,6 +24,7 @@ const MODULE_SHARED = [
 
 @NgModule({
 	declarations: [
+		AlertComponent,
 		BlockUIComponent,
     	DynamicFormQuestionComponent,
 		DynamicFormComponent,
@@ -37,6 +39,7 @@ const MODULE_SHARED = [
 	],
 	exports: [
 		...MODULE_SHARED,
+		AlertComponent,
 		BlockUIComponent,
     	DynamicFormQuestionComponent,
 		DynamicFormComponent,
