@@ -24,8 +24,7 @@ export class AppComponent implements OnInit {
   constructor(
     public appSettings:AppSettings, 
     public accountsService: AccountsService,
-    private cd: ChangeDetectorRef,
-    private service: QuestionControlService
+    private cd: ChangeDetectorRef
   ){
       this.settings = this.appSettings.settings;
   }

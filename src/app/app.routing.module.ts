@@ -42,10 +42,7 @@ const routes: Routes = [
         path: 'products',
         canActivate: [AuthGuard],
         loadChildren: () =>
-          import('./pages/products/products.module').then(
-            (m) => m.ProductsModule
-          ),
-        data: { breadcrumb: 'Products', permission: 'can_read_product' },
+          import('./pages/products/products.module').then((m) => m.ProductsModule)
       },
       {
         path: 'orders',

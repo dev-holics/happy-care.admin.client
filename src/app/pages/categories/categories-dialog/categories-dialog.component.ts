@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryModel, CategoryCreateUpdate, CategoryOptions } from 'src/app/_models/category';
-import { CategoriesService } from 'src/app/pages/categories/services/categories.service';
+import { CategoriesService } from 'src/app/_services/categories.service';
 
 @Component({
   selector: 'app-categories-dialog',

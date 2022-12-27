@@ -8,9 +8,9 @@ import { PERMISSION } from 'src/app/shared/config';
 import { OriginModel } from 'src/app/pages/origins/models/origin.model';
 import { BrandModel } from 'src/app/pages/brands/models/brand.model';
 import { CategoryModel } from 'src/app/_models/category';
-import { CategoriesService } from 'src/app/pages/categories/services/categories.service';
 import { OriginsService } from 'src/app/pages/origins/services/origins.service';
 import { BrandsService } from 'src/app/pages/brands/services/brands.service';
+import { CategoriesService } from 'src/app/_services/categories.service';
 
 
 @Component({
@@ -20,11 +20,11 @@ import { BrandsService } from 'src/app/pages/brands/services/brands.service';
   providers: [ProductsService, MessageService, ConfirmationService],
 })
 export class ProductsComponent implements OnInit {
+  public brands: BrandModel[];
   public categories: CategoryModel[];
   public origins: OriginModel[];
   public products: ProductModel[];
-  public trademark: BrandModel[];
-  public selectedProduct: ProductModel;
+  public product: ProductModel;
   public displayDialog: boolean = false;
 
   public canCreate: boolean = true;
@@ -48,8 +48,10 @@ export class ProductsComponent implements OnInit {
     private accountsService: AccountsService
   ) {}
 
-  ngOnInit(): void {
-    this.getProducts();
+  async ngOnInit(): Promise<void> {
+    await this.getBrands();
+    await this.getOrigins();
+    await this.getProducts();
     const currentUser = this.accountsService.currentUserValue;
     if (currentUser) {
       const tokenPayload:any = decode(currentUser.accessToken)
@@ -94,29 +96,65 @@ export class ProductsComponent implements OnInit {
     console.log(this.products);
   }
 
-  async getBrands(): Promise<BrandModel> {
+  async getBrands(): Promise<void> {
     const res = await this.brandsService.getBrands(null);
-    return res.data;
+    this.brands = res.data;
   }
 
-  public addProduct(product: ProductModel) {
+  async addProduct(product: ProductModel) {
+    await this.productsService.addProduct(product);
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Inserted',
+      detail: 'Record inserted',
+    });
+    await this.getProducts();
   }
 
-  public updateProduct(product: ProductModel) {
+  async updateProduct(product: ProductModel) {
+    await this.productsService.updateProduct(product);
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Updated',
+      detail: 'Record updated',
+    });
+    await this.getProducts();
   }
 
-  public deleteProduct(product: ProductModel) {
+  async deleteProduct(product: ProductModel) {
+    await this.productsService.deleteProduct(product.id);
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Confirmed',
+      detail: 'Record deleted',
+    });
+    await this.getProducts();
   }
 
-  paginate(event): void {
+  async paginate(event): Promise<void> {
+    this.paginator.limit = event.rows;
+    this.paginator.page = event.first / event.rows + 1;
+    document.getElementById('main-content')!.scrollTop = 0;
+    await this.getProducts();
   }
 
   openDialog(product): void {
     this.displayDialog = true;
     if (product) {
-      this.selectedProduct = product;
+      this.product = product;
     } else {
-      this.selectedProduct = new ProductModel();
+      this.product = new ProductModel();
+    }
+  }
+
+  async onHideDialog(product): Promise<void> {
+    this.displayDialog = false;
+    if (product) {
+      if (product.id) {
+        await this.updateProduct(product);
+      } else {
+        await this.addProduct(product);
+      }
     }
   }
 

@@ -3,7 +3,7 @@ import { BrandModel } from '../models/brand.model';
 import { HttpService } from 'src/app/_services/http.service';
 import { URL_CONFIG } from 'src/app/shared/config/url.config';
 
-@Injectable()
+@Injectable({ providedIn: 'root'})
 export class BrandsService {
   constructor(
     public httpService: HttpService

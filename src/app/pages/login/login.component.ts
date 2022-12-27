@@ -25,9 +25,8 @@ export class LoginComponent implements OnInit {
   constructor(public appSettings:AppSettings,
     public fb: FormBuilder,
     public router:Router,
-    public accountsService: AccountsService,
-    private alertService: NotificationService){
-    this.settings = this.appSettings.settings;
+    public accountsService: AccountsService){
+    this.settings = this.appSettings.settings; 
     this.form = this.fb.group({
       'phoneNumber': [null, Validators.compose(
         [
@@ -65,7 +64,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/']);
         },
         (error) => {
-          this.alertService.showError(error.error.message, 'Đăng nhập thất bại');
+          // this.alertService.showError(error.error.message, 'Đăng nhập thất bại');
           this.loading = false;
         },
       );
