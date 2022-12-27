@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductModel } from 'src/app/pages/products/models/product.model';
-import { PAYMENT_TYPE } from 'src/app/_config';
+import { PAYMENT_TYPE } from 'src/app/shared/config';
 import { OrderModel } from '../../models/order.model';
 
 @Component({

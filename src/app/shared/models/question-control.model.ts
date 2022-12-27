@@ -1,4 +1,4 @@
-import { QUESTION_CONTROL_TYPE } from 'src/app/_config';
+import { QUESTION_CONTROL_TYPE } from 'src/app/shared/config';
 import { QuestionBaseModel } from './question-base.model';
 
 export class TextboxControl extends QuestionBaseModel<string> {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/_services/http.service';
-import { URL_CONFIG } from 'src/app/_config/url.config';
+import { URL_CONFIG } from 'src/app/shared/config/url.config';
 import { OrderModel } from '../models/order.model';
 
 @Injectable({ providedIn: 'root' })
@@ -9,7 +9,7 @@ export class OrdersService {
 
   async getOrders(queryObject: any): Promise<any> {
     const query = this.httpService.convertQueryString(queryObject);
-    const url = `${URL_CONFIG.ORIGIN_PUBLIC_URL}${query}`;
+    const url = `${URL_CONFIG.ORDER_ADMIN_URL}${query}`;
     const res = await this.httpService.get(url);
 
     const data = res.data;

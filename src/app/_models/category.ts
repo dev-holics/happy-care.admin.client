@@ -1,4 +1,4 @@
-export class Category {
+export class CategoryModel {
   id: string = '';
   isActive: string = '';
   name: string = '';

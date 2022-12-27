@@ -1,4 +1,4 @@
-import { Category } from "src/app/_models/category";
+import { CategoryModel } from "src/app/_models/category";
 import { ImageModel } from "src/app/shared/models/image.model";
 import { OriginModel } from "../../origins/models/origin.model";
 import { BrandModel } from "../../brands/models/brand.model";
@@ -20,6 +20,6 @@ export class ProductModel {
     originId: string;
     origin: OriginModel | null;
     categoryId: string;
-    category: Category | null;
+    category: CategoryModel | null;
     images: Array<ImageModel>;
 }

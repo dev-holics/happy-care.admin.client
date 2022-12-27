@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BrandModel } from '../models/brand.model';
 import { HttpService } from 'src/app/_services/http.service';
-import { URL_CONFIG } from 'src/app/_config/url.config';
+import { URL_CONFIG } from 'src/app/shared/config/url.config';
 
 @Injectable()
 export class BrandsService {

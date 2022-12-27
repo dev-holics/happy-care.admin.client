@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/_services/http.service';
-import { URL_CONFIG } from 'src/app/_config/url.config';
+import { URL_CONFIG } from 'src/app/shared/config/url.config';
 import { ProductModel } from '../models/product.model';
 
 @Injectable({ providedIn: 'root' })

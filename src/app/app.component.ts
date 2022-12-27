@@ -4,7 +4,7 @@ import { AppSettings } from './app.settings';
 import { Settings } from './app.settings.model';
 import { QuestionBaseModel } from './shared/models/question-base.model';
 import { QuestionControlService } from './shared/services/question-control.service';
-import { UiHelper } from './_helpers/ui.helper';
+import { UiHelper } from './shared/helpers/ui.helper';
 import { AccountsService } from './_services/accounts.service';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Category, CategoryCreateUpdate, CategoryOptions } from 'src/app/_models/category';
-import { CategoriesService } from 'src/app/_services/categories.service';
+import { CategoryModel, CategoryCreateUpdate, CategoryOptions } from 'src/app/_models/category';
+import { CategoriesService } from 'src/app/pages/categories/services/categories.service';
 
 @Component({
   selector: 'app-categories-dialog',
@@ -12,7 +12,7 @@ export class CategoriesDialogComponent implements OnInit {
 
   @Input('display') display: boolean;
   @Input('Categories') categories: CategoryOptions[];
-  @Input('Category') category: Category;
+  @Input('Category') category: CategoryModel;
   @Input('Id') id: string;
   @Output() closeDialog = new EventEmitter<any>();
   public form: FormGroup;
@@ -49,7 +49,7 @@ export class CategoriesDialogComponent implements OnInit {
         }
       )
     } else {
-      this.category = new Category();
+      this.category = new CategoryModel();
     }
   }
 

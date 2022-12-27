@@ -5,7 +5,7 @@ import { __values } from 'tslib';
 import { UserToken, UserLogin } from '../_models/user';
 import { map } from 'rxjs/operators';
 import { Profile } from '../_models/profile';
-import { URL_CONFIG } from '../_config';
+import { URL_CONFIG } from '../shared/config';
 
 @Injectable({
   providedIn: 'root',

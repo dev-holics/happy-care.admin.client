@@ -10,7 +10,7 @@ import { CustomOverlayContainer } from './theme/utils/custom-overlay-container';
 import { AppRoutingModule } from './app.routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
-import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { JwtInterceptor } from './shared/helpers/jwt.interceptor';
 
 import { PagesComponent } from './pages/pages.component';
 
