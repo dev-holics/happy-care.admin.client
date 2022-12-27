@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordFormat, passwordValidator, phoneNumberFormat, phoneNumberValidator } from 'src/app/theme/utils/app-validators';
-import { GENDER } from 'src/app/_config/enum.config';
+import { GENDER } from 'src/app/shared/config/enum.config';
 import { Branch } from 'src/app/_models/branch';
 import { RoleOption } from 'src/app/_models/role';
 import { UsersService } from 'src/app/_services/users.service';

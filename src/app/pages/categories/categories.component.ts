@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ResolveEnd } from '@angular/router';
 import * as _ from 'lodash';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
-import { Category, CategoryCreateUpdate, CategoryOptions } from 'src/app/_models/category';
-import { CategoriesService } from 'src/app/_services/categories.service';
+import { CategoryModel, CategoryCreateUpdate, CategoryOptions } from 'src/app/_models/category';
 import decode from "jwt-decode";
 import { AccountsService } from 'src/app/_services/accounts.service';
+import { CategoriesService } from 'src/app/_services/categories.service';
 
 @Component({
   selector: 'app-categories',
@@ -14,7 +14,7 @@ import { AccountsService } from 'src/app/_services/accounts.service';
 })
 export class CategoriesComponent implements OnInit {
 
-  categories: Category[] = []
+  categories: CategoryModel[] = []
   public categoryOptions: CategoryOptions[] = []
   public displayDialog: boolean;
   public selectedId: string;

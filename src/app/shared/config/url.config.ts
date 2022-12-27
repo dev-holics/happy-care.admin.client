@@ -1,4 +1,4 @@
-import { API_URL } from 'src/app/_config/env.config';
+import { API_URL } from 'src/app/shared/config/env.config';
 
 export const PUBLIC_URL = `${API_URL}/public`;
 export const ADMIN_URL = `${API_URL}/admin`;

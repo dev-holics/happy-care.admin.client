@@ -5,10 +5,10 @@ import {
 	HttpStatusCode,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ErrorHandlerHelper } from 'src/app/_helpers/error-handler.helper';
+import { ErrorHandlerHelper } from 'src/app/shared/helpers/error-handler.helper';
 import { firstValueFrom } from 'rxjs';
 import { isEmpty } from 'radash';
-import { UiHelper } from '../_helpers/ui.helper';
+import { UiHelper } from '../shared/helpers/ui.helper';
 
 @Injectable({ providedIn: 'root' })
 export class HttpService {

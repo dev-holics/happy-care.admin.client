@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { EVENT_KEY } from '../_config/constant.config';
+import { EVENT_KEY } from '../shared/config/constant.config';
 
 @Injectable({ providedIn: 'root' })
 export class AppEventService {

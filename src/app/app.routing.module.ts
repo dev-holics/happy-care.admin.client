@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './pages/pages.component';
-import { AuthGuard, ProductGuard } from './_helpers/auth.guard';
+import { AuthGuard } from './shared/helpers/auth.guard';
 
 const routes: Routes = [
   {
@@ -42,10 +42,7 @@ const routes: Routes = [
         path: 'products',
         canActivate: [AuthGuard],
         loadChildren: () =>
-          import('./pages/products/products.module').then(
-            (m) => m.ProductsModule
-          ),
-        data: { breadcrumb: 'Products', permission: 'can_read_product' },
+          import('./pages/products/products.module').then((m) => m.ProductsModule)
       },
       {
         path: 'orders',

@@ -19,3 +19,10 @@ export enum GENDER {
   MALE = 'MALE',
   FEMALE = 'FEMALE',
 }
+
+export enum PERMISSION {
+  // product
+  CREATE_PRODUCT = 'create_product',
+  UPDATE_PRODUCT = 'update_product',
+  DELETE_PRODUCT = 'delete_product',
+}

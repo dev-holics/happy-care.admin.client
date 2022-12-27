@@ -4,6 +4,13 @@ import { AccountsService } from 'src/app/_services/accounts.service';
 import decode from "jwt-decode";
 import { ProductsService } from '../../services/product.service';
 import { ProductModel } from '../../models/product.model';
+import { PERMISSION } from 'src/app/shared/config';
+import { OriginModel } from 'src/app/pages/origins/models/origin.model';
+import { BrandModel } from 'src/app/pages/brands/models/brand.model';
+import { CategoryModel } from 'src/app/_models/category';
+import { OriginsService } from 'src/app/pages/origins/services/origins.service';
+import { BrandsService } from 'src/app/pages/brands/services/brands.service';
+import { CategoriesService } from 'src/app/_services/categories.service';
 
 
 @Component({
@@ -13,12 +20,17 @@ import { ProductModel } from '../../models/product.model';
   providers: [ProductsService, MessageService, ConfirmationService],
 })
 export class ProductsComponent implements OnInit {
+  public brands: BrandModel[];
+  public categories: CategoryModel[];
+  public origins: OriginModel[];
   public products: ProductModel[];
-  public selectedProduct: ProductModel;
+  public product: ProductModel;
   public displayDialog: boolean = false;
+
+  public canCreate: boolean = true;
   public canUpdate: boolean = true;
-  public canAdd: boolean = true;
   public canDelete: boolean = true;
+
   public paginator: any = {
     page: 1,
     limit: 10,
@@ -27,100 +39,122 @@ export class ProductsComponent implements OnInit {
   public searchText: string = '';
 
   constructor(
-    public productsService: ProductsService,
+    private categoriesService: CategoriesService,
+    private originsService: OriginsService,
+    private productsService: ProductsService,
+    private brandsService: BrandsService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private accountsService: AccountsService
   ) {}
 
-  ngOnInit(): void {
-    let query: any = {
-			page: this.paginator.page,
-			limit: this.paginator.limit,
-      search: this.searchText
-		};
-    this.getProducts(query.page, query.limit);
+  async ngOnInit(): Promise<void> {
+    await this.getBrands();
+    await this.getOrigins();
+    await this.getProducts();
     const currentUser = this.accountsService.currentUserValue;
     if (currentUser) {
       const tokenPayload:any = decode(currentUser.accessToken)
       const permissions = tokenPayload.role.permissions;
 
-      this.canAdd = this.isAccess(permissions, 'create_product');
-      this.canUpdate = this.isAccess(permissions, 'update_product');
-      this.canDelete = this.isAccess(permissions, 'delete_product');
+      this.canCreate = this.isAccess(permissions, PERMISSION.CREATE_PRODUCT);
+      this.canUpdate = this.isAccess(permissions, PERMISSION.UPDATE_PRODUCT);
+      this.canDelete = this.isAccess(permissions, PERMISSION.DELETE_PRODUCT);
     }
   }
 
   isAccess(permissions: any, permission: string) {
     return permissions.some((x) => x.name == permission);
   }
-  public getProducts(page: number, limit: number): void {
-    // this.products = []; // for show spinner each time
-    // this.productsService.getProducts(page, limit).subscribe((obj) => {
-    //   this.page = obj['currentPage'];
-    //   this.limit = obj['limit'];
-    //   this.totalData = obj['totalData'];
-    //   let data = obj['data'];
-    //   console.log(data);
-    //   data.map((product) => {
-    //     product.categoryId = product.category.id;
-    //   });
-    //   this.products = data;
-    // });
+
+  // async getCategories(): Promise<void> {
+  //   const res = await this.categoriesService.getCategories();
+  //   this.categories = res.data;
+  // }
+
+  async getOrigins(): Promise<void> {
+    const res = await this.originsService.getOrigins(null);
+    this.origins = res.data;
   }
 
-  public addProduct(product: ProductModel) {
-    // this.productsService
-    //   .addProduct(product)
-    //   .subscribe((trademark) => {
-    //     this.messageService.add({
-    //       severity: 'info',
-    //       summary: 'Inserted',
-    //       detail: 'Record inserted',
-    //     });
-    //     this.getProducts(this.page, this.limit);
-    //   });
+  async getProducts(): Promise<void> {
+    let query: any = {
+			page: this.paginator.page,
+			limit: this.paginator.limit,
+      search: this.searchText
+		};
+    const res = await this.productsService.getProducts(query);
+
+    this.products = res.data.map((product) => {
+      product.trademarkId = product.trademark.id;
+      product.originId = product.origin.id;
+      product.categoryId = product.category.id;
+      return product;
+    });
+    this.paginator = res.paginator;
+
+    console.log(this.products);
   }
 
-  public updateProduct(product: ProductModel) {
-    // this.productsService
-    //   .updateProduct(product)
-    //   .subscribe((product) => {
-    //     this.messageService.add({
-    //       severity: 'info',
-    //       summary: 'Updated',
-    //       detail: 'Record updated',
-    //     });
-    //     this.getProducts(this.page, this.limit)
-    //   });
+  async getBrands(): Promise<void> {
+    const res = await this.brandsService.getBrands(null);
+    this.brands = res.data;
   }
 
-  public deleteProduct(product: ProductModel) {
-    // this.productsService
-    //   .deleteProduct(product.id)
-    //   .subscribe((product) => {
-    //     this.messageService.add({
-    //       severity: 'info',
-    //       summary: 'Confirmed',
-    //       detail: 'Record deleted',
-    //     });
-    //     this.getProducts(this.page, this.limit);
-    //   });
+  async addProduct(product: ProductModel) {
+    await this.productsService.addProduct(product);
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Inserted',
+      detail: 'Record inserted',
+    });
+    await this.getProducts();
   }
 
-  paginate(event): void {
-    // this.limit = event.rows;
-    // this.page = event.first / event.rows + 1;
-    // document.getElementById('main-content')!.scrollTop = 0;
-    // this.getProducts(this.page, this.limit);
+  async updateProduct(product: ProductModel) {
+    await this.productsService.updateProduct(product);
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Updated',
+      detail: 'Record updated',
+    });
+    await this.getProducts();
+  }
+
+  async deleteProduct(product: ProductModel) {
+    await this.productsService.deleteProduct(product.id);
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Confirmed',
+      detail: 'Record deleted',
+    });
+    await this.getProducts();
+  }
+
+  async paginate(event): Promise<void> {
+    this.paginator.limit = event.rows;
+    this.paginator.page = event.first / event.rows + 1;
+    document.getElementById('main-content')!.scrollTop = 0;
+    await this.getProducts();
   }
 
   openDialog(product): void {
     this.displayDialog = true;
     if (product) {
-      this.selectedProduct = product;
+      this.product = product;
     } else {
-      this.selectedProduct = new ProductModel();
+      this.product = new ProductModel();
+    }
+  }
+
+  async onHideDialog(product): Promise<void> {
+    this.displayDialog = false;
+    if (product) {
+      if (product.id) {
+        await this.updateProduct(product);
+      } else {
+        await this.addProduct(product);
+      }
     }
   }
 

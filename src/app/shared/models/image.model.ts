@@ -1,4 +1,4 @@
-export class Image {
+export class ImageModel {
     url: string;
     publicId: string;
     fileName: string;

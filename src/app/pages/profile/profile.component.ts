@@ -74,10 +74,10 @@ export class ProfileComponent implements OnInit {
       this.accountService.updateProfile(this.profile).subscribe(
         (response) => {
           this.loading = false;
-          this.alertService.showSuccess(response.message, "");
+          // this.alertService.showSuccess(response.message, "");
         },
         (error) => {
-          this.alertService.showError(error.error.errors[0].message, "");
+          // this.alertService.showError(error.error.errors[0].message, "");
           this.loading = false;
         },
       );}

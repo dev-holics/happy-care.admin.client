@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { URL_CONFIG } from '../_config';
+import { URL_CONFIG } from '../shared/config';
 import { PermissionCreate, PermissionUpdate } from '../_models/permissions';
 import { Permission } from '../_models/role';
 

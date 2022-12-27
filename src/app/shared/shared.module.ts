@@ -8,6 +8,9 @@ import { PasswordModule } from 'primeng/password';
 import { DynamicFormQuestionComponent } from './components/dynamic-form-question/dynamic-form-question.component';
 import { BlockUIComponent } from './components/block-ui/block-ui.component';
 import { CustomMaterialModule } from './material.module';
+import { SidenavComponent } from '../theme/components/sidenav/sidenav.component';
+import { UserMenuComponent } from '../theme/components/user-menu/user-menu.component';
+import { VerticalMenuComponent } from '../theme/components/menu/vertical-menu/vertical-menu.component';
 
 const PROVIDERS: never[] = [];
 
@@ -23,6 +26,9 @@ const MODULE_SHARED = [
 		BlockUIComponent,
     	DynamicFormQuestionComponent,
 		DynamicFormComponent,
+		SidenavComponent,
+		UserMenuComponent,
+		VerticalMenuComponent
 	],
 	imports: [
 		...MODULE_SHARED, 
@@ -34,6 +40,9 @@ const MODULE_SHARED = [
 		BlockUIComponent,
     	DynamicFormQuestionComponent,
 		DynamicFormComponent,
+		SidenavComponent,
+		UserMenuComponent,
+		VerticalMenuComponent
 	],
 })
 export class SharedModule {

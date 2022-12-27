@@ -61,7 +61,7 @@ const MODULE_SHARED = [
 	MatTabsModule,
 	MatToolbarModule,
 	MatTooltipModule,
-	MatStepperModule,
+	MatStepperModule
 ];
 
 @NgModule({

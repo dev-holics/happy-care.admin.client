@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { URL_CONFIG } from '../_config';
-import { Category, CategoryCreateUpdate } from '../_models/category';
+import { URL_CONFIG } from '../shared/config';
+import { CategoryModel, CategoryCreateUpdate } from '../_models/category';
 
 @Injectable({
   providedIn: 'root',
@@ -14,12 +14,12 @@ export class CategoriesService {
   
   constructor(private httpClient: HttpClient) {}
 
-  getCategories(): Observable<Category[]> {
-    return this.httpClient.get<Category[]>(`${URL_CONFIG.CATEGORY_PUBLIC_URL}`);
+  getCategories(): Observable<CategoryModel[]> {
+    return this.httpClient.get<CategoryModel[]>(`${URL_CONFIG.CATEGORY_PUBLIC_URL}`);
   }
 
-  getCategoriesById(categoryId: string): Observable<Category> {
-    return this.httpClient.get<Category>(
+  getCategoriesById(categoryId: string): Observable<CategoryModel> {
+    return this.httpClient.get<CategoryModel>(
       `${URL_CONFIG.CATEGORY_PUBLIC_URL}/tree`,
       { params: { parentId: categoryId } }
     );
