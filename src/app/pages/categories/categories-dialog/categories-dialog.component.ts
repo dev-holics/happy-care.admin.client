@@ -36,18 +36,19 @@ export class CategoriesDialogComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if(this.id) {
-      this.categoryService.getCategoriesById(this.id).subscribe(
-        (response: any) => {
-          this.form.patchValue({
-            name: response.data.name,
-            description: response.data.description,
-            order: response.data.order,
-            parentId: response.data.parent?.id,
-          })
-        }
-      )
+      const response = await this.categoryService.getCategoriesById(this.id);
+      this.form.patchValue({
+        name: response.data.name,
+        description: response.data.description,
+        order: response.data.order,
+        parentId: response.data.parent?.id,
+      })
+      this.categories = [];
+      if (response.data.parent) {
+        this.categories.push(new CategoryOptions(response.data.parent.id, response.data.parent.name))
+      }
     } else {
       this.category = new CategoryModel();
     }
