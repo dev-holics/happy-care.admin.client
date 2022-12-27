@@ -22,7 +22,7 @@
         </ng-template>
     </p-toolbar>
     <p-table [value]="categories" responsiveLayout="scroll" styleClass="w-full p-datatable-gridlines p-datatable-striped mt-2"
-                [paginator]="true" [rows]="limit" [totalRecords]="totalData"
+                [lazy]="true" [paginator]="true" [rows]="paginator.limit" [totalRecords]="paginator.totalData"
                 [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10, 15, 20]"
                 (onPage)="paginate($event)">
         <ng-template pTemplate="header">

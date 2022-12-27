@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
 import { URL_CONFIG } from '../shared/config';
-import { CategoryModel, CategoryCreateUpdate } from '../_models/category';
+import { CategoryCreateUpdate } from '../_models/category';
+import { HttpService } from 'src/app/_services/http.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,35 +11,46 @@ export class CategoriesService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
-  
-  constructor(private httpClient: HttpClient) {}
 
-  getCategories(): Observable<CategoryModel[]> {
-    return this.httpClient.get<CategoryModel[]>(`${URL_CONFIG.CATEGORY_PUBLIC_URL}`);
+  constructor(private httpClient: HttpClient, public httpService: HttpService) {}
+
+  async getCategories(queryObject: any): Promise<any> {
+    const query = this.httpService.convertQueryString(queryObject);
+    const url = `${URL_CONFIG.CATEGORY_PUBLIC_URL}${query}`;
+    const res = await this.httpService.get(url);
+
+    const data = res.data;
+    const paginator = {
+      page: res.currentPage,
+      limit: res.limit,
+      totalData: res.totalData
+    };
+
+    return {
+      data: data,
+      paginator: paginator
+    };
   }
 
-  getCategoriesById(categoryId: string): Observable<CategoryModel> {
-    return this.httpClient.get<CategoryModel>(
-      `${URL_CONFIG.CATEGORY_PUBLIC_URL}/tree`,
-      { params: { parentId: categoryId } }
-    );
+  async getCategoriesById(categoryId: any): Promise<any> {
+    const url = `${URL_CONFIG.CATEGORY_PUBLIC_URL}/tree`;
+    const params = { parentId: categoryId };
+    const res = await this.httpService.getOne(url, params);
+
+    const data = res.data;
+
+    return {
+      data: data,
+    };
   }
 
-  create(category: CategoryCreateUpdate): Observable<any> {
-    return this.httpClient
-      .post(`${URL_CONFIG.CATEGORY_ADMIN_URL}`, category, this.httpOptions)
-      .pipe(
-        map((response: any) => {
-          return response;
-        })
-      );
+  async create(category: CategoryCreateUpdate) {
+    const url = `${URL_CONFIG.CATEGORY_ADMIN_URL}`;
+    await this.httpService.post(url, category);
   }
 
-  put(id: string, category: CategoryCreateUpdate): Observable<any> {
-    return this.httpClient.put(
-      `${URL_CONFIG.CATEGORY_ADMIN_URL}/${id}`,
-      category,
-      this.httpOptions
-    );
+  async update(id: string, category: CategoryCreateUpdate) {
+    const url = `${URL_CONFIG.CATEGORY_ADMIN_URL}/${id}`;
+    await this.httpService.put(url, category);
   }
 }

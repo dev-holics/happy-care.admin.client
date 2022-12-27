@@ -32,6 +32,18 @@ export class HttpService {
 		};
 	}
 
+  async getOne(url: string, params: any, isBlocked: boolean = true): Promise<any> {
+    if (isBlocked) UiHelper.block();
+
+		return firstValueFrom(this.http.get(url, this.initOption({params})))
+			.catch(err => {
+				return this.handleError(err);
+			})
+			.finally(() => {
+				if (isBlocked) UiHelper.unBlock();
+			});
+  }
+
 	async get(url: string, isBlocked: boolean = true): Promise<any> {
 		if (isBlocked) UiHelper.block();
 
