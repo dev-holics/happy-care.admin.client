@@ -27,7 +27,7 @@ export class UsersService {
     } = { page, limit, isActive: true };
 
     return this.httpClient
-      .get<UserDto[]>(`${URL_CONFIG.USER_URL}/`, { params: params })
+      .get<UserDto[]>(`${URL_CONFIG.USER_ADMIN_URL}/`, { params: params })
       .pipe(
         map((response: any) => {
           return response;
@@ -37,7 +37,7 @@ export class UsersService {
 
   getUserById(userId: string): Observable<UserDto> {
     return this.httpClient
-      .get<UserDto>(`${URL_CONFIG.USER_URL}/${userId}`)
+      .get<UserDto>(`${URL_CONFIG.USER_ADMIN_URL}/${userId}`)
       .pipe(
         map((response: any) => {
           return response.data;
@@ -47,7 +47,7 @@ export class UsersService {
 
   create(userCreate: UserCreate): Observable<any> {
     return this.httpClient
-      .post(`${URL_CONFIG.USER_URL}/create`, userCreate, this.httpOptions)
+      .post(`${URL_CONFIG.USER_ADMIN_URL}/create`, userCreate, this.httpOptions)
       .pipe(
         map((response: any) => {
           return response;

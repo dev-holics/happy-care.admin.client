@@ -75,7 +75,8 @@ export class UsersDialogComponent implements OnInit {
             fullname: response.fullname,
             email: response.email,
             gender: response.gender,
-            role: response.role.id
+            role: response.role.id,
+            branch: response.branch?.id,
           })
         }
       )
