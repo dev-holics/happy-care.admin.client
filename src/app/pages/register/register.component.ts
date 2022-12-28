@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { phoneNumberValidator, matchingPasswords } from '../../theme/utils/app-validators';
+import { phoneNumberValidator, matchingPasswords } from '../../shared/utils/app-validators';
 import { AppSettings } from '../../app.settings';
 import { Settings } from '../../app.settings.model';
 

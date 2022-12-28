@@ -18,6 +18,7 @@ export const URL_CONFIG = Object.freeze({
     // admin url
     BRANCH_ADMIN_URL: `${ADMIN_URL}/branches`,
     CATEGORY_ADMIN_URL: `${ADMIN_URL}/categories`,
+    DISTRICT_PUBLIC_URL: `${PUBLIC_URL}/districts`,
     ORDER_ADMIN_URL: `${ADMIN_URL}/orders`,
     ORIGIN_ADMIN_URL: `${ADMIN_URL}/origins`,
     PERMISSION_ADMIN_URL: `${ADMIN_URL}/permissions`,

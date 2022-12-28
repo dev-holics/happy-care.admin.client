@@ -1,4 +1,4 @@
-import { FormGroup, FormControl, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 
 export function phoneNumberValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {

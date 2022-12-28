@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ToastModule } from 'primeng/toast';
 
-import { CustomOverlayContainer } from './theme/utils/custom-overlay-container';
+import { CustomOverlayContainer } from './shared/utils/custom-overlay-container';
 
 import { AppRoutingModule } from './app.routing.module';
 import { AppComponent } from './app.component';

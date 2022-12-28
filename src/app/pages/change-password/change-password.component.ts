@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { matchingPasswords, passwordValidator } from 'src/app/theme/utils/app-validators';
+import { matchingPasswords, passwordValidator } from 'src/app/shared/utils/app-validators';
 import { UserChangePassword } from 'src/app/_models/user';
 import { AccountsService } from 'src/app/_services/accounts.service';
 import { NotificationService } from 'src/app/_services/notification.service';

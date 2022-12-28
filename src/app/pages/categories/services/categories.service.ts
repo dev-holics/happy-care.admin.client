@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { URL_CONFIG } from '../shared/config';
-import { CategoryCreateUpdate } from '../_models/category';
+import { URL_CONFIG } from '../../../shared/config';
+import { CategoryCreateUpdate } from '../../../_models/category';
 import { HttpService } from 'src/app/_services/http.service';
 
 @Injectable({

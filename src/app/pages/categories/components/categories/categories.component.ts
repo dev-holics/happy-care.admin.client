@@ -5,7 +5,7 @@ import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/a
 import { CategoryModel, CategoryCreateUpdate, CategoryOptions } from 'src/app/_models/category';
 import decode from "jwt-decode";
 import { AccountsService } from 'src/app/_services/accounts.service';
-import { CategoriesService } from 'src/app/_services/categories.service';
+import { CategoriesService } from 'src/app/pages/categories/services/categories.service';
 
 @Component({
   selector: 'app-categories',

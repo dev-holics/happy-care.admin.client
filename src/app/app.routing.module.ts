@@ -26,8 +26,9 @@ const routes: Routes = [
       {
         path: 'roles',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./pages/roles/roles.module').then(m => m.RolesModule),
-        data: { breadcrumb: 'Roles', permission: 'read_role'}
+        loadChildren: () =>
+          import('./pages/roles/roles.module').then((m) => m.RolesModule),
+        data: { breadcrumb: 'Roles', permission: 'read_role' },
       },
       {
         path: 'categories',
@@ -42,12 +43,14 @@ const routes: Routes = [
         path: 'products',
         canActivate: [AuthGuard],
         loadChildren: () =>
-          import('./pages/products/products.module').then((m) => m.ProductsModule)
+          import('./pages/products/products.module').then(
+            (m) => m.ProductsModule
+          ),
       },
       {
         path: 'orders',
         loadChildren: () =>
-          import('./pages/orders/orders.module').then((m) => m.OrdersModule)
+          import('./pages/orders/orders.module').then((m) => m.OrdersModule),
       },
       {
         path: 'brands',
@@ -72,7 +75,7 @@ const routes: Routes = [
           import('./pages/branches/branches.module').then(
             (m) => m.BranchesModule
           ),
-        data: { breadcrumb: 'Branches', permission: 'read_branch' },
+        data: { permission: 'read_branch' },
       },
       {
         path: 'permissions',
@@ -87,29 +90,21 @@ const routes: Routes = [
         path: 'users',
         canActivate: [AuthGuard],
         loadChildren: () =>
-          import('./pages/users/users.module').then(
-            (m) => m.UsersModule
-          ),
+          import('./pages/users/users.module').then((m) => m.UsersModule),
         data: { breadcrumb: 'Users', permission: 'read_user' },
-      },
-      {
-        path: 'productLog',
-        canActivate: [AuthGuard],
-        loadChildren: () =>
-          import('./pages/product-log/product-log.module').then(
-            (m) => m.ProductLogModule
-          ),
-        data: { breadcrumb: 'ProductLog', permission: 'read_product_log' },
       },
       {
         path: 'products-of-branches',
         canActivate: [AuthGuard],
-        loadChildren:() =>
-          import ('./pages/products-of-branches/products-of-branches.module').then(
-            (m) => m.ProductsOfBranchesModule
-          ),
-        data: { breadcrumb: 'Products Of Branches', permission: 'can_read_product_of_branch'}
-      }
+        loadChildren: () =>
+          import(
+            './pages/products-of-branches/products-of-branches.module'
+          ).then((m) => m.ProductsOfBranchesModule),
+        data: {
+          breadcrumb: 'Products Of Branches',
+          permission: 'can_read_product_of_branch',
+        },
+      },
     ],
   },
   {

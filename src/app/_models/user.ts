@@ -1,4 +1,4 @@
-import { Branch } from "./branch";
+import { BranchModel } from "../pages/branches/models/branch.model";
 import { Role } from "./role";
 
 export class UserDto {
@@ -10,7 +10,7 @@ export class UserDto {
   gender: string;
   birthday: Date;
   role: Role;
-  branch: Branch;
+  branch: BranchModel;
 }
 
 export class UserCreate {

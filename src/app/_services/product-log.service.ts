@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { URL_CONFIG } from '../shared/config';
 import { ImportProductDto, ProductLogDto } from '../_models/product_log';
 

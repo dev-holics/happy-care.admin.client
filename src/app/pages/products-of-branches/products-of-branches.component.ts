@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Branch } from 'src/app/_models/branch';
+import { BranchModel } from 'src/app/pages/branches/models/branch.model';
 import { ProductOfBranchDto } from 'src/app/_models/product';
 import { ImportProductDto } from 'src/app/_models/product_log';
 import { AccountsService } from 'src/app/_services/accounts.service';
 import { ProductLogService } from 'src/app/_services/product-log.service';
 import { ProductsOfBranchesService } from 'src/app/_services/products-of-branches.service';
 import decode from "jwt-decode";
-import { BranchsService } from 'src/app/_services/branches.service';
-import { ProductsService } from '../products/services/product.service';
+import { BranchesService } from 'src/app/pages/branches/services/branches.service';
+import { ProductsService } from '../products/services/products.service';
 import { ProductModel } from '../products/models/product.model';
 
 @Component({
@@ -20,7 +20,7 @@ export class ProductsOfBranchesComponent implements OnInit {
 
   products: ProductOfBranchDto[] = []
   public productOptions: ProductModel[] = []
-  public branchOptions: Branch[] = []
+  public branchOptions: BranchModel[] = []
   public displayDialog: boolean;
   public selectedId: string;
   public page: number = 1;
@@ -31,7 +31,7 @@ export class ProductsOfBranchesComponent implements OnInit {
   public canImport: boolean = true;
 
   constructor(
-    public branchesService: BranchsService,
+    public branchesService: BranchesService,
     public productOfBranchService: ProductsOfBranchesService,
     public productLogService: ProductLogService,
     public productsService: ProductsService,
@@ -72,11 +72,7 @@ export class ProductsOfBranchesComponent implements OnInit {
     }
 
     async fetchOptions() {
-      this.branchesService.getBranches(0, 200).subscribe(
-        (response: any) => {
-          this.branchOptions = response.data
-        }
-      )
+      this.branchOptions = await this.branchesService.getBranches(null);
       let res = await this.productsService.getProducts(null);
       this.productOptions = res.data;
     }

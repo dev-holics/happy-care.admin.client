@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
 import { AccountsService } from 'src/app/_services/accounts.service';
 import decode from "jwt-decode";
-import { ProductsService } from '../../services/product.service';
+import { ProductsService } from '../../services/products.service';
 import { ProductModel } from '../../models/product.model';
 import { PERMISSION } from 'src/app/shared/config';
 import { OriginModel } from 'src/app/pages/origins/models/origin.model';
@@ -10,14 +10,14 @@ import { BrandModel } from 'src/app/pages/brands/models/brand.model';
 import { CategoryModel } from 'src/app/_models/category';
 import { OriginsService } from 'src/app/pages/origins/services/origins.service';
 import { BrandsService } from 'src/app/pages/brands/services/brands.service';
-import { CategoriesService } from 'src/app/_services/categories.service';
+import { CategoriesService } from 'src/app/pages/categories/services/categories.service';
 
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
-  providers: [ProductsService, MessageService, ConfirmationService],
+  providers: [MessageService, ConfirmationService],
 })
 export class ProductsComponent implements OnInit {
   public brands: BrandModel[];
@@ -67,10 +67,15 @@ export class ProductsComponent implements OnInit {
     return permissions.some((x) => x.name == permission);
   }
 
-  // async getCategories(): Promise<void> {
-  //   const res = await this.categoriesService.getCategories();
-  //   this.categories = res.data;
-  // }
+  async getBrands(): Promise<void> {
+    const res = await this.brandsService.getBrands(null);
+    this.brands = res.data;
+  }
+
+  async getCategories(): Promise<void> {
+    const res = await this.categoriesService.getCategories(null);
+    this.categories = res.data;
+  }
 
   async getOrigins(): Promise<void> {
     const res = await this.originsService.getOrigins(null);
@@ -94,11 +99,6 @@ export class ProductsComponent implements OnInit {
     this.paginator = res.paginator;
 
     console.log(this.products);
-  }
-
-  async getBrands(): Promise<void> {
-    const res = await this.brandsService.getBrands(null);
-    this.brands = res.data;
   }
 
   async addProduct(product: ProductModel) {

@@ -12,6 +12,7 @@ import { SidenavComponent } from '../theme/components/sidenav/sidenav.component'
 import { UserMenuComponent } from '../theme/components/user-menu/user-menu.component';
 import { VerticalMenuComponent } from '../theme/components/menu/vertical-menu/vertical-menu.component';
 import { AlertComponent } from './components/alert/alert.component';
+import { BaseDialogComponent } from './components/base-dialog/base-dialog.component';
 
 const PROVIDERS: never[] = [];
 
@@ -26,6 +27,7 @@ const MODULE_SHARED = [
 	declarations: [
 		AlertComponent,
 		BlockUIComponent,
+		BaseDialogComponent,
     	DynamicFormQuestionComponent,
 		DynamicFormComponent,
 		SidenavComponent,
@@ -41,6 +43,7 @@ const MODULE_SHARED = [
 		...MODULE_SHARED,
 		AlertComponent,
 		BlockUIComponent,
+		BaseDialogComponent,
     	DynamicFormQuestionComponent,
 		DynamicFormComponent,
 		SidenavComponent,

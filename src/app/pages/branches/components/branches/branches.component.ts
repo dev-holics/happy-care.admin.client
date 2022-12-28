@@ -1,37 +1,50 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
-import { Branch, BranchCreateUpdate, City } from 'src/app/_models/branch';
+import { BranchModel, CityModel, DistrictModel } from 'src/app/pages/branches/models/branch.model';
 import decode from "jwt-decode";
 import { AccountsService } from 'src/app/_services/accounts.service';
-import { BranchsService } from 'src/app/_services/branches.service';
+import { BranchesService } from 'src/app/pages/branches/services/branches.service';
 
 @Component({
   selector: 'app-branches',
   templateUrl: './branches.component.html',
-  styleUrls: ['./branches.component.scss']
+  styleUrls: ['./branches.component.scss'],
+  providers: [MessageService, ConfirmationService],
 })
 export class BranchesComponent implements OnInit {
 
-  branches: Branch[] = []
-  public cityOptions: City[] = []
+  public branches: BranchModel[] = [];
+  public cities: CityModel[] = [];
+  public districts: DistrictModel[] = [];
   public displayDialog: boolean;
-  public selectedId: string;
-  public page: number = 1;
-  public limit: number = 10;
-  public totalData: number = 0;
+  public branch: BranchModel;
+
+  public paginator: any = {
+    page: 1,
+    limit: 10,
+    totalData: 0,
+  }
+
+  public searchData: any = {
+    cityId: null,
+    districtId: null,
+    searchText: null
+  }
+
   public canUpdate: boolean = true;
   public canAdd: boolean = true;
   public canDelete: boolean = true;
 
   constructor(
-    public branchService: BranchsService,
+    public branchesService: BranchesService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private accountsService: AccountsService) { }
 
-  ngOnInit(): void {
-    this.fetchBranches();
-    this.fetchCities();
+  async ngOnInit(): Promise<void> {
+    await this.getBranches();
+    await this.getCities();
+    await this.getDistricts();
     const currentUser = this.accountsService.currentUserValue;
     if (currentUser) {
       const tokenPayload:any = decode(currentUser.accessToken)
@@ -47,74 +60,64 @@ export class BranchesComponent implements OnInit {
     return permissions.some((x) => x.name == permission);
   }
 
-  fetchCities() {
-    this.branchService.getCities().subscribe(
-      (response: any) => {
-        this.cityOptions = response.data;
-      }
-    )
+  async getBranches(): Promise<void> {
+    const query = {
+      page: this.paginator.page,
+      limit: this.paginator.limit,
+      cityId: this.searchData.cityId,
+      districtId: this.searchData.districtId,
+      searchText: this.searchData.searchText
+    }
+    const res = await this.branchesService.getBranches(query);
+    this.branches = res.data;
+    this.paginator = res.paginator;
   }
 
-  fetchBranches() {
-    this.branches = [];
-    this.branchService.getBranches(this.page, this.limit, "", "").subscribe(
-      (response: any) => {
-        this.page = response.currentPage;
-        this.limit = response.limit;
-        this.totalData = response.totalData;
-        this.branches = response.data;
-      }
-    )
+  async getCities(): Promise<void> {
+    const res = await this.branchesService.getCities();
+    this.cities = res;
   }
 
-  public addBranch(branch: BranchCreateUpdate) {
-    this.branchService
-      .create(branch)
-      .subscribe((response) =>
-      {
-        this.fetchBranches()
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: response.message,
-        });
-      });
+  async getDistricts(): Promise<void> {
+    const res = await this.branchesService.getDistricts();
+    res.map((d) => {
+      d.cityId = d.city.id;
+    });
+    this.districts = res;
   }
 
-  public updateBranch(id: string, branch: BranchCreateUpdate) {
-    this.branchService
-      .put(id, branch)
-      .subscribe((response) =>
-      {
-        this.fetchBranches()
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: response.message,
-        });
-      });
+  async addBranch(branch: BranchModel): Promise<void> {
+    await this.branchesService.addBranch(branch);
+    await this.getBranches();
+  }
+
+  async updateBranch(branch: BranchModel): Promise<void> {
+    await this.branchesService.updateBranch(branch);
+    await this.getBranches();
   }
 
   paginate(event): void {
-    this.limit = event.rows;
-    this.page = event.first / event.rows + 1;
+    this.paginator.limit = event.rows;
+    this.paginator.page = event.first / event.rows + 1;
     document.getElementById('main-content')!.scrollTop = 0;
-    this.fetchBranches();
+    this.getBranches();
   }
 
-  openDialog(id: string | null): void {
+  openDialog(branch: BranchModel | null): void {
+    console.log(branch);
     this.displayDialog = true;
-    if (id) {
-      this.selectedId = id;
+    if (branch) {
+      this.branch = branch;
     } else {
-      this.selectedId = '';
+      this.branch = new BranchModel();
     }
   }
 
-  onHideDialog(data: any): void {
+  onHideDialog(branch: BranchModel): void {
     this.displayDialog = false;
-    if (data) {
-      data.id ? this.updateBranch(data.id, data.branch) : this.addBranch(data.branch);
+    if (branch) {
+      branch.id = this.branch.id;
+      branch.id ? this.updateBranch(branch) : this.addBranch(branch);
     }
   }
 

@@ -12,7 +12,6 @@
     <div class="field-value" *ngSwitchCase="'textbox'">
       <input
         pInputText
-        type="text"
         [ngClass]="{ 'p-disabled': question.disabled }"
         [style]="{ width: '100%' }"
         [formControlName]="question.key"

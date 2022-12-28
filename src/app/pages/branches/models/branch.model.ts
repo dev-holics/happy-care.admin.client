@@ -1,23 +1,19 @@
-export class Branch {
+export class BranchModel {
   id: string = '';
   isActive: string = '';
   address: string = '';
   districtId: string = '';
-  district: District;
+  district: DistrictModel;
 }
 
-export class BranchCreateUpdate {
-  address: string = '';
-  districtId: string = '';
-}
-export class District {
+export class DistrictModel {
   id: string = '';
   name: string = '';
   cityId: string = '';
-  city: City;
+  city: CityModel;
 }
 
-export class City {
+export class CityModel {
   id: string = '';
   name: string = '';
 }
