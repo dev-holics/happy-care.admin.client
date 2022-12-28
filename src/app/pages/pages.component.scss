@@ -1,0 +1,22 @@
+@import './../../assets/scss/base/variables';
+
+.header {
+    // position: relative;
+    height: $toolbar-height;
+    padding: 0 20px;
+    background-color: var(--blue-400);
+    box-shadow: 0px 4px 12px -2px var(--gray-400);
+    z-index: 1;
+}
+
+.sidenav {
+    position: relative;
+    overflow: hidden;
+    border: none !important;
+    box-shadow: 2px 0px 12px -2px var(--gray-400);
+    z-index: 1;
+}
+
+.container-fluid {
+    padding: 0;
+}

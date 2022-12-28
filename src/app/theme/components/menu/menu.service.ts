@@ -9,7 +9,7 @@ import { MenuItem } from 'primeng/api';
 export class MenuService {
   constructor(private location: Location, private router: Router) {}
 
-  public getVerticalMenuItems(): Array<Menu> {
+  public getVerticalMenuItems(): Array<any> {
     return verticalMenuItems;
   }
 

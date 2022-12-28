@@ -1,6 +1,92 @@
 ﻿import { Menu } from "./menu.model";
 
 export const verticalMenuItems = [
+    {
+        label: 'Tổng quan',
+        icon: 'pi pi-home',
+        url: '/'
+    },
+    {
+        label: 'Danh mục',
+        items: [
+            {
+                label: 'Danh sách danh mục',
+                url: '/categories'
+            }
+        ]
+    },
+    {
+        label: 'Chi nhánh',
+        items: [
+            {
+                label: 'Danh sách chi nhánh',
+                url: '/branches'
+            },
+            {
+                label: 'Sản phẩm của chi nhánh',
+                url: '/products-of-branches'
+            }
+        ]
+    },
+    {
+        label: 'Sản phẩm',
+        items: [
+            {
+                label: 'Nguồn gốc',
+                url: '/origins'
+            },
+            {
+                label: 'Sản phẩm',
+                url: '/products'
+            },
+            {
+                label: 'Nhãn hiệu',
+                url: '/brands'
+            }
+        ]
+    },
+    {
+        label: 'Quản lý đơn hàng',
+        items: [
+            {
+                label: 'Đơn hàng',
+                url: '/orders'
+            },
+            {
+                label: 'Trạng thái đơn hàng',
+                url: '/order-statuses'
+            }
+        ]
+    },
+    {
+        label: 'Quản lý hệ thống',
+        items: [
+            {
+                label: 'Vai trò',
+                url: '/roles'
+            },
+            {
+                label: 'Quyền',
+                url: '/permissions'
+            },
+            {
+                label: 'Người dùng',
+                url: '/users'
+            }
+        ]
+    },
+    {
+        label: 'Kho hàng',
+        items: [
+            {
+                label: 'Nhập kho',
+                url: '/products/log'
+            },
+        ]
+    }
+];
+
+export const horizontalMenuItems = [
     new Menu (1, 'Tổng quan', '/', null, 'pi pi-home', null, false, 0),
     new Menu (300, 'Danh mục', '/', null, null, null, true, 0),
     new Menu (302, 'Danh sách danh mục', null, '/categories', null, null, false, 300),
@@ -21,7 +107,4 @@ export const verticalMenuItems = [
 
     new Menu (314, 'Kho', '/', null , null, null, true, 0),
     new Menu (315, 'Nhập kho', null, '/productLog', null, null, false, 314),
-];
-
-export const horizontalMenuItems = [
 ];
