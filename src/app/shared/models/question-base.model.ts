@@ -11,6 +11,8 @@ export class QuestionBaseModel<T> {
 	optionLabel: string;
 	optionValue: string;
 	onChange?: (_event?: any) => void;
+	onClick?: (_event?: any) => void;
+	onFocus?: (_event?: any) => void;
 	virtualScroll: boolean;
 	virtualScrollItemSize: number;
 	lazy: boolean;
@@ -34,6 +36,8 @@ export class QuestionBaseModel<T> {
 			disabled?: boolean;
 			hidden?: boolean;
 			onChange?: (_event?: any) => void;
+			onClick?: (_event?: any) => void;
+			onFocus?: (_event?: any) => void;
 			virtualScroll?: boolean;
 			virtualScrollItemSize?: number;
 			lazy?: boolean;
@@ -62,6 +66,8 @@ export class QuestionBaseModel<T> {
 		this.disabled = !!options.disabled;
 		this.hidden = !!options.hidden;
 		this.onChange = options.onChange;
+		this.onClick = options.onClick;
+		this.onFocus = options.onFocus;
 		this.virtualScroll = !!options.virtualScroll;
 		this.virtualScrollItemSize = options.virtualScrollItemSize || 0;
 		this.lazy = !!options.lazy;

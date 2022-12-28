@@ -110,3 +110,22 @@ $button-import-active: #212121;
 $box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
 $box-shadow-content: 1px 5px 12px -3px rgba(0, 0, 0, 0.175);
 $box-shadow-drag: 0px 1px 2px 0px rgba(9, 30, 66, 0.25);
+
+$font-family: 'Roboto', sans-serif;
+
+$toolbar-height: 56px; 
+$horizontal-menu-height: $toolbar-height;
+
+$sidenav-width: 250px;
+$sidenav-user-block-height: 156px;
+$mini-sidenav-user-block-height: 70px;
+
+$flex-distance: 8px;
+$inner-sidenav-content-padding: $flex-distance;
+
+//Login, Register, Errors box
+$box-height: 186px;
+$box-position: 34px;
+$register-box-height: 300px;
+
+$footer-height: 56px; 

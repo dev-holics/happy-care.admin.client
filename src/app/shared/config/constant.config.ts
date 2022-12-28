@@ -14,6 +14,10 @@ export const ROLE = Object.freeze({
 	CUSTOMER: 'Customer',
 });
 
+export const SCROLL_DEFAULT_CONFIG = Object.freeze({
+	DELAY: 250
+});
+
 export const PAYMENT_TYPE_OPTIONS = [
   {
     id: 'ALL',
