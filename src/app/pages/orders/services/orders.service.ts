@@ -67,6 +67,42 @@ export class OrdersService {
       });
   }
 
+  async getRevenueByDate(params: any) : Promise<any> {
+    const queryString = this.httpService.convertQueryString(params);
+		const url = `${URL_CONFIG.ORDER_ADMIN_URL}/revenue-date${queryString}`;
+
+		const res = await this.httpService.get(url);
+
+		if (res?.statusCode !== HttpStatusCode.Ok) {
+			return {
+				data: null,
+				success: false,
+			};
+		}
+    return {
+      data: res.data,
+      success: true,
+    }
+  }
+
+  async getRevenueByYear(params: any) : Promise<any> {
+    const queryString = this.httpService.convertQueryString(params);
+		const url = `${URL_CONFIG.ORDER_ADMIN_URL}/revenue-year${queryString}`;
+
+		const res = await this.httpService.get(url);
+
+		if (res?.statusCode !== HttpStatusCode.Ok) {
+			return {
+				data: null,
+				success: false,
+			};
+		}
+    return {
+      data: res.data,
+      success: true,
+    }
+  }
+
   async getOrderHistory(
 		params: any,
 	): Promise<PaginationResponseModel<OrderModel[]>> {
@@ -82,7 +118,6 @@ export class OrdersService {
 				success: false,
 			};
 		}
-    console.log(res);
 
 		const orders: OrderModel[] = res?.data.map((d: any) => ({
 			id: d.id,

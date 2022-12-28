@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-12 text-center">
+    <h1>BIỂU ĐỒ DOANH THU</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-6">
+    <div class="row">
+      <div class="col-3">
+        <span>Chọn năm</span>
+      </div>
+      <div class="col-9">
+        <p-dropdown
+          [(ngModel)]="selectedYear"
+          [options]="years"
+          placeholder="Chọn năm"
+          [style]="{ width: '100%' }"
+          aria-describedby="origin-help"
+          (onChange)="getMonthRevenue()"
+          [showClear]="false"
+        >
+        </p-dropdown>
+      </div>
+    </div>
+    <div class="row">
+      <div class="content-section implementation">
+        <div class="card">
+            <p-chart type="bar" [data]="monthData" [options]="monthOptions"></p-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="row">
+      <div class="col-3">
+        <span>Chọn ngày</span>
+      </div>
+      <div class="col-9">
+        <p-calendar [(ngModel)]="selectedDate" (onSelect)="getDayRevenue()"></p-calendar>
+      </div>
+    </div>
+    <div class="row">
+      <div class="content-section implementation">
+        <div class="card">
+            <p-chart type="bar" [data]="dayData" [options]="dayOptions"></p-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
