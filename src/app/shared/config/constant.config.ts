@@ -14,3 +14,7 @@ export const ROLE = Object.freeze({
 	CUSTOMER: 'Customer',
 });
 
+export const SCROLL_DEFAULT_CONFIG = Object.freeze({
+	DELAY: 250
+});
+

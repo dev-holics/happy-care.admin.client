@@ -63,6 +63,8 @@
         optionValue="{{ question.optionValue }}"
         [showClear]="true"
         (onChange)="question.onChange && question.onChange($event)"
+        (onClick)="question.onClick && question.onClick($event)"
+        (onFocus)="question.onFocus && question.onFocus($event)"
         [virtualScroll]="question.virtualScroll"
         [virtualScrollItemSize]="question.virtualScrollItemSize"
         [lazy]="question.lazy"

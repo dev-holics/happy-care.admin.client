@@ -5,7 +5,7 @@ import { CategoriesService } from 'src/app/pages/categories/services/categories.
 import { OriginModel } from 'src/app/pages/origins/models/origin.model';
 import { OriginsService } from 'src/app/pages/origins/services/origins.service';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
-import { DEFAULT_PAGINATION } from 'src/app/shared/config';
+import { DEFAULT_PAGINATION, SCROLL_DEFAULT_CONFIG } from 'src/app/shared/config';
 import { QuestionBaseModel } from 'src/app/shared/models/question-base.model';
 import { DropdownControl, TextareaControl, TextboxControl } from 'src/app/shared/models/question-control.model';
 import { CategoryModel } from 'src/app/_models/category';
@@ -20,6 +20,8 @@ export class ProductDialogComponent extends BaseDialogComponent implements OnIni
   @Input('product') product: ProductModel;
 
   public lastBrandPage: number = 1;
+  public lastCategoryPage: number = 1;
+  public lastOriginPage: number = 1;
 
   public brands: BrandModel[] = [];
   public categories: CategoryModel[] = [];
@@ -139,8 +141,7 @@ export class ProductDialogComponent extends BaseDialogComponent implements OnIni
         virtualScrollItemSize: DEFAULT_PAGINATION.LIMIT * 2,
         virtualScrollOptions: {
           showLoader: true,
-          loading: false,
-          delay: 150
+          loading: false
         },
         lazy: true,
         onLazyLoad: this.onBrandLazyLoad.bind(this),
@@ -155,6 +156,14 @@ export class ProductDialogComponent extends BaseDialogComponent implements OnIni
 				options: this.origins,
 				optionLabel: 'name',
 				optionValue: 'id',
+        virtualScroll: true,
+        virtualScrollItemSize: DEFAULT_PAGINATION.LIMIT * 2,
+        virtualScrollOptions: {
+          showLoader: true,
+          loading: false
+        },
+        lazy: true,
+        onLazyLoad: this.onOriginLazyLoad.bind(this),
 				validates: {
 					required: true,
 				},
@@ -163,9 +172,17 @@ export class ProductDialogComponent extends BaseDialogComponent implements OnIni
         key: 'categoryId',
 				label: 'Loại sản phẩm',
 				value: this.model.categoryId || '',
-				options: this.brands,
+				options: this.categories,
 				optionLabel: 'name',
 				optionValue: 'id',
+        virtualScroll: true,
+        virtualScrollItemSize: DEFAULT_PAGINATION.LIMIT * 2,
+        virtualScrollOptions: {
+          showLoader: true,
+          loading: false
+        },
+        lazy: true,
+        onLazyLoad: this.onCategoryLazyLoad.bind(this),
 				validates: {
 					required: true,
 				},
@@ -181,6 +198,9 @@ export class ProductDialogComponent extends BaseDialogComponent implements OnIni
     }
     const res = await this.brandsService.getBrands(query);
     this.brands = Array.from({length: res.paginator.totalData});
+    if (!res.data.find(x => x.id === this.model.trademarkId)) {
+      this.brands[res.paginator.totalData - 1] = this.model.trademark;
+    }
     for (let i = 0; i < res.data.length; i++) {
       this.brands[i] = res.data[i];
     }
@@ -193,8 +213,14 @@ export class ProductDialogComponent extends BaseDialogComponent implements OnIni
       limit: DEFAULT_PAGINATION.LIMIT
     }
     const res = await this.categoriesService.getCategories(query);
-    this.categories.push(...res.data);
-    this.questions[12].options = this.categories;
+    this.categories = Array.from({length: res.paginator.totalData});
+    if (!res.data.find(x => x.id === this.model.categoryId)) {
+      this.categories[res.paginator.totalData - 1] = this.model.category;
+    }
+    for (let i = 0; i < res.data.length; i++) {
+      this.categories[i] = res.data[i];
+    }
+    this.questions[13].options = this.categories;
   }
 
   async getOrigins(): Promise<void> {
@@ -203,8 +229,14 @@ export class ProductDialogComponent extends BaseDialogComponent implements OnIni
       limit: DEFAULT_PAGINATION.LIMIT
     }
     const res = await this.originsService.getOrigins(query);
-    this.origins.push(...res.data);
-    this.questions[13].options = this.origins;
+    this.origins = Array.from({length: res.paginator.totalData});
+    if (!res.data.find(x => x.id === this.model.originId)) {
+      this.origins[res.paginator.totalData - 1] = this.model.origin;
+    }
+    for (let i = 0; i < res.data.length; i++) {
+      this.origins[i] = res.data[i];
+    }
+    this.questions[12].options = this.origins;
   }
 
   async onBrandLazyLoad(event): Promise<void> {
@@ -214,7 +246,7 @@ export class ProductDialogComponent extends BaseDialogComponent implements OnIni
       this.questions[11].virtualScrollOptions = {
         showLoader: true,
         loading: true,
-        delay: 100
+        delay: SCROLL_DEFAULT_CONFIG.DELAY
       }
       const query = {
         page: page,
@@ -226,6 +258,58 @@ export class ProductDialogComponent extends BaseDialogComponent implements OnIni
       this.brands.splice(firstIndex, lastIndex, ...res.data);
       this.lastBrandPage = res.paginator.page;
       this.questions[11].virtualScrollOptions = {
+        showLoader: true,
+        loading: false,
+        delay: 0
+      }
+    }
+  }
+
+  async onCategoryLazyLoad(event): Promise<void> {
+    const { first, last } = event;
+    const page = Math.floor(last / DEFAULT_PAGINATION.LIMIT) + 1;
+    if (page > this.lastCategoryPage) {
+      this.questions[13].virtualScrollOptions = {
+        showLoader: true,
+        loading: true,
+        delay: SCROLL_DEFAULT_CONFIG.DELAY
+      }
+      const query = {
+        page: page,
+        limit: DEFAULT_PAGINATION.LIMIT
+      }
+      const res = await this.categoriesService.getCategories(query, false);
+      const firstIndex = this.lastCategoryPage * DEFAULT_PAGINATION.LIMIT;
+      const lastIndex = firstIndex + res.data.length;
+      this.categories.splice(firstIndex, lastIndex, ...res.data);
+      this.lastCategoryPage = res.paginator.page;
+      this.questions[13].virtualScrollOptions = {
+        showLoader: true,
+        loading: false,
+        delay: 0
+      }
+    }
+  }
+
+  async onOriginLazyLoad(event): Promise<void> {
+    const { first, last } = event;
+    const page = Math.floor(last / DEFAULT_PAGINATION.LIMIT) + 1;
+    if (page > this.lastOriginPage) {
+      this.questions[12].virtualScrollOptions = {
+        showLoader: true,
+        loading: true,
+        delay: SCROLL_DEFAULT_CONFIG.DELAY
+      }
+      const query = {
+        page: page,
+        limit: DEFAULT_PAGINATION.LIMIT
+      }
+      const res = await this.originsService.getOrigins(query, false);
+      const firstIndex = this.lastOriginPage * DEFAULT_PAGINATION.LIMIT;
+      const lastIndex = firstIndex + res.data.length;
+      this.origins.splice(firstIndex, lastIndex, ...res.data);
+      this.lastOriginPage = res.paginator.page;
+      this.questions[12].virtualScrollOptions = {
         showLoader: true,
         loading: false,
         delay: 0

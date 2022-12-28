@@ -125,6 +125,9 @@ export class ProductsComponent implements OnInit {
   async onHideDialog(product): Promise<void> {
     this.displayDialog = false;
     if (product) {
+      product.id = this.product.id;
+      product.images = [];
+      product.price = Number(product.price);
       if (product.id) {
         await this.updateProduct(product);
       } else {

@@ -7,10 +7,10 @@ import { URL_CONFIG } from 'src/app/shared/config/url.config';
 export class OriginsService {
   constructor(public httpService: HttpService) {}
 
-  async getOrigins(queryObject: any): Promise<any> {
+  async getOrigins(queryObject: any, isBlocked = true): Promise<any> {
     const query = this.httpService.convertQueryString(queryObject);
     const url = `${URL_CONFIG.ORIGIN_PUBLIC_URL}${query}`;
-    const res = await this.httpService.get(url);
+    const res = await this.httpService.get(url, isBlocked);
 
     const data = res.data;
     const paginator = {

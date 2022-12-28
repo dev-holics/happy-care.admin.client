@@ -14,10 +14,10 @@ export class CategoriesService {
 
   constructor(private httpClient: HttpClient, public httpService: HttpService) {}
 
-  async getCategories(queryObject: any): Promise<any> {
+  async getCategories(queryObject: any, isBlocked = true): Promise<any> {
     const query = this.httpService.convertQueryString(queryObject);
     const url = `${URL_CONFIG.CATEGORY_PUBLIC_URL}${query}`;
-    const res = await this.httpService.get(url);
+    const res = await this.httpService.get(url, isBlocked);
 
     const data = res.data;
     const paginator = {
