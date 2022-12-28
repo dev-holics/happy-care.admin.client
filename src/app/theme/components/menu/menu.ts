@@ -1,7 +1,8 @@
 ﻿import { Menu } from "./menu.model";
 
 export const verticalMenuItems = [
-    new Menu (1, 'Tổng quan', '/', null, 'pi pi-home', null, false, 0),
+    new Menu (1, 'Tổng quan', '/dashboard', null, 'pi pi-home', null, false, 0),
+    new Menu (320, 'Đơn hàng', '/orders', null, null, null, false, 0),
     new Menu (300, 'Danh mục', '/', null, null, null, true, 0),
     new Menu (302, 'Danh sách danh mục', null, '/categories', null, null, false, 300),
 
