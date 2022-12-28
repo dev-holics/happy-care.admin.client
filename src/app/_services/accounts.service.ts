@@ -56,8 +56,8 @@ export class AccountsService {
     this.logout();
   }
 
-  getProfile(): Observable<Profile> {
-    return this.httpClient.get<Profile>(`${URL_CONFIG.USER_URL}/profile`);
+  getProfile(): Observable<any> {
+    return this.httpClient.get<any>(`${URL_CONFIG.USER_URL}/profile`);
   }
 
   updateProfile(profile: Profile): Observable<any> {

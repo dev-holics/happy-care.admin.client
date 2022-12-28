@@ -4,6 +4,8 @@ import { QuestionBaseModel } from 'src/app/shared/models/question-base.model';
 import { DropdownControl, TextboxControl } from 'src/app/shared/models/question-control.model';
 import { BranchModel } from 'src/app/pages/branches/models/branch.model';
 import { ProductModel } from '../../models/product.model';
+import { Profile } from 'src/app/_models/profile';
+import { ROLE } from 'src/app/shared/config';
 
 @Component({
   selector: 'app-product-import-dialog',
@@ -13,6 +15,7 @@ import { ProductModel } from '../../models/product.model';
 export class ProductImportDialogComponent extends BaseDialogComponent implements OnInit {
   @Input('branches') branches: BranchModel[];
   @Input('products') products: ProductModel[];
+  @Input('profile') profile: Profile;
 
   override ngOnInit(): void {
     super.ngOnInit();
@@ -30,6 +33,18 @@ export class ProductImportDialogComponent extends BaseDialogComponent implements
         value: '',
         options: this.products,
         optionLabel: 'name',
+        optionValue: 'id',
+        validates: {
+          required: true,
+        },
+      }),
+      new DropdownControl({
+        key: 'branchId',
+        label: 'Chi nhánh',
+        value: this.profile?.branchId || '',
+        hidden: this.profile?.role === ROLE.PHARMACIST ? true : false,
+        options: this.branches,
+        optionLabel: 'address',
         optionValue: 'id',
         validates: {
           required: true,

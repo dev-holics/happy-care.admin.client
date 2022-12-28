@@ -1,78 +1,133 @@
 <app-product-import-dialog
   *ngIf="displayImportDialog"
   [display]="displayImportDialog"
-  [model]="productImport"
   [products]="products"
-  (closeDialog)="onHideImportDialog($event)">
+  [branches]="branches"
+  [model]="productImport"
+  (closeDialog)="onHideImportDialog($event)"
+>
 </app-product-import-dialog>
-<p-confirmDialog #cd [style]="{width: '40vw'}">
-    <ng-template pTemplate="footer">
-        <button type="button" pButton icon="pi pi-times" class="p-button-outlined p-button-info" label="No" (click)="cd.reject()"></button>
-        <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
-    </ng-template>
+<p-confirmDialog #cd [style]="{ width: '40vw' }">
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      class="p-button-outlined p-button-info"
+      label="No"
+      (click)="cd.reject()"
+    ></button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      label="Yes"
+      (click)="cd.accept()"
+    ></button>
+  </ng-template>
 </p-confirmDialog>
 <p-toast></p-toast>
 <div class="col p-4 data-table">
-    <div class="flex flex-row pb-3 justify-content-between align-items-center">
-        <h2 class="m-0">Quản lí nhập kho</h2>
-        <div class="flex align-items-center">
-            <button pButton pRipple type="button" class="p-button-success mr-4" (click)="openImportDialog(null)">
-                Tạo phiếu nhập
-            </button>
-            <button pButton pRipple type="button" class="p-button-success" (click)="openExportDialog(null)">
-                Tạo phiếu xuất
-            </button>
-        </div>
+  <div class="flex flex-row pb-3 justify-content-between align-items-center">
+    <h2 class="m-0">Quản lí nhập kho</h2>
+    <div class="flex align-items-center">
+      <button
+        pButton
+        pRipple
+        type="button"
+        class="p-button-success mr-4"
+        (click)="openImportDialog(null)"
+      >
+        Tạo phiếu nhập
+      </button>
+      <button
+        pButton
+        pRipple
+        type="button"
+        class="p-button-success"
+        (click)="openExportDialog(null)"
+      >
+        Tạo phiếu xuất
+      </button>
     </div>
-    <p-toolbar styleClass="mb-4 d-flex flex-row justify-content-start">
-      <div class="field col-3">
-        <label for="branchId" class="block form-label">Chi nhánh</label>
-        <p-dropdown [(ngModel)]="searchData.branchId" [options]="branches" placeholder="Chọn chi nhánh" [style]="{'width':'100%'}"
-                    aria-describedby="origin-help" optionLabel="address" optionValue="id"
-                    [filter]="true" filterBy="address" (onChange)="onChangeBranch($event)"
-                    [showClear]="true"
-        >
-        </p-dropdown>
-      </div>
-      <div class="field col-3 ml-3">
-        <label for="query" class="block form-label">Tìm kiếm</label>
-        <input pInputText id="query" type="date" [(ngModel)]="searchData.transactionDate"
-                aria-describedby="code-help" class="w-full" />
-      </div>
-      <div class="field ml-auto p-2">
-        <button type="button" pButton class="p-button-outlined p-button-info" label="Tìm kiếm" (click)="getProductLog()"></button>
-      </div>
-    </p-toolbar>
-    <p-table [value]="productLog" responsiveLayout="scroll" styleClass="w-full p-datatable-gridlines p-datatable-striped mt-2"
-                [lazy]="true" [paginator]="true" [rows]="paginator.limit" [totalRecords]="paginator.totalData"
-                [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10, 15, 20]"
-                (onPage)="paginate($event)">
-        <ng-template pTemplate="header">
-            <tr>
-                <th scope="col" style="width: 3rem">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
-                <th scope="col">Ngày</th>
-                <th scope="col">Chi nhánh</th>
-                <th scope="col">Tên sản phẩm</th>
-                <th scope="col">Số lượng</th>
-                <th scope="col">Loại</th>
-                <th scope="col"></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-log>
-            <tr>
-                <td>
-                    <p-tableCheckbox [value]="log"></p-tableCheckbox>
-                </td>
-                <td>{{log.transactionDate.substring(0,10)}}</td>
-                <td>{{log.branch.address}}</td>
-                <td>{{log.product.name}}</td>
-                <td>{{log.quantity}}</td>
-                <td>{{log.type}}</td>
-                <td style="text-align: center;">
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+  </div>
+  <p-toolbar styleClass="mb-4 d-flex flex-row justify-content-start">
+    <div class="field col-3">
+      <label for="branchId" class="block form-label">Chi nhánh</label>
+      <p-dropdown
+        [(ngModel)]="searchData.branchId"
+        [options]="branches"
+        placeholder="Chọn chi nhánh"
+        [style]="{ width: '100%' }"
+        aria-describedby="origin-help"
+        optionLabel="address"
+        optionValue="id"
+        [filter]="true"
+        filterBy="address"
+        (onChange)="onChangeBranch($event)"
+        [showClear]="true"
+      >
+      </p-dropdown>
+    </div>
+    <div class="field col-3 ml-3">
+      <label for="query" class="block form-label">Tìm kiếm</label>
+      <input
+        pInputText
+        id="query"
+        type="date"
+        [(ngModel)]="searchData.transactionDate"
+        aria-describedby="code-help"
+        class="w-full"
+      />
+    </div>
+    <div class="field ml-auto p-2">
+      <button
+        type="button"
+        pButton
+        class="p-button-outlined p-button-info"
+        label="Tìm kiếm"
+        (click)="getProductLog()"
+      ></button>
+    </div>
+  </p-toolbar>
+  <p-table
+    [value]="productLog"
+    responsiveLayout="scroll"
+    styleClass="w-full p-datatable-gridlines p-datatable-striped mt-2"
+    [lazy]="true"
+    [paginator]="true"
+    [rows]="paginator.limit"
+    [totalRecords]="paginator.totalData"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rowsPerPageOptions]="[10, 15, 20]"
+    (onPage)="paginate($event)"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th scope="col">Ngày</th>
+        <th scope="col">Chi nhánh</th>
+        <th scope="col">Tên sản phẩm</th>
+        <th scope="col">Số lượng</th>
+        <th scope="col">Loại</th>
+        <th scope="col"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-log>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="log"></p-tableCheckbox>
+        </td>
+        <td>{{ log.transactionDate.substring(0, 10) }}</td>
+        <td>{{ log.branch.address }}</td>
+        <td>{{ log.product.name }}</td>
+        <td>{{ log.quantity }}</td>
+        <td>{{ log.type }}</td>
+        <td style="text-align: center"></td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>

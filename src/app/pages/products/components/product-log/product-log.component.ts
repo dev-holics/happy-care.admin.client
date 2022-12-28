@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { BranchModel } from 'src/app/pages/branches/models/branch.model';
 import { BranchesService } from 'src/app/pages/branches/services/branches.service';
+import { ROLE } from 'src/app/shared/config';
+import decode from "jwt-decode";
+import { Profile } from 'src/app/_models/profile';
+import { AccountsService } from 'src/app/_services/accounts.service';
 import { ProductExportModel, ProductImportModel, ProductLogModel, ProductModel } from '../../models/product.model';
 import { ProductsService } from '../../services/products.service';
 
@@ -19,6 +23,7 @@ export class ProductLogComponent implements OnInit {
   public productImport: ProductImportModel;
   public displayExportDialog: boolean = false;
   public productExport: ProductExportModel;
+  public profile: Profile | null;
 
   public searchData: any = {
     branchId: null,
@@ -33,13 +38,25 @@ export class ProductLogComponent implements OnInit {
   }
 
   constructor(
+    private accountsService: AccountsService,
     private branchesService: BranchesService,
     private productsService: ProductsService,
   ) { }
 
   async ngOnInit(): Promise<void> {
+    await this.getBranches();
     await this.getProducts();
     await this.getProductLog();
+    this.accountsService.getProfile().subscribe((res) => {
+      this.profile = res.data;
+      if (this.profile && this.profile.role.name == ROLE.PHARMACIST) {
+        const currentUser = this.accountsService.currentUserValue;
+        if (currentUser) {
+          const tokenPayload : any = decode(currentUser.accessToken)
+          this.profile.branchId = tokenPayload.branchId;
+        }
+      }
+    });
   }
 
   async getProductLog(): Promise<void> {

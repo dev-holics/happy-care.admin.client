@@ -6,3 +6,11 @@ export const DEFAULT_PAGINATION = Object.freeze({
 	PAGE: 1,
 	LIMIT: 15,
 });
+
+export const ROLE = Object.freeze({
+	SUPER_ADMIN: 'Super admin',
+	ADMIN: 'Admin',
+	PHARMACIST: 'Pharmacist',
+	CUSTOMER: 'Customer',
+});
+
