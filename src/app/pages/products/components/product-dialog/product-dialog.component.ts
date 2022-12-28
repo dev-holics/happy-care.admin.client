@@ -19,8 +19,7 @@ import { ProductModel } from '../../models/product.model';
 export class ProductDialogComponent extends BaseDialogComponent implements OnInit {
   @Input('product') product: ProductModel;
 
-  public brandLoading: boolean = false;
-  public totalBrands: number;
+  public lastBrandPage: number = 1;
 
   public brands: BrandModel[] = [];
   public categories: CategoryModel[] = [];
@@ -137,10 +136,11 @@ export class ProductDialogComponent extends BaseDialogComponent implements OnIni
 				optionLabel: 'name',
 				optionValue: 'id',
         virtualScroll: true,
-        virtualScrollItemSize: 40,
+        virtualScrollItemSize: DEFAULT_PAGINATION.LIMIT * 2,
         virtualScrollOptions: {
           showLoader: true,
-          loading: this.brandLoading
+          loading: false,
+          delay: 150
         },
         lazy: true,
         onLazyLoad: this.onBrandLazyLoad.bind(this),
@@ -180,8 +180,10 @@ export class ProductDialogComponent extends BaseDialogComponent implements OnIni
       limit: DEFAULT_PAGINATION.LIMIT
     }
     const res = await this.brandsService.getBrands(query);
-    this.brands.push(...res.data);
-    this.totalBrands = res.paginator.totalData;
+    this.brands = Array.from({length: res.paginator.totalData});
+    for (let i = 0; i < res.data.length; i++) {
+      this.brands[i] = res.data[i];
+    }
     this.questions[11].options = this.brands;
   }
 
@@ -206,22 +208,29 @@ export class ProductDialogComponent extends BaseDialogComponent implements OnIni
   }
 
   async onBrandLazyLoad(event): Promise<void> {
-    const { last } = event;
-    console.log(last, this.brands.length, this.brandLoading);
-    if (last !== this.brands.length || this.brandLoading) return;
+    const { first, last } = event;
     const page = Math.floor(last / DEFAULT_PAGINATION.LIMIT) + 1;
-    if (page * DEFAULT_PAGINATION.LIMIT >= this.totalBrands) return;
-    this.brandLoading = true;
-    this.questions[11].virtualScrollOptions.loading = this.brandLoading;
-    const query = {
-      page: Math.floor(this.brands.length / DEFAULT_PAGINATION.LIMIT) + 1,
-      limit: DEFAULT_PAGINATION.LIMIT
+    if (page > this.lastBrandPage) {
+      this.questions[11].virtualScrollOptions = {
+        showLoader: true,
+        loading: true,
+        delay: 100
+      }
+      const query = {
+        page: page,
+        limit: DEFAULT_PAGINATION.LIMIT
+      }
+      const res = await this.brandsService.getBrands(query, false);
+      const firstIndex = this.lastBrandPage * DEFAULT_PAGINATION.LIMIT;
+      const lastIndex = firstIndex + res.data.length;
+      this.brands.splice(firstIndex, lastIndex, ...res.data);
+      this.lastBrandPage = res.paginator.page;
+      this.questions[11].virtualScrollOptions = {
+        showLoader: true,
+        loading: false,
+        delay: 0
+      }
     }
-    const res = await this.brandsService.getBrands(query, false);
-    this.brands.push(...res.data);
-    this.questions[11].options = this.brands;
-    this.brandLoading = false;
-    this.questions[11].virtualScrollOptions.loading = this.brandLoading;
   }
 
 }
