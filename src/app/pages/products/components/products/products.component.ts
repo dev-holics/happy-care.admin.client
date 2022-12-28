@@ -20,9 +20,6 @@ import { CategoriesService } from 'src/app/pages/categories/services/categories.
   providers: [MessageService, ConfirmationService],
 })
 export class ProductsComponent implements OnInit {
-  public brands: BrandModel[];
-  public categories: CategoryModel[];
-  public origins: OriginModel[];
   public products: ProductModel[];
   public product: ProductModel;
   public displayDialog: boolean = false;
@@ -39,18 +36,13 @@ export class ProductsComponent implements OnInit {
   public searchText: string = '';
 
   constructor(
-    private categoriesService: CategoriesService,
-    private originsService: OriginsService,
     private productsService: ProductsService,
-    private brandsService: BrandsService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private accountsService: AccountsService
   ) {}
 
   async ngOnInit(): Promise<void> {
-    await this.getBrands();
-    await this.getOrigins();
     await this.getProducts();
     const currentUser = this.accountsService.currentUserValue;
     if (currentUser) {
@@ -65,21 +57,6 @@ export class ProductsComponent implements OnInit {
 
   isAccess(permissions: any, permission: string) {
     return permissions.some((x) => x.name == permission);
-  }
-
-  async getBrands(): Promise<void> {
-    const res = await this.brandsService.getBrands(null);
-    this.brands = res.data;
-  }
-
-  async getCategories(): Promise<void> {
-    const res = await this.categoriesService.getCategories(null);
-    this.categories = res.data;
-  }
-
-  async getOrigins(): Promise<void> {
-    const res = await this.originsService.getOrigins(null);
-    this.origins = res.data;
   }
 
   async getProducts(): Promise<void> {
@@ -97,8 +74,6 @@ export class ProductsComponent implements OnInit {
       return product;
     });
     this.paginator = res.paginator;
-
-    console.log(this.products);
   }
 
   async addProduct(product: ProductModel) {

@@ -1,9 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BrandModel } from 'src/app/pages/brands/models/brand.model';
+import { BrandsService } from 'src/app/pages/brands/services/brands.service';
+import { CategoriesService } from 'src/app/pages/categories/services/categories.service';
 import { OriginModel } from 'src/app/pages/origins/models/origin.model';
+import { OriginsService } from 'src/app/pages/origins/services/origins.service';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
+import { DEFAULT_PAGINATION } from 'src/app/shared/config';
 import { QuestionBaseModel } from 'src/app/shared/models/question-base.model';
 import { DropdownControl, TextareaControl, TextboxControl } from 'src/app/shared/models/question-control.model';
+import { CategoryModel } from 'src/app/_models/category';
 import { ProductModel } from '../../models/product.model';
 
 @Component({
@@ -12,11 +17,27 @@ import { ProductModel } from '../../models/product.model';
   styleUrls: ['./../../../../shared/components/base-dialog/base-dialog.component.scss'],
 })
 export class ProductDialogComponent extends BaseDialogComponent implements OnInit {
-  @Input('brands') brands: BrandModel[];
-  @Input('origins') origins: OriginModel[];
   @Input('product') product: ProductModel;
 
+  public brandLoading: boolean = false;
+  public totalBrands: number;
+
+  public brands: BrandModel[] = [];
+  public categories: CategoryModel[] = [];
+  public origins: OriginModel[] = [];
+
+  constructor(
+    private brandsService: BrandsService,
+    private categoriesService: CategoriesService,
+    private originsService: OriginsService
+  ) {
+    super();
+  }
+
   override ngOnInit(): void {
+    this.getBrands();
+    this.getCategories();
+    this.getOrigins();
     super.ngOnInit();
     this.title = "sản phẩm",
     this.style = {
@@ -115,9 +136,17 @@ export class ProductDialogComponent extends BaseDialogComponent implements OnIni
 				options: this.brands,
 				optionLabel: 'name',
 				optionValue: 'id',
+        virtualScroll: true,
+        virtualScrollItemSize: 40,
+        virtualScrollOptions: {
+          showLoader: true,
+          loading: this.brandLoading
+        },
+        lazy: true,
+        onLazyLoad: this.onBrandLazyLoad.bind(this),
 				validates: {
 					required: true,
-				},
+				}
       }),
       new DropdownControl({
         key: 'originId',
@@ -144,4 +173,55 @@ export class ProductDialogComponent extends BaseDialogComponent implements OnIni
     ];
     this.questions = questions;
   }
+
+  async getBrands(): Promise<void> {
+    const query = {
+      page: DEFAULT_PAGINATION.PAGE,
+      limit: DEFAULT_PAGINATION.LIMIT
+    }
+    const res = await this.brandsService.getBrands(query);
+    this.brands.push(...res.data);
+    this.totalBrands = res.paginator.totalData;
+    this.questions[11].options = this.brands;
+  }
+
+  async getCategories(): Promise<void> {
+    const query = {
+      page: DEFAULT_PAGINATION.PAGE,
+      limit: DEFAULT_PAGINATION.LIMIT
+    }
+    const res = await this.categoriesService.getCategories(query);
+    this.categories.push(...res.data);
+    this.questions[12].options = this.categories;
+  }
+
+  async getOrigins(): Promise<void> {
+    const query = {
+      page: DEFAULT_PAGINATION.PAGE,
+      limit: DEFAULT_PAGINATION.LIMIT
+    }
+    const res = await this.originsService.getOrigins(query);
+    this.origins.push(...res.data);
+    this.questions[13].options = this.origins;
+  }
+
+  async onBrandLazyLoad(event): Promise<void> {
+    const { last } = event;
+    console.log(last, this.brands.length, this.brandLoading);
+    if (last !== this.brands.length || this.brandLoading) return;
+    const page = Math.floor(last / DEFAULT_PAGINATION.LIMIT) + 1;
+    if (page * DEFAULT_PAGINATION.LIMIT >= this.totalBrands) return;
+    this.brandLoading = true;
+    this.questions[11].virtualScrollOptions.loading = this.brandLoading;
+    const query = {
+      page: Math.floor(this.brands.length / DEFAULT_PAGINATION.LIMIT) + 1,
+      limit: DEFAULT_PAGINATION.LIMIT
+    }
+    const res = await this.brandsService.getBrands(query, false);
+    this.brands.push(...res.data);
+    this.questions[11].options = this.brands;
+    this.brandLoading = false;
+    this.questions[11].virtualScrollOptions.loading = this.brandLoading;
+  }
+
 }

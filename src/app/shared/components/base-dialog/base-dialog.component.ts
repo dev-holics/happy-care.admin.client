@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { AppInjector } from 'src/app/app.module';
 import { QuestionBaseModel } from '../../models/question-base.model';
 import { QuestionControlService } from '../../services/question-control.service';
 
@@ -17,10 +18,11 @@ export class BaseDialogComponent implements OnInit {
   public questions: QuestionBaseModel<string | string[]>[];
   public form: FormGroup;
   public style: any = {};
+  protected questionControlService: QuestionControlService
 
-  constructor(
-    protected questionControlService: QuestionControlService
-  ) {}
+  constructor() {
+    this.questionControlService = AppInjector.get(QuestionControlService);
+  }
 
   ngOnInit(): void {
     this.createFormQuestions();
