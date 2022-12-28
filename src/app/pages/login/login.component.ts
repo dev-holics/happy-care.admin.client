@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { phoneNumberValidator } from '../../theme/utils/app-validators';
+import { phoneNumberValidator } from '../../shared/utils/app-validators';
 import { AppSettings } from '../../app.settings';
 import { Settings } from '../../app.settings.model';
 import { UserLogin } from 'src/app/_models/user';

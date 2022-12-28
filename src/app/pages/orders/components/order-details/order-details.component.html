@@ -1,0 +1,61 @@
+<p-dialog
+  [(visible)]="isVisible"
+  [draggable]="false"
+  [resizable]="false"
+  [modal]="true"
+>
+  <ng-template pTemplate="header">
+    <div class="row">
+      <h3>
+        Chi tiết hoá đơn
+      </h3>
+    </div>
+  </ng-template>
+  <div class="row">
+    <div class="field flex col-3">
+      <span>Tên sản phẩm </span>
+    </div>
+    <div class="field flex col-3">
+      <span>Đơn giá </span>
+    </div>
+    <div class="field flex col-3">
+      <span>Số lượng</span>
+    </div>
+    <div class="field flex col-3">
+      <span>Thành tiền</span>
+    </div>
+  </div>
+
+  <ng-container
+    *ngFor="let product of order.products; let i = index"
+  >
+    <div class="row">
+      <div class="field flex col-3">
+        <span>{{ product.product.name }} </span>
+      </div>
+      <div class="field flex col-3">
+        <span>{{ product.product.price | currency:'VND' }} </span>
+      </div>
+      <div class="field flex col-3">
+        <span>{{ product.quantity }} </span>
+      </div>
+      <div class="field flex col-3">
+        <span>{{ product.product.price * product.quantity | currency:'VND' }} </span>
+      </div>
+    </div>
+
+  </ng-container>
+  <ng-template pTemplate="footer">
+    <div class="flex flex-row justify-content-end align-items-center">
+      <button
+        pButton
+        pRipple
+        type="button"
+        class="p-button-danger"
+        (click)="close()"
+      >
+        Huỷ
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>

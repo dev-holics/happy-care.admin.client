@@ -1,43 +1,55 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
 import { BrandModel } from 'src/app/pages/brands/models/brand.model';
+import { BrandsService } from 'src/app/pages/brands/services/brands.service';
+import { CategoriesService } from 'src/app/pages/categories/services/categories.service';
 import { OriginModel } from 'src/app/pages/origins/models/origin.model';
+import { OriginsService } from 'src/app/pages/origins/services/origins.service';
+import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
+import { DEFAULT_PAGINATION } from 'src/app/shared/config';
 import { QuestionBaseModel } from 'src/app/shared/models/question-base.model';
 import { DropdownControl, TextareaControl, TextboxControl } from 'src/app/shared/models/question-control.model';
-import { QuestionControlService } from 'src/app/shared/services/question-control.service';
+import { CategoryModel } from 'src/app/_models/category';
 import { ProductModel } from '../../models/product.model';
 
 @Component({
   selector: 'app-product-dialog',
-  templateUrl: './product-dialog.component.html',
-  styleUrls: ['./product-dialog.component.scss'],
-  providers: [FormBuilder]
+  templateUrl: './../../../../shared/components/base-dialog/base-dialog.component.html',
+  styleUrls: ['./../../../../shared/components/base-dialog/base-dialog.component.scss'],
 })
-export class ProductDialogComponent implements OnInit {
-  @Input('display') display: boolean;
-  @Input('brands') brands: BrandModel[];
-  @Input('origins') origins: OriginModel[];
+export class ProductDialogComponent extends BaseDialogComponent implements OnInit {
   @Input('product') product: ProductModel;
-  @Output() closeDialog = new EventEmitter<any>();
 
-  public questions: QuestionBaseModel<string | string[]>[];
-  public form: FormGroup;
+  public lastBrandPage: number = 1;
+
+  public brands: BrandModel[] = [];
+  public categories: CategoryModel[] = [];
+  public origins: OriginModel[] = [];
 
   constructor(
-    private questionControlService: QuestionControlService
-  ) {}
-
-  ngOnInit(): void {
-    this.createFormQuestions();
-    this.createForm();
+    private brandsService: BrandsService,
+    private categoriesService: CategoriesService,
+    private originsService: OriginsService
+  ) {
+    super();
   }
 
-  createFormQuestions(): void {
+  override ngOnInit(): void {
+    this.getBrands();
+    this.getCategories();
+    this.getOrigins();
+    super.ngOnInit();
+    this.title = "sản phẩm",
+    this.style = {
+      width: '50vw'
+    }
+  }
+
+  override createFormQuestions(): void {
     const questions: QuestionBaseModel<string | string[]>[] = [
 			new TextboxControl({
 				key: 'code',
 				label: 'Mã sản phẩm',
-				value: this.product.code || '',
+				value: this.model.code || '',
 				validates: {
 					required: true,
 					maxLength: 500,
@@ -46,7 +58,7 @@ export class ProductDialogComponent implements OnInit {
       new TextboxControl({
 				key: 'name',
 				label: 'Tên sản phẩm',
-				value: this.product.name || '',
+				value: this.model.name || '',
 				validates: {
 					required: true
 				},
@@ -54,17 +66,17 @@ export class ProductDialogComponent implements OnInit {
       new TextareaControl({
 				key: 'description',
 				label: 'Mô tả',
-				value: this.product.description || ''
+				value: this.model.description || ''
 			}),
       new TextboxControl({
         key: 'packingSpec',
         label: 'Quy cách đóng gói',
-        value: this.product.packingSpec || ''
+        value: this.model.packingSpec || ''
       }),
       new TextboxControl({
         key: 'unit',
         label: 'Đơn vị tính',
-        value: this.product.unit || '',
+        value: this.model.unit || '',
         validates: {
           required: true
         },
@@ -72,7 +84,7 @@ export class ProductDialogComponent implements OnInit {
       new TextboxControl({
         key: 'price',
         label: 'Giá',
-        value: this.product.price? this.product.price.toString() : null || '',
+        value: this.model.price? this.model.price.toString() : null || '',
         validates: {
           required: true
         },
@@ -80,14 +92,14 @@ export class ProductDialogComponent implements OnInit {
       new TextareaControl({
         key: 'element',
         label: 'Thành phần',
-        value: this.product.element || '',
+        value: this.model.element || '',
         validates: {
         },
       }),
       new TextareaControl({
         key: 'uses',
         label: 'Công dụng',
-        value: this.product.uses || '',
+        value: this.model.uses || '',
         validates: {
           required: true
         },
@@ -95,7 +107,7 @@ export class ProductDialogComponent implements OnInit {
       new TextareaControl({
         key: 'subject',
         label: 'Đối tượng sử dụng',
-        value: this.product.subject || '',
+        value: this.model.subject || '',
         validates: {
           required: true
         },
@@ -103,7 +115,7 @@ export class ProductDialogComponent implements OnInit {
       new TextareaControl({
         key: 'guide',
         label: 'Hướng dẫn sử dụng',
-        value: this.product.guide || '',
+        value: this.model.guide || '',
         validates: {
           required: true
         }
@@ -111,7 +123,7 @@ export class ProductDialogComponent implements OnInit {
       new TextareaControl({
         key: 'preserve',
         label: 'Hướng dẫn bảo quản',
-        value: this.product.preserve || '',
+        value: this.model.preserve || '',
         validates: {
           required: true
         }
@@ -119,18 +131,27 @@ export class ProductDialogComponent implements OnInit {
       new DropdownControl({
         key: 'trademarkId',
 				label: 'Thương hiệu',
-				value: this.product.trademarkId || '',
+				value: this.model.trademarkId || '',
 				options: this.brands,
 				optionLabel: 'name',
 				optionValue: 'id',
+        virtualScroll: true,
+        virtualScrollItemSize: DEFAULT_PAGINATION.LIMIT * 2,
+        virtualScrollOptions: {
+          showLoader: true,
+          loading: false,
+          delay: 150
+        },
+        lazy: true,
+        onLazyLoad: this.onBrandLazyLoad.bind(this),
 				validates: {
 					required: true,
-				},
+				}
       }),
       new DropdownControl({
         key: 'originId',
 				label: 'Nguồn gốc',
-				value: this.product.originId || '',
+				value: this.model.originId || '',
 				options: this.origins,
 				optionLabel: 'name',
 				optionValue: 'id',
@@ -141,7 +162,7 @@ export class ProductDialogComponent implements OnInit {
       new DropdownControl({
         key: 'categoryId',
 				label: 'Loại sản phẩm',
-				value: this.product.categoryId || '',
+				value: this.model.categoryId || '',
 				options: this.brands,
 				optionLabel: 'name',
 				optionValue: 'id',
@@ -153,23 +174,63 @@ export class ProductDialogComponent implements OnInit {
     this.questions = questions;
   }
 
-  createForm() {
-    this.form = this.questionControlService.getFormGroup(this.questions);
+  async getBrands(): Promise<void> {
+    const query = {
+      page: DEFAULT_PAGINATION.PAGE,
+      limit: DEFAULT_PAGINATION.LIMIT
+    }
+    const res = await this.brandsService.getBrands(query);
+    this.brands = Array.from({length: res.paginator.totalData});
+    for (let i = 0; i < res.data.length; i++) {
+      this.brands[i] = res.data[i];
+    }
+    this.questions[11].options = this.brands;
   }
 
-  public get isVisible(): boolean {
-    return this.display;
-  }
-  
-  public set isVisible(val: boolean) {
-    this.close(null);
+  async getCategories(): Promise<void> {
+    const query = {
+      page: DEFAULT_PAGINATION.PAGE,
+      limit: DEFAULT_PAGINATION.LIMIT
+    }
+    const res = await this.categoriesService.getCategories(query);
+    this.categories.push(...res.data);
+    this.questions[12].options = this.categories;
   }
 
-  close(product): void {
-    if(product) {
-      this.closeDialog.emit(product);
-    } else {
-      this.closeDialog.emit(null);
+  async getOrigins(): Promise<void> {
+    const query = {
+      page: DEFAULT_PAGINATION.PAGE,
+      limit: DEFAULT_PAGINATION.LIMIT
+    }
+    const res = await this.originsService.getOrigins(query);
+    this.origins.push(...res.data);
+    this.questions[13].options = this.origins;
+  }
+
+  async onBrandLazyLoad(event): Promise<void> {
+    const { first, last } = event;
+    const page = Math.floor(last / DEFAULT_PAGINATION.LIMIT) + 1;
+    if (page > this.lastBrandPage) {
+      this.questions[11].virtualScrollOptions = {
+        showLoader: true,
+        loading: true,
+        delay: 100
+      }
+      const query = {
+        page: page,
+        limit: DEFAULT_PAGINATION.LIMIT
+      }
+      const res = await this.brandsService.getBrands(query, false);
+      const firstIndex = this.lastBrandPage * DEFAULT_PAGINATION.LIMIT;
+      const lastIndex = firstIndex + res.data.length;
+      this.brands.splice(firstIndex, lastIndex, ...res.data);
+      this.lastBrandPage = res.paginator.page;
+      this.questions[11].virtualScrollOptions = {
+        showLoader: true,
+        loading: false,
+        delay: 0
+      }
     }
   }
+
 }

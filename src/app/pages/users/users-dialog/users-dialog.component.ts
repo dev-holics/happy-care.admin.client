@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { passwordFormat, passwordValidator, phoneNumberFormat, phoneNumberValidator } from 'src/app/theme/utils/app-validators';
+import { passwordFormat, passwordValidator, phoneNumberFormat, phoneNumberValidator } from 'src/app/shared/utils/app-validators';
 import { GENDER } from 'src/app/shared/config/enum.config';
-import { Branch } from 'src/app/_models/branch';
+import { BranchModel } from 'src/app/pages/branches/models/branch.model';
 import { RoleOption } from 'src/app/_models/role';
 import { UsersService } from 'src/app/_services/users.service';
 
@@ -15,7 +15,7 @@ export class UsersDialogComponent implements OnInit {
 
   @Input('display') display: boolean;
   @Input('roles') roles: RoleOption[];
-  @Input('branches') branches: Branch[];
+  @Input('branches') branches: BranchModel[];
   @Input('Id') id: string;
   @Output() closeDialog = new EventEmitter<any>();
   public phamarcistId = '8902b1b3-a5be-4fff-9d29-1460b90641e9';

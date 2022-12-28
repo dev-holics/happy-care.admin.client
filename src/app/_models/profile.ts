@@ -5,4 +5,6 @@ export class Profile {
   avatar: string = '';
   phoneNumber: string = '';
   fullname: string = '';
+  role: any = null;
+  branchId: string = '';
 }

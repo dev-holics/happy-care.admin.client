@@ -1,54 +1,16 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { BranchesComponent } from './branches.component';
-import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputTextModule } from 'primeng/inputtext';
-import { MessageModule } from 'primeng/message';
-import { MessagesModule } from 'primeng/messages';
-import { PaginatorModule } from 'primeng/paginator';
-import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
-import { ToolbarModule } from 'primeng/toolbar';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { BranchesDialogComponent } from './branches-dialog/branches-dialog.component';
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { SharedModule } from "src/app/shared/shared.module";
+import { BranchesRoutingModule } from "./branches-routing.module";
+import { BranchDialogComponent } from "./components/branch-dialog/branch-dialog.component";
+import { BranchesComponent } from "./components/branches/branches.component";
 
-export const routes = [
-  {
-      path: '',
-      component: BranchesComponent,
-  }
-];
 
 @NgModule({
+  imports: [CommonModule, BranchesRoutingModule, SharedModule.forRoot()],
   declarations: [
     BranchesComponent,
-    BranchesDialogComponent
+    BranchDialogComponent
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes),
-    FormsModule,
-    ButtonModule,
-    DialogModule,
-    InputTextModule,
-    DropdownModule,
-    TableModule,
-    PaginatorModule,
-    ToolbarModule,
-    ConfirmDialogModule,
-    MessagesModule,
-    MessageModule,
-    ToastModule
-  ],
-  providers: [
-    ConfirmationService,
-    MessageService
-  ]
 })
-export class BranchesModule { }
+export class BranchesModule {}

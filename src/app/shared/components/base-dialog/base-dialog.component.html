@@ -1,0 +1,45 @@
+<p-dialog
+  [(visible)]="isVisible"
+  [draggable]="false"
+  [resizable]="false"
+  [maximizable]="true"
+  [modal]="true"
+  [style]="style"
+>
+  <ng-template pTemplate="header">
+    <h2 style="margin: 0;">
+      <span *ngIf="!model.id">Tạo mới</span>
+      <span *ngIf="model.id">Chỉnh sửa</span>
+      {{ title }}
+    </h2>
+  </ng-template>
+  <form [formGroup]="form">
+    <div *ngFor="let question of questions">
+      <dynamic-form-question
+        [question]="question"
+        [formGroup]="form"
+      ></dynamic-form-question>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <div class="flex flex-row justify-content-end align-items-center">
+      <button
+        pButton
+        pRipple
+        type="button"
+        class="p-button-danger"
+        (click)="close(null)"
+      >
+        Huỷ
+      </button>
+      <button
+        pButton
+        pRipple
+        [disabled]="!form.valid"
+        (click)="close(form.value)"
+      >
+        Submit
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>

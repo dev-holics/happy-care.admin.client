@@ -1,9 +1,122 @@
 <app-order-dialog *ngIf="displayDialog" [display]="displayDialog" [products]="products"
                     [order]="order" (closeDialogEvent)="onHideDialog($event)">
 </app-order-dialog>
+<app-order-details *ngIf="displayDetails" [display]="displayDetails" [order]="selectedOrder"
+                  (closeDialogEvent)="onHideDetail()">
+</app-order-details>
 <div class="col p-4 data-table">
     <div class="flex flex-row pb-3 justify-content-between align-items-center">
         <h2 class="m-0">Hoá đơn</h2>
         <button pButton pRipple type="button" label="Tạo mới" class="p-button-success" (click)="openDialog(null)"></button>
     </div>
+    <p-toolbar styleClass="mb-4">
+      <div class="field col-3">
+        <label for="branchId" class="block form-label">Chi nhánh</label>
+        <p-dropdown
+          [(ngModel)]="branchId"
+          [options]="branches"
+          placeholder="Chọn chi nhánh"
+          [style]="{ width: '100%' }"
+          aria-describedby="origin-help"
+          optionLabel="address"
+          optionValue="id"
+          [filter]="true"
+          filterBy="address"
+          (onChange)="onChangeBranch($event)"
+          [showClear]="false"
+        >
+        </p-dropdown>
+      </div>
+      <div class="field col-3">
+        <label for="status" class="block form-label">Trạng thái đơn hàng</label>
+        <p-dropdown
+          [(ngModel)]="status"
+          [options]="statusOption"
+          placeholder="Chọn trạng thái"
+          [style]="{ width: '100%' }"
+          aria-describedby="origin-help"
+          optionLabel="value"
+          optionValue="id"
+          [filter]="true"
+          (onChange)="onChangeBranch($event)"
+          [showClear]="false"
+        >
+        </p-dropdown>
+      </div>
+      <div class="field col-3">
+        <label for="paymentType" class="block form-label">Trạng thái đơn hàng</label>
+        <p-dropdown
+          [(ngModel)]="paymentType"
+          [options]="paymentTypeOptions"
+          placeholder="Chọn phương thức thanh toán"
+          [style]="{ width: '100%' }"
+          aria-describedby="origin-help"
+          optionLabel="value"
+          optionValue="id"
+          [filter]="true"
+          (onChange)="onChangeBranch($event)"
+          [showClear]="false"
+        >
+        </p-dropdown>
+      </div>
+  </p-toolbar>
+  <p-table [value]="orders" responsiveLayout="scroll" styleClass="w-full p-datatable-gridlines p-datatable-striped mt-2"
+              [lazy]="true" [paginator]="true" [rows]="params.limit" [totalRecords]="totalData"
+              [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10, 15, 20]"
+              (onPage)="paginate($event)">
+      <ng-template pTemplate="header">
+          <tr>
+              <th style="width: 3rem">
+                  <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+              </th>
+              <th>Mã Order</th>
+              <th>Ngày order</th>
+              <th>Loại order</th>
+              <th>Phương thức thanh toán</th>
+              <th>Giá tiền</th>
+              <th>Trạng thái</th>
+              <th>Cách nhận hàng</th>
+              <th></th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-order>
+          <tr>
+              <td>
+                  <p-tableCheckbox [value]="order"></p-tableCheckbox>
+              </td>
+              <td>{{order.orderCode}}</td>
+              <td>{{order.orderDate}}</td>
+              <td>{{getOrderType(order.orderType)}}</td>
+              <td>{{getPaymentType(order.paymentType)}}</td>
+              <td>{{order.totalPrice | currency:'VND' }}</td>
+              <td>{{transformOrderStatus(order.status)}}</td>
+              <td>{{getDeliveryType(order.delivery)}}</td>
+              <td style="text-align: center;">
+                  <button pButton pRipple icon="pi pi-eye"
+                    class="p-button-info m-1"
+                    pTooltip="Xem chi tiết đơn hàng"
+                    (click)="onShowDetail(order)"
+                  >
+                  </button>
+                  <button
+                    *ngIf="canChangeStatus &&
+                      (order.status !== 'RECEIVED' && order.status !== 'DELIVERED' && order.status !== 'CANCELED')"
+                    pButton
+                    pRipple
+                    icon="pi pi-pencil"
+                    class="p-button-warning m-1"
+                    pTooltip="Cập nhật trạng thái"
+                    (click)="onShowChangeStatusDialog(order)">
+                  </button>
+
+              </td>
+          </tr>
+      </ng-template>
+  </p-table>
 </div>
+
+<app-alert [(displayAlert)]="changeStatusPopup" [isDisabled]="false"
+             textButton="OK"
+             text="{{ getText() }}" (submit)="updateStatus()"
+             (close)="onHideChangeStatusDialog()" type='warning'>
+</app-alert>

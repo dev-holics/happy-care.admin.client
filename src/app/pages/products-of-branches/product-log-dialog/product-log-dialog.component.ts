@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Branch } from 'src/app/_models/branch';
+import { BranchModel } from 'src/app/pages/branches/models/branch.model';
 import { ProductLogService } from 'src/app/_services/product-log.service';
 import { ProductModel } from '../../products/models/product.model';
 
@@ -11,7 +11,7 @@ import { ProductModel } from '../../products/models/product.model';
 })
 export class ProductLogDialogComponent implements OnInit {
   @Input('display') display: boolean;
-  @Input('branches') branches: Branch[];
+  @Input('branches') branches: BranchModel[];
   @Input('products') products: ProductModel[];
   @Input('productId') productId: string = '';
   @Input('branchId') branchId: string = '';

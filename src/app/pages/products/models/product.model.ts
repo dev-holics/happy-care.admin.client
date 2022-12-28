@@ -23,3 +23,27 @@ export class ProductModel {
     category: CategoryModel | null;
     images: Array<ImageModel>;
 }
+
+export class ProductLogModel {
+    quantity: number;
+    transactionDate: Date;
+    type: string;
+    productName: string;
+    branchName: string;
+    product: any;
+    branch: any;
+}
+
+export class ProductImportModel {
+    quantity: number;
+    expired: Date;
+    branchId: string;
+    productId: string;
+}
+
+export class ProductExportModel {
+    quantity: number;
+    productSegementId: string;
+    branchId: string;
+    productId: string;
+}

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Branch } from 'src/app/_models/branch';
+import { BranchModel } from 'src/app/pages/branches/models/branch.model';
 import { RoleOption } from 'src/app/_models/role';
 import { UserCreate, UserDto } from 'src/app/_models/user';
 import { AccountsService } from 'src/app/_services/accounts.service';
 import { RolesService } from 'src/app/_services/roles.service';
 import { UsersService } from 'src/app/_services/users.service';
 import decode from "jwt-decode";
-import { BranchsService } from 'src/app/_services/branches.service';
+import { BranchesService } from 'src/app/pages/branches/services/branches.service';
 
 @Component({
   selector: 'app-users',
@@ -19,7 +19,7 @@ export class UsersComponent implements OnInit {
 
   users: UserDto[] = [];
   public roleOptions: RoleOption[];
-  public branchOptions: Branch[] = []
+  public branchOptions: BranchModel[] = []
   public displayDialog: boolean;
   public displayChangeRoleDialog: boolean;
   public selectedId: string;
@@ -32,15 +32,15 @@ export class UsersComponent implements OnInit {
 
   constructor(
     public usersService: UsersService,
-    public branchesService: BranchsService,
+    public branchesService: BranchesService,
     public rolesService: RolesService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private accountsService: AccountsService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.fetchUsers();
-    this.fetchOptions();
+    await this.fetchOptions();
     const currentUser = this.accountsService.currentUserValue;
     if (currentUser) {
       const tokenPayload:any = decode(currentUser.accessToken)
@@ -68,17 +68,13 @@ export class UsersComponent implements OnInit {
     )
   }
 
-  fetchOptions() {
+  async fetchOptions(): Promise<void> {
     this.rolesService.getRoles().subscribe(
       (response: any) => {
         this.roleOptions = response;
       }
     )
-    this.branchesService.getBranches(0, 200).subscribe(
-      (response: any) => {
-        this.branchOptions = response.data;
-      }
-    )
+    this.branchOptions = await this.branchesService.getBranches(null);
   }
 
   paginate(event): void {

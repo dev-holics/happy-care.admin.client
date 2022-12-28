@@ -56,13 +56,13 @@ export class AccountsService {
     this.logout();
   }
 
-  getProfile(): Observable<Profile> {
-    return this.httpClient.get<Profile>(`${URL_CONFIG.USER_URL}/users/profile`);
+  getProfile(): Observable<any> {
+    return this.httpClient.get<any>(`${URL_CONFIG.USER_URL}/profile`);
   }
 
   updateProfile(profile: Profile): Observable<any> {
     return this.httpClient
-      .put(`${URL_CONFIG.USER_URL}/users/profile`, profile, this.httpOptions)
+      .put(`${URL_CONFIG.USER_URL}/profile`, profile, this.httpOptions)
       .pipe(
         map((response: any) => {
           return response;

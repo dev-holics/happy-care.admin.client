@@ -11,6 +11,12 @@ export class QuestionBaseModel<T> {
 	optionLabel: string;
 	optionValue: string;
 	onChange?: (_event?: any) => void;
+	virtualScroll: boolean;
+	virtualScrollItemSize: number;
+	lazy: boolean;
+	onLazyLoad?: (_event?: any) => void;
+	virtualScrollOptions: any;
+	style: any;
 	validates: {
 		required?: boolean;
 		minLength?: number;
@@ -28,12 +34,18 @@ export class QuestionBaseModel<T> {
 			disabled?: boolean;
 			hidden?: boolean;
 			onChange?: (_event?: any) => void;
+			virtualScroll?: boolean;
+			virtualScrollItemSize?: number;
+			lazy?: boolean;
+			onLazyLoad?: (_event?: any) => void;
+			virtualScrollOptions?: any;
 			controlType?: string;
 			type?: string;
 			options?: any[];
 			optionFilter?: boolean;
 			optionLabel?: string;
 			optionValue?: string;
+			style?: any;
 			validates?: {
 				required?: boolean;
 				minLength?: number;
@@ -50,12 +62,18 @@ export class QuestionBaseModel<T> {
 		this.disabled = !!options.disabled;
 		this.hidden = !!options.hidden;
 		this.onChange = options.onChange;
+		this.virtualScroll = !!options.virtualScroll;
+		this.virtualScrollItemSize = options.virtualScrollItemSize || 0;
+		this.lazy = !!options.lazy;
+		this.onLazyLoad = options.onLazyLoad;
+		this.virtualScrollOptions = options.virtualScrollOptions || {};
 		this.controlType = options.controlType || '';
 		this.type = options.type || '';
 		this.options = options.options || [];
 		this.optionFilter = options.optionFilter || false;
 		this.optionLabel = options.optionLabel || '';
 		this.optionValue = options.optionValue || '';
+		this.style = options.style || {};
 		this.validates = options.validates || {};
 	}
 }
