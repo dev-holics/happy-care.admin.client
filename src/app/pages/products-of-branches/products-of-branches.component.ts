@@ -72,7 +72,7 @@ export class ProductsOfBranchesComponent implements OnInit {
     }
 
     async fetchOptions() {
-      this.branchOptions = await this.branchesService.getBranches(null);
+      this.branchOptions = (await this.branchesService.getBranches(null)).data;
       let res = await this.productsService.getProducts(null);
       this.productOptions = res.data;
     }
