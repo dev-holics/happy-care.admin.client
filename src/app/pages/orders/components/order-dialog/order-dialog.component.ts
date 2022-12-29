@@ -34,7 +34,7 @@ export class OrderDialogComponent implements OnInit {
     ];
     this.form = this.fb.group(
       {
-        id: null,
+        productId: null,
         customerId: null,
         products: this.fb.array([this.productForm()]),
         paymentType: [null, Validators.compose([Validators.required])],
@@ -50,7 +50,7 @@ export class OrderDialogComponent implements OnInit {
   public get isVisible(): boolean {
     return this.display;
   }
-  
+
   public set isVisible(val: boolean) {
     this.close(null);
   }
@@ -65,7 +65,7 @@ export class OrderDialogComponent implements OnInit {
 
   productForm() {
     return this.fb.group({
-      id: [null, Validators.compose([Validators.required])],
+      productId: [null, Validators.compose([Validators.required])],
       price: null,
       quantity: [null, Validators.compose([Validators.required])],
     });
@@ -94,7 +94,7 @@ export class OrderDialogComponent implements OnInit {
     });
     this.form.get('totalPrice')?.setValue(totalPrice);
   }
-  
+
   close(order) {
     if (!order) {
       this.closeDialogEvent.emit(null);
