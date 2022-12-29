@@ -18,7 +18,7 @@ import { ProductModel } from '../products/models/product.model';
 })
 export class ProductsOfBranchesComponent implements OnInit {
 
-  products: ProductOfBranchDto[] = []
+  products: any[] = []
   public productOptions: ProductModel[] = []
   public branchOptions: BranchModel[] = []
   public displayDialog: boolean;
@@ -67,6 +67,15 @@ export class ProductsOfBranchesComponent implements OnInit {
           this.limit = response.limit;
           this.totalData = response.totalData;
           this.products = response.data;
+          this.products.forEach(element => {
+            let quantity = 0;
+            if (element.productConsignments) {
+              element.productConsignments.forEach(e => {
+                quantity += e.quantity
+              })
+            }
+            element.quantity = quantity;
+          });
         }
       )
     }

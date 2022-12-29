@@ -18,7 +18,7 @@ export class UsersDialogComponent implements OnInit {
   @Input('branches') branches: BranchModel[];
   @Input('Id') id: string;
   @Output() closeDialog = new EventEmitter<any>();
-  public phamarcistId = '8902b1b3-a5be-4fff-9d29-1460b90641e9';
+  public phamarcistId = '9cc4e0cc-b225-48db-adeb-b96b1fc116f1';
   public form: FormGroup;
   public gender = [
     { id: GENDER.MALE, name: 'Nam' },

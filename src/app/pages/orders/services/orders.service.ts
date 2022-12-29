@@ -43,7 +43,8 @@ export class OrdersService {
 
   async addOrder(order: OrderModel) {
     const url = `${URL_CONFIG.ORDER_ADMIN_URL}`;
-    await this.httpService.post(url, order);
+    const res = await this.httpService.post(url, order);
+    console.log(res);
   }
 
   async updateOrder(order: OrderModel) {
