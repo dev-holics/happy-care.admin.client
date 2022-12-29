@@ -37,7 +37,7 @@ const routes: Routes = [
           import('./pages/categories/categories.module').then(
             (m) => m.CategoriesModule
           ),
-        data: { breadcrumb: 'Categories', permission: 'read_category' },
+        data: { breadcrumb: 'Categories' },
       },
       {
         path: 'products',
