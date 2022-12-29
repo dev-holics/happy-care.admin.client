@@ -15,7 +15,6 @@ const routes: Routes = [
   {
     path: 'log',
     component: ProductLogComponent,
-    canActivate: [AuthGuard],
     data: {
       breadcrumb: 'Product log',
     }

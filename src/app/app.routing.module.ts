@@ -25,14 +25,12 @@ const routes: Routes = [
       },
       {
         path: 'roles',
-        canActivate: [AuthGuard],
         loadChildren: () =>
           import('./pages/roles/roles.module').then((m) => m.RolesModule),
         data: { breadcrumb: 'Roles', permission: 'read_role' },
       },
       {
         path: 'categories',
-        canActivate: [AuthGuard],
         loadChildren: () =>
           import('./pages/categories/categories.module').then(
             (m) => m.CategoriesModule
@@ -41,7 +39,6 @@ const routes: Routes = [
       },
       {
         path: 'products',
-        canActivate: [AuthGuard],
         loadChildren: () =>
           import('./pages/products/products.module').then(
             (m) => m.ProductsModule
@@ -59,7 +56,6 @@ const routes: Routes = [
       },
       {
         path: 'brands',
-        canActivate: [AuthGuard],
         loadChildren: () =>
           import('./pages/brands/brands.module').then(
             (m) => m.TrademarksModule
@@ -68,14 +64,12 @@ const routes: Routes = [
       },
       {
         path: 'origins',
-        canActivate: [AuthGuard],
         loadChildren: () =>
           import('./pages/origins/origins.module').then((m) => m.OriginsModule),
         data: { breadcrumb: 'Origins', permission: 'read_origin' },
       },
       {
         path: 'branches',
-        canActivate: [AuthGuard],
         loadChildren: () =>
           import('./pages/branches/branches.module').then(
             (m) => m.BranchesModule
@@ -84,7 +78,6 @@ const routes: Routes = [
       },
       {
         path: 'permissions',
-        canActivate: [AuthGuard],
         loadChildren: () =>
           import('./pages/permissions/permissions.module').then(
             (m) => m.PermissionsModule
@@ -93,14 +86,12 @@ const routes: Routes = [
       },
       {
         path: 'users',
-        canActivate: [AuthGuard],
         loadChildren: () =>
           import('./pages/users/users.module').then((m) => m.UsersModule),
         data: { breadcrumb: 'Users', permission: 'read_user' },
       },
       {
         path: 'products-of-branches',
-        canActivate: [AuthGuard],
         loadChildren: () =>
           import(
             './pages/products-of-branches/products-of-branches.module'

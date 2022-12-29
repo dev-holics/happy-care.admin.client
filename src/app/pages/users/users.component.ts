@@ -74,7 +74,7 @@ export class UsersComponent implements OnInit {
         this.roleOptions = response;
       }
     )
-    this.branchOptions = await this.branchesService.getBranches(null);
+    this.branchOptions = (await this.branchesService.getBranches(null)).data;
   }
 
   paginate(event): void {

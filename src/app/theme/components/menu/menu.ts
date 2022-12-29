@@ -4,7 +4,7 @@ export const verticalMenuItems = [
     {
         label: 'Tổng quan',
         icon: 'pi pi-home',
-        url: '/'
+        url: '/dashboard'
     },
     {
         label: 'Danh mục',

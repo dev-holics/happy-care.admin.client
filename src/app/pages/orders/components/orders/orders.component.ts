@@ -186,10 +186,11 @@ export class OrdersComponent implements OnInit {
     }
   }
 
-  onHideDialog(order): void {
+  async onHideDialog(order): Promise<void> {
     console.log(order);
     this.displayDialog = false;
     if (order) {
+      await this.ordersService.addOrder(order);
     }
   }
 
